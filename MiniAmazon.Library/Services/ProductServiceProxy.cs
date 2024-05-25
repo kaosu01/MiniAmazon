@@ -39,7 +39,8 @@ namespace MiniAmazon.Library.Services
         }
         public Product? AddorUpdate(Product product)
         {
-            if (products == null) { return null; }
+            if (products == null)
+                return null;
 
             var isAdd = false;
 
