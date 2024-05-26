@@ -56,7 +56,7 @@ namespace MiniAmazon
                     case "C":
                         {
                             if (Checkout(shoppingCart))
-                                Console.WriteLine("Thank You for Shopping at Amazon");
+                                Console.WriteLine("Thank You for Shopping at Amazon!");
                             break;
                         }
                     case "E":
