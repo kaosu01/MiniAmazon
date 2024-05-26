@@ -196,18 +196,25 @@ namespace MiniAmazon
 
                         switch (ans?.ToUpper())
                         {
-                            case "Y": { productSvc?.Delete(idInput); break; }
-                            case "N": { break; }
+                            case "Y":
+                            {
+                                productSvc?.Delete(idInput);
+                                Console.WriteLine($"{product.Name} Has Been Removed From the Inventory");
+                                break;
+                            }
+                            case "N":
+                            {
+                                Console.WriteLine($"{product.Name} Was Not Removed From the Inventory");
+                                break;
+                            }
                             default:
-                                {
-                                    Console.WriteLine("Invalid Selection... Please Try Again...");
-                                    Console.Write("Are You Sure You Want to Remove This Product From the Inventory (Y/N)? ");
-                                    ans = Console.ReadLine();
-                                    break;
-                                }
+                            {
+                                Console.WriteLine("Invalid Selection... Please Try Again...");
+                                Console.Write("Are You Sure You Want to Remove This Product From the Inventory (Y/N)? ");
+                                ans = Console.ReadLine();
+                                break;
+                            }
                         }
-
-                        Console.WriteLine($"{product.Name} Has Been Removed From the Inventory");
 
                         break;
                     }
