@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniAmazon", "MiniAmazon\MiniAmazon.csproj", "{2C63F7FE-3C27-4EEF-AF5B-2751BC13084D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniAmazon", "MiniAmazon\MiniAmazon.csproj", "{2C63F7FE-3C27-4EEF-AF5B-2751BC13084D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniAmazon.Library", "MiniAmazon.Library\MiniAmazon.Library.csproj", "{C36ED4EB-F4FB-4EED-B361-CAE54D0C97EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniAmazon.Library", "MiniAmazon.Library\MiniAmazon.Library.csproj", "{C36ED4EB-F4FB-4EED-B361-CAE54D0C97EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniAmazon.MAUI", "MiniAmazon.MAUI\MiniAmazon.MAUI.csproj", "{FC486F69-3CDF-49EF-8176-D1E4708807B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,12 @@ Global
 		{C36ED4EB-F4FB-4EED-B361-CAE54D0C97EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C36ED4EB-F4FB-4EED-B361-CAE54D0C97EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C36ED4EB-F4FB-4EED-B361-CAE54D0C97EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC486F69-3CDF-49EF-8176-D1E4708807B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC486F69-3CDF-49EF-8176-D1E4708807B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC486F69-3CDF-49EF-8176-D1E4708807B4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FC486F69-3CDF-49EF-8176-D1E4708807B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC486F69-3CDF-49EF-8176-D1E4708807B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC486F69-3CDF-49EF-8176-D1E4708807B4}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
