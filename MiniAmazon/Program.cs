@@ -8,7 +8,7 @@ namespace MiniAmazon
         static void Main(string[] args)
         {
             var productSvc = ProductServiceProxy.Current;
-            var shoppingCart = new List<Product>();
+            var shoppingCart = ShoppingCartProxy.Current;
 
             productSvc.AddorUpdate(
             new Product
@@ -69,6 +69,7 @@ namespace MiniAmazon
                 }
             }
         }
+
         static void Inventory(ProductServiceProxy productSvc)
         {
             bool inInventory = true;
@@ -215,7 +216,6 @@ namespace MiniAmazon
                                 break;
                             }
                         }
-
                         break;
                     }
                     case "L":
@@ -229,7 +229,7 @@ namespace MiniAmazon
             }
             return;
         }
-        static void Shopping(ProductServiceProxy productSvc, List<Product> shoppingCart)
+        static void Shopping(ProductServiceProxy productSvc, ShoppingCartProxy shoppingCart)
         {
             bool shopping = true;   // Continue Shopping Until Checkout
             string? shopInput = null;
@@ -251,143 +251,186 @@ namespace MiniAmazon
                 switch (shopInput?.ToUpper())
                 {
                     case "A":
-                    {
-                        // Variables Used to Add a Product to the User's Cart
-                        int idInput = 0;
-                        int pCount = 0;
-                        Product? product = null;
-                        Product? productToAdd = null;
-
-                        // Get Product Using ID
-                        do
                         {
-                            productSvc?.Products?.ToList().ForEach(Console.WriteLine);
-                            Console.Write("Enter the ProductID of the Product You Want to Add -> ");
-                            idInput = Convert.ToInt32(Console.ReadLine());
-                            product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
+                            // Variables Used to Add a Product to the User's Cart
+                            int idInput = 0;
+                            int pCount = 0;
+                            Product? product = null;
+                            Product? productToAdd = null;
 
-                            if (product == null)
-                                Console.WriteLine("Invalid ID Selection... Please Try Again...");
-                        } while (product == null);
-
-                        do
-                        {
-                            Console.Write($"How Many of the Product \"{product.Name}\" Do You Want to Add? ");
-                            pCount = Convert.ToInt32(Console.ReadLine());
-
-                            if (pCount > product.Count)
-                                Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
-                        } while (pCount > product.Count);
-
-                        // Search If the Item User Wants to Add to Their Cart is Already in the Cart
-                        // We'll Just Add the Count of the Item Rather than Make a New Product Object
-                        var searchProduct = shoppingCart?.FirstOrDefault(c => c.Id == idInput);
-
-                        // If Product is Already in the Cart
-                        if (searchProduct != null)
-                        {
-                            searchProduct.Count += pCount;
-                        }
-                        // Make A Product Object to Add That to Shopping Cart
-                        else
-                        {
-                            productToAdd = new Product
+                            // Get Product Using ID
+                            do
                             {
-                                Id = product.Id,
-                                Name = product.Name,
-                                Description = product.Description,
-                                Price = product.Price,
-                                Count = pCount
-                            };
-                            shoppingCart?.Add(productToAdd);
+                                productSvc?.Products?.ToList().ForEach(Console.WriteLine);
+                                Console.Write("Enter the ProductID of the Product You Want to Add -> ");
+                                idInput = Convert.ToInt32(Console.ReadLine());
+                                product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
+
+                                if (product == null)
+                                    Console.WriteLine("Invalid ID Selection... Please Try Again...");
+                            } while (product == null);
+
+                            do
+                            {
+                                Console.Write($"How Many of the Product \"{product.Name}\" Do You Want to Add? ");
+                                pCount = Convert.ToInt32(Console.ReadLine());
+
+                                if (pCount > product.Count)
+                                    Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
+                            } while (pCount > product.Count);
+
+                            // Search If the Item User Wants to Add to Their Cart is Already in the Cart
+                            // We'll Just Add the Count of the Item Rather than Make a New Product Object
+                            var searchProduct = shoppingCart?.CartProducts?.FirstOrDefault(c => c.Id == idInput);
+
+                            // If Product is Already in the Cart
+                            if (searchProduct != null)
+                            {
+                                searchProduct.Count += pCount;
+                            }
+                            // Make A Product Object to Add That to Shopping Cart
+                            else
+                            {
+                                productToAdd = new Product
+                                {
+                                    Id = product.Id,
+                                    Name = product.Name,
+                                    Description = product.Description,
+                                    Price = product.Price,
+                                    Count = pCount
+                                };
+                                shoppingCart?.AddorUpdate(productToAdd);
+                            }
+
+                            // Update Product in Inventory
+                            product.Count -= pCount;
+                            product = productSvc?.AddorUpdate(product);
+
+                            Console.WriteLine($"{productToAdd?.Name} Has Been Added to Your Cart");
+
+                            break;
                         }
-
-                        product.Count -= pCount;
-                        product = productSvc?.AddorUpdate(product);
-
-                        Console.WriteLine($"{productToAdd?.Name} Has Been Added to Your Cart");
-
-                        break;
-                    }
                     case "D":
-                    {
-                        if (shoppingCart?.Count == 0)
                         {
-                            Console.WriteLine("Shopping Cart is Currently Empty");
+                            if (shoppingCart?.CartProducts?.Count == 0)
+                            {
+                                Console.WriteLine("Shopping Cart is Currently Empty");
+                            }
+                            else
+                            {
+                                Console.WriteLine("My Cart:");
+                                shoppingCart?.CartProducts?.ToList().ForEach(Console.WriteLine);
+                            }
+                            break;
                         }
-                        else
-                        {
-                            Console.WriteLine("My Cart:");
-                            shoppingCart?.ToList().ForEach(Console.WriteLine);
-                        }
-                        break;
-                    }
                     case "R":
-                    {
-                        int idInput = 0;
-                        int rCount = 0;
-                        Product? productToDelete = null;
-                        Product? product = null;
-
-                        // Get Product Using ID
-                        do
                         {
-                            shoppingCart?.ToList().ForEach(Console.WriteLine);
-                            Console.Write("Enter the ProductID of the Product You Want to Remove -> ");
-                            idInput = Convert.ToInt32(Console.ReadLine());
-                            productToDelete = shoppingCart?.FirstOrDefault(c => c.Id == idInput);
+                            int idInput = 0;
+                            int rCount = 0;
+                            Product? productToDelete = null;
+                            Product? product = null;
 
-                            if (productToDelete == null)
-                                Console.WriteLine("Invalid ID Selection... Please Try Again...");
-                        } while (productToDelete == null);
+                            // Get Product Using ID
+                            do
+                            {
+                                shoppingCart?.CartProducts?.ToList().ForEach(Console.WriteLine);
+                                Console.Write("Enter the ProductID of the Product You Want to Remove -> ");
+                                idInput = Convert.ToInt32(Console.ReadLine());
+                                productToDelete = shoppingCart?.CartProducts?.FirstOrDefault(c => c.Id == idInput);
 
-                        do
-                        {
-                            Console.Write($"How Many of the Product \"{productToDelete.Name}\" Do You Want to Remove? ");
-                            rCount = Convert.ToInt32(Console.ReadLine());
+                                if (productToDelete == null)
+                                    Console.WriteLine("Invalid ID Selection... Please Try Again...");
+                            } while (productToDelete == null);
 
-                            if (rCount > productToDelete.Count)
-                                Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
-                        } while (rCount > productToDelete.Count);
+                            do
+                            {
+                                Console.Write($"How Many of the Product \"{productToDelete.Name}\" Do You Want to Remove? ");
+                                rCount = Convert.ToInt32(Console.ReadLine());
 
-                        // Get the Product from Inventory, Add Back the Amount the User Removed From Their Cart
-                        product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
-                        product.Count += rCount;
-                        productToDelete.Count -= rCount;
-                        product = productSvc?.AddorUpdate(product);
+                                if (rCount > productToDelete.Count)
+                                    Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
+                            } while (rCount > productToDelete.Count);
 
-                        if (productToDelete.Count == 0)
-                        {
-                            shoppingCart?.Remove(productToDelete);
-                            Console.WriteLine($"Removed \"{productToDelete.Name}\" From Your Cart");
+                            // Get the Product from Inventory, Add Back the Amount the User Removed From Their Cart
+                            product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
+                            if (product != null)
+                            {
+                                product.Count += rCount;
+                                productToDelete.Count -= rCount;
+                                product = productSvc?.AddorUpdate(product);
+                            }
+                            if (productToDelete.Count == 0)
+                            {
+                                shoppingCart?.Delete(productToDelete.Id);
+                                Console.WriteLine($"Removed \"{productToDelete.Name}\" From Your Cart");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Removed {rCount} of the Product \"{productToDelete.Name}\" From Your Cart");
+                            }
+
+                            break;
                         }
-                        else
-                        {
-                            Console.WriteLine($"Removed {rCount} of the Product \"{productToDelete.Name}\" From Your Cart");
-                        }
-
-                        break;
-                    }
                     case "C":
-                    {
-                        if (Checkout(shoppingCart))
                         {
-                            shopping = false;
-                            Console.WriteLine("Thank You for Shopping at Amazon");
-                            Console.WriteLine("Returning Back to Main Menu...");
+                            if (Checkout(shoppingCart))
+                            {
+                                shopping = false;
+                                Console.WriteLine("Thank You for Shopping at Amazon");
+                                Console.WriteLine("Returning Back to Main Menu...");
+                            }
+                            break;
                         }
-                        break;
-                    }
                     case "L":
-                    {
-                        Console.WriteLine("Going Back to Main Menu...");
-                        shopping = false;
-                        break;
-                    }
+                        {
+                            Console.WriteLine("Going Back to Main Menu...");
+                            shopping = false;
+                            break;
+                        }
                     default: { Console.WriteLine("Invalid Choice... Please Try Again..."); break; }
                 }
             }
         }
+        static bool Checkout(ShoppingCartProxy shoppingCart)
+        {
+            if (shoppingCart.CartProducts?.Count != 0)
+            {
+                double? subTotal = 0;
+                double tax = 0.07;
+                Console.WriteLine("Order:");
+                for (int i = 0; i < shoppingCart.CartProducts?.Count; i++)
+                {
+                    Console.WriteLine(shoppingCart.CartProducts[i]);
+                    Product? product = shoppingCart.CartProducts[i];
+                    subTotal += product.Price * product.Count;
+                }
+                string strSubTotal = string.Format("{0:0.00}", subTotal);
+                subTotal = Convert.ToDouble(strSubTotal);
+                double? withTax = subTotal * tax;
+                string wTax = string.Format("{0:0.00}", withTax);
+                withTax = Convert.ToDouble(wTax);
+                double? total = subTotal + withTax;
+                string strTotal = string.Format("{0:0.00}", total);
+                total = Convert.ToDouble(strTotal);
+
+                Console.WriteLine($"Subtotal:\t{subTotal}");
+                Console.WriteLine($"Tax:\t\t{withTax}");
+                Console.WriteLine($"Total:\t\t{total}");
+
+                shoppingCart.ClearCart();
+
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Nothing to Checkout...\nPlease Add Items to Your Cart Before Checking Out...");
+                return false;
+            }
+        }
+    }
+}
+/*
+        
         static bool Checkout(List<Product> shoppingCart)
         {
             if (shoppingCart.Count != 0)
@@ -423,6 +466,4 @@ namespace MiniAmazon
                 Console.WriteLine("Nothing to Checkout...\nPlease Add Items to Your Cart Before Checking Out...");
                 return false;
             }
-        }
-    }
-}
+        */

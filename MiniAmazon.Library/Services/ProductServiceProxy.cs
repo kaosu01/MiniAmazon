@@ -13,10 +13,12 @@ namespace MiniAmazon.Library.Services
             get
             {
                 lock (instanceLock)
+                {
                     if (instance == null)
                     {
                         instance = new ProductServiceProxy();
                     }
+                }
                 return instance;
             }
         }
