@@ -1,31 +1,35 @@
 ﻿using MiniAmazon.Library.Models;
 using MiniAmazon.Library.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace MiniAmazon
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var productSvc = ProductServiceProxy.Current;
-            var shoppingCart = ShoppingCartProxy.Current;
+            var inventorySvc = InventoryService.Current;
+            var shoppingCartSvc = ShoppingCartService.Current;
 
-            productSvc.AddorUpdate(
+            // Create A Shopping Cart Used For Checkout
+            var checkout_Cart = shoppingCartSvc.AddOrUpdate( new ShoppingCart() );
+
+            inventorySvc.AddorUpdate(
             new Product
             {
                 Name = "Chair",
                 Description = "You sit on it",
-                Price = 19.99,
-                Count = 3
+                Price = 19.99m,
+                Quantity = 3
             });
 
-            productSvc.AddorUpdate(
+            inventorySvc.AddorUpdate(
             new Product
             {
                 Name = "Eraser",
                 Description = "You erase with it",
-                Price = 4.99,
-                Count = 7
+                Price = 4.99m,
+                Quantity = 7
             });
 
             // Variables for Simulation of Shopping
@@ -45,17 +49,17 @@ namespace MiniAmazon
                 {
                     case "I":
                         {
-                            Inventory(productSvc);
+                            Inventory(inventorySvc);
                             break;
                         }
                     case "S":
                         {
-                            Shopping(productSvc, shoppingCart);
+                            Shopping(inventorySvc, shoppingCartSvc, checkout_Cart);
                             break;
                         }
                     case "C":
                         {
-                            if (Checkout(shoppingCart))
+                            if (Checkout(checkout_Cart))
                                 Console.WriteLine("Thank You for Shopping at Amazon!");
                             break;
                         }
@@ -70,7 +74,7 @@ namespace MiniAmazon
             }
         }
 
-        static void Inventory(ProductServiceProxy productSvc)
+        static void Inventory(InventoryService inventorySvc)
         {
             bool inInventory = true;
             string? invinput = null;
@@ -89,14 +93,14 @@ namespace MiniAmazon
                     {
                         string? pName = null;
                         string? pDescription = null;
-                        double? pPrice = 0;
+                        decimal pPrice = 0;
                         int pCount = 0;
                         Console.Write("Enter the Name of the Product: ");
                         pName = Console.ReadLine();
                         Console.Write("Enter the Description: ");
                         pDescription = Console.ReadLine();
                         Console.Write("Enter the Price: ");
-                        pPrice = Convert.ToDouble(Console.ReadLine());
+                        pPrice = Convert.ToDecimal(Console.ReadLine());
                         Console.Write("Enter the Amount In Stock: ");
                         pCount = Convert.ToInt32(Console.ReadLine());
 
@@ -105,10 +109,10 @@ namespace MiniAmazon
                             Name = pName,
                             Description = pDescription,
                             Price = pPrice,
-                            Count = pCount
+                            Quantity = pCount
                         };
 
-                        product = productSvc?.AddorUpdate(product);
+                        product = inventorySvc?.AddorUpdate(product);
 
                         Console.WriteLine($"{product?.Name} has Been Added to the Inventory");
 
@@ -117,7 +121,7 @@ namespace MiniAmazon
                     case "S":
                     {
                         Console.WriteLine("\nInventory:");
-                        productSvc?.Products?.ToList().ForEach(Console.WriteLine);
+                        inventorySvc?.Products?.ToList().ForEach(Console.WriteLine);
                         break;
                     }
                     case "U":
@@ -132,18 +136,18 @@ namespace MiniAmazon
                         // Get Input for Updating Product
                         string? uName = null;
                         string? uDescription = null;
-                        double? uPrice = 0;
+                        decimal uPrice = 0;
                         int uCount = 0;
 
                         // Print Inventory Again to Show IDs
-                        productSvc?.Products?.ToList().ForEach(Console.WriteLine);
+                        inventorySvc?.Products?.ToList().ForEach(Console.WriteLine);
 
                         // Get ID of the Product
                         do
                         {
                             Console.Write("Select Product by ID -> ");
                             idInput = Convert.ToInt32(Console.ReadLine());
-                            product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
+                            product = inventorySvc?.Products?.FirstOrDefault(c => c.Id == idInput);
 
                             if (product == null)
                                 Console.WriteLine("Invalid ID Selection... Please Try Again...");
@@ -155,7 +159,7 @@ namespace MiniAmazon
                         Console.Write("Enter Updated Description -> ");
                         uDescription = Console.ReadLine();
                         Console.Write("Enter Updated Price -> ");
-                        uPrice = Convert.ToDouble(Console.ReadLine());
+                        uPrice = Convert.ToDecimal(Console.ReadLine());
                         Console.Write("Enter Updated Quantity -> ");
                         uCount = Convert.ToInt32((Console.ReadLine()));
 
@@ -163,9 +167,9 @@ namespace MiniAmazon
                         product.Name = uName;
                         product.Description = uDescription;
                         product.Price = uPrice;
-                        product.Count = uCount;
+                        product.Quantity = uCount;
 
-                        product = productSvc?.AddorUpdate(product);
+                        product = inventorySvc?.AddorUpdate(product);
 
                         Console.WriteLine("Product Has Been Updated");
 
@@ -179,14 +183,14 @@ namespace MiniAmazon
                         Product? product = null;
 
                         // Print Inventory Again to Show IDs
-                        productSvc?.Products?.ToList().ForEach(Console.WriteLine);
+                        inventorySvc?.Products?.ToList().ForEach(Console.WriteLine);
 
                         // Get ID of the Product
                         do
                         {
                             Console.Write("Select Product by ID -> ");
                             idInput = Convert.ToInt32(Console.ReadLine());
-                            product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
+                            product = inventorySvc?.Products?.FirstOrDefault(c => c.Id == idInput);
 
                             if (product == null)
                                 Console.WriteLine("Invalid ID Selection... Please Try Again...");
@@ -199,7 +203,7 @@ namespace MiniAmazon
                         {
                             case "Y":
                             {
-                                productSvc?.Delete(idInput);
+                                inventorySvc?.Delete(idInput);
                                 Console.WriteLine($"{product.Name} Has Been Removed From the Inventory");
                                 break;
                             }
@@ -229,14 +233,14 @@ namespace MiniAmazon
             }
             return;
         }
-        static void Shopping(ProductServiceProxy productSvc, ShoppingCartProxy shoppingCart)
+        static void Shopping(InventoryService inventorySvc, ShoppingCartService shoppingCartSvc, ShoppingCart checkout_Cart)
         {
             bool shopping = true;   // Continue Shopping Until Checkout
             string? shopInput = null;
 
             // Print Items on Sale
             Console.WriteLine("Inventory:");
-            productSvc?.Products?.ToList().ForEach(Console.WriteLine);
+            inventorySvc?.Products?.ToList().ForEach(Console.WriteLine);
 
             // Simulate Shopping
             while (shopping)
@@ -251,129 +255,114 @@ namespace MiniAmazon
                 switch (shopInput?.ToUpper())
                 {
                     case "A":
+                    {
+                        // Variables Used to Add a Product to the User's Cart
+                        int idInput = 0;
+                        int pCount = 0;
+                        Product? product = null;
+                        Product? productToAdd = null;
+
+                        // Get Product Using ID
+                        do
                         {
-                            // Variables Used to Add a Product to the User's Cart
-                            int idInput = 0;
-                            int pCount = 0;
-                            Product? product = null;
-                            Product? productToAdd = null;
+                            inventorySvc?.Products?.ToList().ForEach(Console.WriteLine);
+                            Console.Write("Enter the ProductID of the Product You Want to Add -> ");
+                            idInput = Convert.ToInt32(Console.ReadLine());
+                            product = inventorySvc?.Products?.FirstOrDefault(c => c.Id == idInput);
 
-                            // Get Product Using ID
-                            do
-                            {
-                                productSvc?.Products?.ToList().ForEach(Console.WriteLine);
-                                Console.Write("Enter the ProductID of the Product You Want to Add -> ");
-                                idInput = Convert.ToInt32(Console.ReadLine());
-                                product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
+                            if (product == null)
+                                Console.WriteLine("Invalid ID Selection... Please Try Again...");
+                        } while (product == null);
 
-                                if (product == null)
-                                    Console.WriteLine("Invalid ID Selection... Please Try Again...");
-                            } while (product == null);
+                        do
+                        {
+                            Console.Write($"How Many of the Product \"{product.Name}\" Do You Want to Add? ");
+                            pCount = Convert.ToInt32(Console.ReadLine());
 
-                            do
-                            {
-                                Console.Write($"How Many of the Product \"{product.Name}\" Do You Want to Add? ");
-                                pCount = Convert.ToInt32(Console.ReadLine());
+                            if (pCount > product.Quantity)
+                                Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
+                        } while (pCount > product.Quantity);
+                           
+                        productToAdd = new Product
+                        {
+                            Id = product.Id,
+                            Name = product.Name,
+                            Description = product.Description,
+                            Price = product.Price,
+                            Quantity = pCount
+                        };
+                        shoppingCartSvc?.AddToCart(productToAdd, checkout_Cart.Id);
+                        Console.WriteLine($"{productToAdd.Name} Has Been Added to Your Cart");
 
-                                if (pCount > product.Count)
-                                    Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
-                            } while (pCount > product.Count);
-
-                            // Search If the Item User Wants to Add to Their Cart is Already in the Cart
-                            // We'll Just Add the Count of the Item Rather than Make a New Product Object
-                            var searchProduct = shoppingCart?.CartProducts?.FirstOrDefault(c => c.Id == idInput);
-
-                            // If Product is Already in the Cart
-                            if (searchProduct != null)
-                            {
-                                searchProduct.Count += pCount;
-                            }
-                            // Make A Product Object to Add That to Shopping Cart
-                            else
-                            {
-                                productToAdd = new Product
-                                {
-                                    Id = product.Id,
-                                    Name = product.Name,
-                                    Description = product.Description,
-                                    Price = product.Price,
-                                    Count = pCount
-                                };
-                                shoppingCart?.AddorUpdate(productToAdd);
-                            }
-
-                            // Update Product in Inventory
-                            product.Count -= pCount;
-                            product = productSvc?.AddorUpdate(product);
-
-                            Console.WriteLine($"{productToAdd?.Name} Has Been Added to Your Cart");
-
-                            break;
-                        }
+                        break;
+                    }
                     case "D":
+                    {
+                        if (checkout_Cart.Items?.Count == 0)
                         {
-                            if (shoppingCart?.CartProducts?.Count == 0)
-                            {
-                                Console.WriteLine("Shopping Cart is Currently Empty");
-                            }
-                            else
-                            {
-                                Console.WriteLine("My Cart:");
-                                shoppingCart?.CartProducts?.ToList().ForEach(Console.WriteLine);
-                            }
-                            break;
+                            Console.WriteLine("Shopping Cart is Currently Empty");
                         }
+                        else
+                        {
+                            Console.WriteLine("My Cart:");
+                            checkout_Cart.Items?.ToList().ForEach(Console.WriteLine);
+                        }
+                        break;
+                    }
                     case "R":
+                    {
+                        int idInput = 0;
+                        int rCount = 0;
+                        int amountDeleted = 0;
+                        Product? productToDelete = null;
+
+                        // Get Product Using ID
+                        do
                         {
-                            int idInput = 0;
-                            int rCount = 0;
-                            Product? productToDelete = null;
-                            Product? product = null;
+                            checkout_Cart.Items?.ToList().ForEach(Console.WriteLine);
+                            Console.Write("Enter the ProductID of the Product You Want to Remove -> ");
+                            idInput = Convert.ToInt32(Console.ReadLine());
+                            productToDelete = checkout_Cart.Items?.FirstOrDefault(c => c.Id == idInput);
 
-                            // Get Product Using ID
-                            do
-                            {
-                                shoppingCart?.CartProducts?.ToList().ForEach(Console.WriteLine);
-                                Console.Write("Enter the ProductID of the Product You Want to Remove -> ");
-                                idInput = Convert.ToInt32(Console.ReadLine());
-                                productToDelete = shoppingCart?.CartProducts?.FirstOrDefault(c => c.Id == idInput);
+                            if (productToDelete == null)
+                                Console.WriteLine("Invalid ID Selection... Please Try Again...");
+                        } while (productToDelete == null);
 
-                                if (productToDelete == null)
-                                    Console.WriteLine("Invalid ID Selection... Please Try Again...");
-                            } while (productToDelete == null);
+                        // Get Quantity User Wants to Remove From Their Cart
+                        do
+                        {
+                            Console.Write($"How Many of the Product \"{productToDelete.Name}\" Do You Want to Remove? ");
+                            rCount = Convert.ToInt32(Console.ReadLine());
 
-                            do
-                            {
-                                Console.Write($"How Many of the Product \"{productToDelete.Name}\" Do You Want to Remove? ");
-                                rCount = Convert.ToInt32(Console.ReadLine());
+                            if (rCount > productToDelete.Quantity)
+                                Console.WriteLine("You Have Selected A Quantity Greater Than What's In Your Cart... Please Try Again...");
+                        } while (rCount > productToDelete.Quantity);
 
-                                if (rCount > productToDelete.Count)
-                                    Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
-                            } while (rCount > productToDelete.Count);
+                        amountDeleted = productToDelete.Quantity - rCount;
 
-                            // Get the Product from Inventory, Add Back the Amount the User Removed From Their Cart
-                            product = productSvc?.Products?.FirstOrDefault(c => c.Id == idInput);
-                            if (product != null)
-                            {
-                                product.Count += rCount;
-                                productToDelete.Count -= rCount;
-                                product = productSvc?.AddorUpdate(product);
-                            }
-                            if (productToDelete.Count == 0)
-                            {
-                                shoppingCart?.Delete(productToDelete.Id);
-                                Console.WriteLine($"Removed \"{productToDelete.Name}\" From Your Cart");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Removed {rCount} of the Product \"{productToDelete.Name}\" From Your Cart");
-                            }
+                        // Change the Quantity to How Much the User Wants to Remove From Their Cart, Then Remove
+                        productToDelete = new Product()
+                        {
+                            Id = productToDelete.Id,
+                            Name = productToDelete.Name,
+                            Description = productToDelete.Description,
+                            Price = productToDelete.Price,
+                            Quantity = rCount
+                        };
 
-                            break;
-                        }
+                        shoppingCartSvc?.RemoveFromCart(productToDelete, checkout_Cart.Id);
+
+                        // Print Out Confirmation Message
+                        if (amountDeleted == 0)
+                            Console.WriteLine($"Removed \"{productToDelete.Name}\" From Your Cart");
+                        else
+                            Console.WriteLine($"Removed {rCount} of the Product \"{productToDelete.Name}\" From Your Cart");
+
+                        break;
+                    }
                     case "C":
                         {
-                            if (Checkout(shoppingCart))
+                            if (Checkout(checkout_Cart))
                             {
                                 shopping = false;
                                 Console.WriteLine("Thank You for Shopping at Amazon");
@@ -391,33 +380,30 @@ namespace MiniAmazon
                 }
             }
         }
-        static bool Checkout(ShoppingCartProxy shoppingCart)
+        static bool Checkout(ShoppingCart checkout_Cart)
         {
-            if (shoppingCart.CartProducts?.Count != 0)
+            if (checkout_Cart.Items?.Count != 0)
             {
-                double? subTotal = 0;
-                double tax = 0.07;
+                decimal subTotal = 0;
+                decimal tax = 0.07m;
+                decimal total;
                 Console.WriteLine("Order:");
-                for (int i = 0; i < shoppingCart.CartProducts?.Count; i++)
+                if (checkout_Cart.Items != null)
                 {
-                    Console.WriteLine(shoppingCart.CartProducts[i]);
-                    Product? product = shoppingCart.CartProducts[i];
-                    subTotal += product.Price * product.Count;
+                    for (int i = 0; i < checkout_Cart.Items?.Count; i++)
+                    {
+                        Console.WriteLine(checkout_Cart.Items[i]);
+                        Product product = checkout_Cart.Items[i];
+                        subTotal += product.Price * product.Quantity;
+                    }
                 }
-                string strSubTotal = string.Format("{0:0.00}", subTotal);
-                subTotal = Convert.ToDouble(strSubTotal);
-                double? withTax = subTotal * tax;
-                string wTax = string.Format("{0:0.00}", withTax);
-                withTax = Convert.ToDouble(wTax);
-                double? total = subTotal + withTax;
-                string strTotal = string.Format("{0:0.00}", total);
-                total = Convert.ToDouble(strTotal);
+                total = subTotal + (subTotal * tax);
 
-                Console.WriteLine($"Subtotal:\t{subTotal}");
-                Console.WriteLine($"Tax:\t\t{withTax}");
-                Console.WriteLine($"Total:\t\t{total}");
+                Console.WriteLine($"Subtotal:\t${subTotal.ToString("0.00")}");
+                Console.WriteLine($"Tax:\t\t${(subTotal * tax).ToString("0.00")}");
+                Console.WriteLine($"Total:\t\t${total.ToString("0.00")}");
 
-                shoppingCart.ClearCart();
+                checkout_Cart.Items?.Clear();
 
                 return true;
             }
@@ -429,41 +415,3 @@ namespace MiniAmazon
         }
     }
 }
-/*
-        
-        static bool Checkout(List<Product> shoppingCart)
-        {
-            if (shoppingCart.Count != 0)
-            {
-                double? subTotal = 0;
-                double tax = 0.07;
-                Console.WriteLine("Order:");
-                for (int i = 0; i < shoppingCart.Count; i++)
-                {
-                    Console.WriteLine(shoppingCart[i]);
-                    Product? product = shoppingCart[i];
-                    subTotal += product.Price * product.Count;
-                }
-                string strSubTotal = string.Format("{0:0.00}", subTotal);
-                subTotal = Convert.ToDouble(strSubTotal);
-                double? withTax = subTotal * tax;
-                string wTax = string.Format("{0:0.00}", withTax);
-                withTax = Convert.ToDouble(wTax);
-                double? total = subTotal + withTax;
-                string strTotal = string.Format("{0:0.00}", total);
-                total = Convert.ToDouble(strTotal);
-
-                Console.WriteLine($"Subtotal:\t{subTotal}");
-                Console.WriteLine($"Tax:\t\t{withTax}");
-                Console.WriteLine($"Total:\t\t{total}");
-
-                shoppingCart.Clear();
-
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Nothing to Checkout...\nPlease Add Items to Your Cart Before Checking Out...");
-                return false;
-            }
-        */

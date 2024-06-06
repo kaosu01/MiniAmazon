@@ -3,12 +3,13 @@ using System.Collections.ObjectModel;
 
 namespace MiniAmazon.Library.Services
 {
-    public class ProductServiceProxy
+    public class InventoryService
     {
-        private ProductServiceProxy() { products = new List<Product>(); }
-        private static ProductServiceProxy? instance;
+        private List<Product> products;
+        private InventoryService() { products = new List<Product>(); }
+        private static InventoryService? instance;
         private static object instanceLock = new object();
-        public static ProductServiceProxy Current
+        public static InventoryService Current
         {
             get
             {
@@ -16,27 +17,25 @@ namespace MiniAmazon.Library.Services
                 {
                     if (instance == null)
                     {
-                        instance = new ProductServiceProxy();
+                        instance = new InventoryService();
                     }
                 }
                 return instance;
             }
         }
-        private List<Product>? products;
+        
         public ReadOnlyCollection<Product>? Products
         {
-            get { return products?.AsReadOnly(); }
+            get { return products.AsReadOnly(); }
         }
 
-        public int LastId
+        private int LastId
         {
             get
             {
-                if (products?.Any() ?? false)
-                {
-                    return products?.Select(c => c.Id)?.Max() ?? 0;
-                }
-                return 0;
+                if (!products.Any())
+                    return 1;
+                return products.Select(p => p.Id).Max() + 1;
             }
         }
         public Product? AddorUpdate(Product product)
@@ -49,13 +48,13 @@ namespace MiniAmazon.Library.Services
             // If This is the First Time this Item is Being Added Into the Inventory
             if (product.Id == 0)
             {
-                product.Id = LastId + 1;
+                product.Id = LastId;
                 isAdd = true;
             }
 
             // We Need to Add the Product
             if (isAdd)
-                products?.Add(product);
+                products.Add(product);
 
             return product;
         }
