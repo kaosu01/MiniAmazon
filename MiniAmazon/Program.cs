@@ -48,27 +48,27 @@ namespace MiniAmazon
                 switch (menuinput?.ToUpper())
                 {
                     case "I":
-                        {
-                            Inventory(inventorySvc);
-                            break;
-                        }
+                    {
+                        Inventory(inventorySvc);
+                        break;
+                    }
                     case "S":
-                        {
-                            Shopping(inventorySvc, shoppingCartSvc, checkout_Cart);
-                            break;
-                        }
+                    {
+                        Shopping(inventorySvc, shoppingCartSvc, checkout_Cart);
+                        break;
+                    }
                     case "C":
-                        {
-                            if (Checkout(checkout_Cart))
-                                Console.WriteLine("Thank You for Shopping at Amazon!");
-                            break;
-                        }
-                    case "E":
-                        {
+                    {
+                        if (Checkout(checkout_Cart))
                             Console.WriteLine("Thank You for Shopping at Amazon!");
-                            shopping = false;
-                            break;
-                        }
+                        break;
+                    }
+                    case "E":
+                    {
+                        Console.WriteLine("Thank You for Shopping at Amazon!");
+                        shopping = false;
+                        break;
+                    }
                     default: { Console.WriteLine("Invalid Choice... Please Try Again..."); break; }
                 }
             }
@@ -361,21 +361,21 @@ namespace MiniAmazon
                         break;
                     }
                     case "C":
+                    {
+                        if (Checkout(checkout_Cart))
                         {
-                            if (Checkout(checkout_Cart))
-                            {
-                                shopping = false;
-                                Console.WriteLine("Thank You for Shopping at Amazon");
-                                Console.WriteLine("Returning Back to Main Menu...");
-                            }
-                            break;
-                        }
-                    case "L":
-                        {
-                            Console.WriteLine("Going Back to Main Menu...");
                             shopping = false;
-                            break;
+                            Console.WriteLine("Thank You for Shopping at Amazon");
+                            Console.WriteLine("Returning Back to Main Menu...");
                         }
+                        break;
+                    }
+                    case "L":
+                    {
+                        Console.WriteLine("Going Back to Main Menu...");
+                        shopping = false;
+                        break;
+                    }
                     default: { Console.WriteLine("Invalid Choice... Please Try Again..."); break; }
                 }
             }
