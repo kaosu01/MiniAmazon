@@ -1,5 +1,4 @@
 ﻿using MiniAmazon.Library.Models;
-using MiniAmazon.Library.Services;
 using System.Collections.ObjectModel;
 
 namespace MiniAmazon.Library.Services 
@@ -40,6 +39,8 @@ namespace MiniAmazon.Library.Services
         public ShoppingCart AddOrUpdate(ShoppingCart sc)
         {
             bool isAdd = false;
+
+            // Check If A New Shopping Cart is Being Created
             if (sc.Id == 0)
             {
                 isAdd = true;
@@ -56,6 +57,7 @@ namespace MiniAmazon.Library.Services
             if (carts == null)
                 return;
 
+            // Find the Cart the User Wants to Delete
             var cartToDelete = carts.FirstOrDefault(c => c.Id == id);
 
             if(cartToDelete != null)

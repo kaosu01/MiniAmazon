@@ -2,7 +2,7 @@
 using MiniAmazon.Library.Services;
 using System.ComponentModel.DataAnnotations;
 
-namespace MiniAmazon
+namespace MiniAmazon.CLI
 {
     internal class Program
     {
@@ -12,25 +12,7 @@ namespace MiniAmazon
             var shoppingCartSvc = ShoppingCartService.Current;
 
             // Create A Shopping Cart Used For Checkout
-            var checkout_Cart = shoppingCartSvc.AddOrUpdate( new ShoppingCart() );
-
-            inventorySvc.AddorUpdate(
-            new Product
-            {
-                Name = "Chair",
-                Description = "You sit on it",
-                Price = 19.99m,
-                Quantity = 3
-            });
-
-            inventorySvc.AddorUpdate(
-            new Product
-            {
-                Name = "Eraser",
-                Description = "You erase with it",
-                Price = 4.99m,
-                Quantity = 7
-            });
+            var checkout_Cart = shoppingCartSvc.AddOrUpdate(new ShoppingCart());
 
             // Variables for Simulation of Shopping
             string? menuinput = null;
@@ -83,13 +65,13 @@ namespace MiniAmazon
             {
                 Console.WriteLine("\nSelect An Option:");
                 Console.WriteLine("(A) Add A Product\n(S) Display All Products");
-                Console.WriteLine("(U) Update a Product\n(D) Delete a Product\n(L) Go Back to Main Menu");
+                Console.WriteLine("(U) Update A Product\n(D) Delete A Product\n(L) Go Back To Main Menu");
                 Console.Write("Insert Selection Here -> ");
                 try { invinput = Console.ReadLine(); }
                 catch (Exception) { }
                 switch (invinput?.ToUpper())
                 {
-                    case "A":
+                    case "A":   // Add
                     {
                         string? pName = null;
                         string? pDescription = null;
@@ -118,17 +100,14 @@ namespace MiniAmazon
 
                         break;
                     }
-                    case "S":
+                    case "S":   // Display
                     {
                         Console.WriteLine("\nInventory:");
                         inventorySvc?.Products?.ToList().ForEach(Console.WriteLine);
                         break;
                     }
-                    case "U":
+                    case "U":   // Update
                     {
-                        // Get the Item the User Wants to Update From List of Products
-                        // Do the Same Thing As In Add
-
                         // Get Input for Searching Product to Update
                         int idInput = 0;
                         Product? product = null;
@@ -175,7 +154,7 @@ namespace MiniAmazon
 
                         break;
                     }
-                    case "D":
+                    case "D":   // Remove
                     {
                         // Get ID and Delete Product
                         int idInput = 0;
@@ -203,7 +182,7 @@ namespace MiniAmazon
                         {
                             case "Y":
                             {
-                                inventorySvc?.Delete(idInput);
+                                inventorySvc?.Remove(idInput);
                                 Console.WriteLine($"{product.Name} Has Been Removed From the Inventory");
                                 break;
                             }
@@ -222,7 +201,7 @@ namespace MiniAmazon
                         }
                         break;
                     }
-                    case "L":
+                    case "L":   // Go Back to Main Menu
                     {
                         Console.WriteLine("Returning to Main Menu...");
                         inInventory = false;
@@ -246,15 +225,15 @@ namespace MiniAmazon
             while (shopping)
             {
                 // Get Input
-                Console.WriteLine("\nSelect An Option:");
-                Console.WriteLine("(A) Add A Product to My Cart\n(D) Display All Items in My Cart");
-                Console.WriteLine("(R) Remove a Product From My Cart\n(C) Checkout\n(L) Go Back to Main Menu");
+                Console.WriteLine("Select An Option:");
+                Console.WriteLine("(A) Add A Product to My Cart\n(D) Display All Items In My Cart");
+                Console.WriteLine("(R) Remove A Product From My Cart\n(C) Checkout\n(L) Go Back To Main Menu");
                 Console.Write("Insert Selection Here -> ");
                 try { shopInput = Console.ReadLine(); }
                 catch (Exception) { }
                 switch (shopInput?.ToUpper())
                 {
-                    case "A":
+                    case "A":   // Add
                     {
                         // Variables Used to Add a Product to the User's Cart
                         int idInput = 0;
@@ -296,7 +275,7 @@ namespace MiniAmazon
 
                         break;
                     }
-                    case "D":
+                    case "D":   // Display
                     {
                         if (checkout_Cart.Items?.Count == 0)
                         {
@@ -309,7 +288,7 @@ namespace MiniAmazon
                         }
                         break;
                     }
-                    case "R":
+                    case "R":   // Remove
                     {
                         int idInput = 0;
                         int rCount = 0;
@@ -360,7 +339,7 @@ namespace MiniAmazon
 
                         break;
                     }
-                    case "C":
+                    case "C":   // Checkout
                     {
                         if (Checkout(checkout_Cart))
                         {
