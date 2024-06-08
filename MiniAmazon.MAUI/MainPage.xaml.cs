@@ -9,6 +9,16 @@ namespace MiniAmazon.MAUI
             InitializeComponent();
             BindingContext = new MainPageViewModel();
         }
+
+        private void GoToInventory(object sender, EventArgs e)
+        {
+            Shell.Current.GoToAsync("//InventoryManagement");
+        }
+
+        private void GoToShop(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

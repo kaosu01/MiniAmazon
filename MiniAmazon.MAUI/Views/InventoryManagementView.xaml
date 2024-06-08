@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MiniAmazon.MAUI.Views.InventoryManagementView"
+             Title="InventoryManagementView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                    Text="Amazon"
+                    Clicked="Clicked_Back"
+                    FontAttributes="Bold"
+                    FontSize="32"
+                    BackgroundColor="White"
+                    TextColor="Black"
+                    BorderColor="Blue"
+                    BorderWidth="3"
+                    />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1.75*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="1.75*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="ID" FontAttributes="Bold" TextDecorations="Underline"/>
+            <Label Grid.Column="1" Text="Name" FontAttributes="Bold" TextDecorations="Underline"/>
+            <Label Grid.Column="2" Text="Description" FontAttributes="Bold" TextDecorations="Underline"/>
+            <Label Grid.Column="3" Text="Price" FontAttributes="Bold" TextDecorations="Underline"/>
+            <Label Grid.Column="4" Text="Quantity" FontAttributes="Bold" TextDecorations="Underline"/>
+        </Grid>
+        <ListView Grid.Row="2" ItemsSource="{Binding Products}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="1.75*"/>
+                                <ColumnDefinition Width="0.25*"/>
+                                <ColumnDefinition Width="1.75*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Id}"/>
+                            <Label Grid.Column="1" Text="{Binding Name}"/>
+                            <Label Grid.Column="2" Text="{Binding Description}"/>
+                            <Label Grid.Column="3" Text="{Binding Price}"/>
+                            <Label Grid.Column="4" Text="{Binding Quantity}"/>
+                            <Button Grid.Column="6" Text="Edit"/>
+                            <Button Grid.Column="8" Text="Remove"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

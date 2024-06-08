@@ -29,10 +29,12 @@
                 <Button Grid.Column="1"
                     Text="Go to Inventory"
                     FontAttributes="Bold"
+                    Clicked="GoToInventory"
                     />
                 <Button Grid.Column="3"
                     Text="Go Shopping"
                     FontAttributes="Bold"
+                    Clicked="GoToShop"
                     />
             </Grid>
         </Grid>

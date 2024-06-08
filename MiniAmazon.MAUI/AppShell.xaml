@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MiniAmazon.MAUI"
+    xmlns:views="clr-namespace:MiniAmazon.MAUI.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="MiniAmazon.MAUI">
 
@@ -11,5 +12,10 @@
         Title="Home Page"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
+    <ShellContent
+        Title="Inventory Management"
+        ContentTemplate="{DataTemplate views:InventoryManagementView}"
+        Route="InventoryManagement" />
 
 </Shell>

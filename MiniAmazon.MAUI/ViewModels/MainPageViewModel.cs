@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MiniAmazon.MAUI.ViewModels
+﻿namespace MiniAmazon.MAUI.ViewModels
 {
-    internal class MainPageViewModel
+    public class MainPageViewModel
     {
 
     }
