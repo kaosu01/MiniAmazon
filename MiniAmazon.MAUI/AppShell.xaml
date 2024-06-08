@@ -8,7 +8,7 @@
     Title="MiniAmazon.MAUI">
 
     <ShellContent
-        Title="Home"
+        Title="Home Page"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
