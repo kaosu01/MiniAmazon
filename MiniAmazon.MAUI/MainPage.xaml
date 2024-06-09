@@ -12,12 +12,12 @@
                 <RowDefinition Height="3.5*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="1"
-                Text="Welcome to Amazon!"
-                FontAttributes="Bold"
-                FontSize="30"
-                SemanticProperties.HeadingLevel="Level1"
-                HorizontalOptions="Center"
-                />
+                    Text="Welcome to Amazon!"
+                    FontAttributes="Bold"
+                    FontSize="30"
+                    SemanticProperties.HeadingLevel="Level1"
+                    HorizontalOptions="Center"
+                    />
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -27,15 +27,15 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="1"
-                    Text="Go to Inventory"
-                    FontAttributes="Bold"
-                    Clicked="GoToInventory"
-                    />
+                        Text="Go to Inventory"
+                        FontAttributes="Bold"
+                        Clicked="GoToInventory"
+                        />
                 <Button Grid.Column="3"
-                    Text="Go Shopping"
-                    FontAttributes="Bold"
-                    Clicked="GoToShop"
-                    />
+                        Text="Go Shopping"
+                        FontAttributes="Bold"
+                        Clicked="GoToShop"
+                        />
             </Grid>
         </Grid>
     </ScrollView>

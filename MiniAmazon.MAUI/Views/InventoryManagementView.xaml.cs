@@ -10,8 +10,13 @@ public partial class InventoryManagementView : ContentPage
 		BindingContext = new InventoryManagementViewModel();
 	}
 
-	private void Clicked_Back(object sender, EventArgs e)
+	private void Logo_Clicked(object sender, EventArgs e)
 	{
 		Shell.Current.GoToAsync("//MainPage");
+	}
+
+	private void Add_Clicked(object sender, EventArgs e)
+	{
+
 	}
 }

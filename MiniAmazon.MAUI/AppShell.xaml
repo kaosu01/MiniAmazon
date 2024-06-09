@@ -18,4 +18,9 @@
         ContentTemplate="{DataTemplate views:InventoryManagementView}"
         Route="InventoryManagement" />
 
+    <ShellContent
+    Title="Product Management"
+    ContentTemplate="{DataTemplate views:ProductView}"
+    Route="Product" />
+
 </Shell>
