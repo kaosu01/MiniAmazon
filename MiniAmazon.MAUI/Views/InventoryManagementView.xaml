@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MiniAmazon.MAUI.Views.InventoryManagementView"
-             Title="InventoryManagementView">
+             Title="InventoryManagementView"
+             NavigatedTo="ContentPage_NavigatedTo"
+             NavigatedFrom="ContentPage_NavigatedFrom">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -87,7 +89,10 @@
                    TextDecorations="Underline"
                    />
         </Grid>
-        <ListView Grid.Row="3" ItemsSource="{Binding Products}">
+        <ListView Grid.Row="3"
+                  ItemsSource="{Binding Products}"
+                  SelectedItem="{Binding SelectedProduct}"
+                  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

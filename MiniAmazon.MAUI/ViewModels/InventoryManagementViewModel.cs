@@ -1,11 +1,18 @@
 ﻿using MiniAmazon.Library.Services;
-using System.Net.Http.Headers;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MiniAmazon.MAUI.ViewModels
 {
     
-    public class InventoryManagementViewModel
+    public class InventoryManagementViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public List<ProductViewModel> Products
         {
             get
@@ -14,6 +21,14 @@ namespace MiniAmazon.MAUI.ViewModels
                     ?? new List<ProductViewModel>();
             }
         }
+
+        public ProductViewModel SelectedProduct { get; set; }
+
         public InventoryManagementViewModel() { }
+
+        public void RefreshProducts()
+        {
+            NotifyPropertyChanged("Products");
+        }
     }
 }

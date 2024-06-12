@@ -17,6 +17,16 @@ public partial class InventoryManagementView : ContentPage
 
 	private void Add_Clicked(object sender, EventArgs e)
 	{
-
+		Shell.Current.GoToAsync("//Product");
 	}
+
+    private void ContentPage_NavigatedTo(object sender, NavigationEventArgs e)
+    {
+        (BindingContext as InventoryManagementViewModel)?.RefreshProducts();
+    }
+
+    private void ContentPage_NavigatedFrom(object sender, NavigationEventArgs e)
+    {
+        
+    }
 }
