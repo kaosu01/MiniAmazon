@@ -1,12 +1,31 @@
 ﻿using MiniAmazon.Library.Models;
 using MiniAmazon.Library.Services;
-using System.Windows.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MiniAmazon.MAUI.ViewModels
 {
     public class ProductViewModel
     {
         public Product? Product { get; set; }
+
+        public int Id
+        {
+            get
+            {
+                return Product?.Id ?? 0;
+            }
+            set
+            {
+                if (Product != null)
+                {
+                    Product.Id = value;
+                }
+            }
+        }
 
         public string? Name
         {
@@ -20,6 +39,7 @@ namespace MiniAmazon.MAUI.ViewModels
                     Product.Name = value;
             }
         }
+
         public string? Description
         {
             get
@@ -32,7 +52,8 @@ namespace MiniAmazon.MAUI.ViewModels
                     Product.Description = value;
             }
         }
-        public string Price
+
+        public string? Price
         {
             get
             {
@@ -48,7 +69,8 @@ namespace MiniAmazon.MAUI.ViewModels
                     Product.Price = price;
             }
         }
-        public string Quantity
+
+        public string? Quantity
         {
             get
             {
@@ -60,20 +82,8 @@ namespace MiniAmazon.MAUI.ViewModels
             {
                 if (Product == null)
                     return;
-                if(int.TryParse(value, out var quantity))
+                if (int.TryParse(value, out var quantity))
                     Product.Quantity = quantity;
-            }
-        }
-        public int Id
-        {
-            get
-            {
-                return Product?.Id ?? 0;
-            }
-            set
-            {
-                if (Product != null)
-                    Product.Id = value;
             }
         }
 
@@ -82,7 +92,7 @@ namespace MiniAmazon.MAUI.ViewModels
             Product = new Product();
         }
 
-        public ProductViewModel(Product p)
+        public ProductViewModel(Product? p)
         {
             if (p != null)
                 Product = p;
@@ -92,7 +102,8 @@ namespace MiniAmazon.MAUI.ViewModels
 
         public void Add()
         {
-            InventoryService.Current.AddorUpdate(Product);
-        } 
+            if (Product != null)
+                InventoryService.Current.AddorUpdate(Product);
+        }
     }
 }

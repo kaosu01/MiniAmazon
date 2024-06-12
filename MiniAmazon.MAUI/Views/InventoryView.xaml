@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MiniAmazon.MAUI.Views.InventoryManagementView"
-             Title="InventoryManagementView"
+             x:Class="MiniAmazon.MAUI.Views.InventoryView"
+             Title="InventoryView"
              NavigatedTo="ContentPage_NavigatedTo">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="7.5*"/>
             </Grid.ColumnDefinitions>
-                <Button Grid.Column="0"
+            <Button Grid.Column="0"
                         Text="Amazon"
                         Clicked="Logo_Clicked"
                         FontAttributes="Bold"
@@ -132,8 +132,6 @@
                                     VerticalOptions="Center"
                                     FontAttributes="Bold"
                                     BackgroundColor="Gray"
-                                    Command="{Binding Path=EditCommand}"
-                                    CommandParameter="{Binding}"
                                     Text="Edit"
                                     />
                             <Button Grid.Column="8"

@@ -3,127 +3,129 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MiniAmazon.MAUI.Views.ProductView"
              Title="ProductView">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="0.25*"/>
-            <RowDefinition/>
-            <RowDefinition Height="0.25*"/>
-            <RowDefinition/>
-            <RowDefinition Height="0.25*"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="6*"/>
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0"
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0"
                Text="Enter Product Details"
                FontAttributes="Bold"
                FontSize="32"
                HorizontalTextAlignment="Center"
                VerticalTextAlignment="Center"
                />
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0.75*"/>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="2"
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.75*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="2"
                    Text="Name:"
                    FontSize="Medium"
                    FontAttributes="Bold"
                    VerticalTextAlignment="Center"
                    />
-            <Entry Grid.Column="3"
+                <Entry Grid.Column="3"
                    Text="{Binding Name}"
                    />
-        </Grid>
-        <Grid Grid.Row="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0.75*"/>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="2"
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.75*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="2"
            Text="Description:"
            FontSize="Medium"
            FontAttributes="Bold"
            VerticalTextAlignment="Center"
            />
-            <Entry Grid.Column="3"
+                <Entry Grid.Column="3"
                    Text="{Binding Description}"
            />
-        </Grid>
-        <Grid Grid.Row="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0.75*"/>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="2"
+            </Grid>
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.75*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="2"
            Text="Price:"
            FontSize="Medium"
            FontAttributes="Bold"
            VerticalTextAlignment="Center"
            />
-            <Entry Grid.Column="3"
+                <Entry Grid.Column="3"
                    Text="{Binding Price}"
            />
-        </Grid>
-        <Grid Grid.Row="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0.75*"/>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="2"
+            </Grid>
+            <Grid Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.75*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="2"
            Text="Quantity:"
            FontSize="Medium"
            FontAttributes="Bold"
            VerticalTextAlignment="Center"
            />
-            <Entry Grid.Column="3"
+                <Entry Grid.Column="3"
                    Text="{Binding Quantity}"
            />
-        </Grid>
-        <Grid Grid.Row="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="2"
+            </Grid>
+            <Grid Grid.Row="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="2"
                     Text="Cancel"
                     Margin="20, 0"
                     BackgroundColor="Red"
                     FontAttributes="Bold"
                     Clicked="Cancel_Clicked"
                     />
-            <Button Grid.Column="3"
+                <Button Grid.Column="3"
                     Text="Save"
                     Margin="20, 0"
                     BackgroundColor="Green"
                     FontAttributes="Bold"
                     Clicked="Save_Clicked"
                     />
+            </Grid>
         </Grid>
-    </Grid>
+    </VerticalStackLayout>
 </ContentPage>

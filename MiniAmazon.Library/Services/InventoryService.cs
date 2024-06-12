@@ -77,7 +77,7 @@ namespace MiniAmazon.Library.Services
             var isAdd = false;
 
             // If This is the First Time this Item is Being Added Into the Inventory
-            if (p.Id == 0)
+            if (p?.Id == 0)
             {
                 p.Id = LastId;
                 isAdd = true;

@@ -9,13 +9,13 @@
     Title="MiniAmazon.MAUI">
 
     <ShellContent
-        Title="Home Page"
+        Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
     <ShellContent
         Title="Inventory Management"
-        ContentTemplate="{DataTemplate views:InventoryManagementView}"
+        ContentTemplate="{DataTemplate views:InventoryView}"
         Route="Inventory" />
 
     <ShellContent
