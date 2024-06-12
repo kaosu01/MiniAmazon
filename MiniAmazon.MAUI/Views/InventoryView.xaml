@@ -133,6 +133,8 @@
                                     FontAttributes="Bold"
                                     BackgroundColor="Gray"
                                     Text="Edit"
+                                    Command="{Binding Path=EditCommand}"
+                                    CommandParameter="{Binding}"
                                     />
                             <Button Grid.Column="8"
                                     VerticalOptions="Center"

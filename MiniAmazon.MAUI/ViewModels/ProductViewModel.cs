@@ -2,14 +2,32 @@
 using MiniAmazon.Library.Services;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MiniAmazon.MAUI.ViewModels
 {
     public class ProductViewModel
     {
+        public ICommand? EditCommand { get; private set; }
+
+        private void ExecuteEdit(ProductViewModel? p)
+        {
+            if (p?.Product == null)
+            {
+                return;
+            }
+            Shell.Current.GoToAsync($"//Product?productId={p.Product.Id}");
+        }
+
+        public void SetupCommands()
+        {
+            EditCommand = new Command(
+               (p) => ExecuteEdit(p as ProductViewModel));
+        }
         public Product? Product { get; set; }
 
         public int Id
@@ -59,7 +77,7 @@ namespace MiniAmazon.MAUI.ViewModels
             {
                 if (Product == null)
                     return string.Empty;
-                return $"{Product.Price:C}";
+                return $"${Product.Price}";
             }
             set
             {
@@ -90,6 +108,7 @@ namespace MiniAmazon.MAUI.ViewModels
         public ProductViewModel()
         {
             Product = new Product();
+            SetupCommands();
         }
 
         public ProductViewModel(Product? p)
@@ -98,6 +117,16 @@ namespace MiniAmazon.MAUI.ViewModels
                 Product = p;
             else
                 Product = new Product();
+            SetupCommands();
+        }
+
+        public ProductViewModel(int id)
+        {
+            Product = InventoryService.Current?.Products?.FirstOrDefault(p => p.Id == id);
+            if (Product == null)
+            {
+                Product = new Product();
+            }
         }
 
         public void Add()

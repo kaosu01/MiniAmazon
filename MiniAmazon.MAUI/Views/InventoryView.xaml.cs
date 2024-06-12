@@ -1,4 +1,5 @@
 using MiniAmazon.MAUI.ViewModels;
+using System.Xml.Serialization;
 
 namespace MiniAmazon.MAUI.Views;
 
