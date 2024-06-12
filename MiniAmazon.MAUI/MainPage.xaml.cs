@@ -12,7 +12,7 @@ namespace MiniAmazon.MAUI
 
         private void GoToInventory(object sender, EventArgs e)
         {
-            Shell.Current.GoToAsync("//InventoryManagement");
+            Shell.Current.GoToAsync("//Inventory");
         }
 
         private void GoToShop(object sender, EventArgs e)

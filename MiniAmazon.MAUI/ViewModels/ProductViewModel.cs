@@ -6,19 +6,7 @@ namespace MiniAmazon.MAUI.ViewModels
 {
     public class ProductViewModel
     {
-        public ICommand? EditCommand { get; private set; }
-        public void SetupCommands()
-        {
-            EditCommand = new Command((p) => ExecuteEdit(p as ProductViewModel));
-        }
-        private void ExecuteEdit(ProductViewModel? p)
-        {
-            if (p?.Product == null)
-                return;
-            Shell.Current.GoToAsync($"//Product?productId={p.Product.Id}");
-        }
-
-        public Product? Product;
+        public Product? Product { get; set; }
 
         public string? Name
         {
@@ -44,28 +32,36 @@ namespace MiniAmazon.MAUI.ViewModels
                     Product.Description = value;
             }
         }
-        public decimal Price
+        public string Price
         {
             get
             {
-                return Product?.Price ?? 0;
+                if (Product == null)
+                    return string.Empty;
+                return $"{Product.Price:C}";
             }
             set
             {
-                if (Product != null)
-                    Product.Price = value;
+                if (Product == null)
+                    return;
+                if (decimal.TryParse(value, out var price))
+                    Product.Price = price;
             }
         }
-        public int Quantity
+        public string Quantity
         {
             get
             {
-                return Product?.Quantity ?? 0;
+                if (Product == null)
+                    return string.Empty;
+                return $"{Product.Quantity}";
             }
             set
             {
-                if (Product != null)
-                    Product.Quantity = value;
+                if (Product == null)
+                    return;
+                if(int.TryParse(value, out var quantity))
+                    Product.Quantity = quantity;
             }
         }
         public int Id
@@ -84,30 +80,19 @@ namespace MiniAmazon.MAUI.ViewModels
         public ProductViewModel()
         {
             Product = new Product();
-            SetupCommands();
         }
 
         public ProductViewModel(Product p)
         {
-            Product = p;
-            SetupCommands();
-        }
-
-        public ProductViewModel(int id)
-        {
-            Product = InventoryService.Current?.Products?.FirstOrDefault(p => p.Id == id);
-            if (Product != null)
+            if (p != null)
+                Product = p;
+            else
                 Product = new Product();
-            SetupCommands();
         }
 
         public void Add()
         {
             InventoryService.Current.AddorUpdate(Product);
-        }
-
-        public string? Display() { return ToString(); }
-
-        
+        } 
     }
 }

@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MiniAmazon.MAUI.Views.InventoryManagementView"
              Title="InventoryManagementView"
-             NavigatedTo="ContentPage_NavigatedTo"
-             NavigatedFrom="ContentPage_NavigatedFrom">
+             NavigatedTo="ContentPage_NavigatedTo">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -91,7 +90,6 @@
         </Grid>
         <ListView Grid.Row="3"
                   ItemsSource="{Binding Products}"
-                  SelectedItem="{Binding SelectedProduct}"
                   >
             <ListView.ItemTemplate>
                 <DataTemplate>
