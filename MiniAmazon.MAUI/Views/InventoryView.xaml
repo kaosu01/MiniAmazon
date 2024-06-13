@@ -14,13 +14,13 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="7.5*"/>
+                <ColumnDefinition Width="6*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"
-                        Text="Amazon"
+                        Text="Mini-Amazon"
                         Clicked="Logo_Clicked"
                         FontAttributes="Bold"
-                        FontSize="32"
+                        FontSize="24"
                         Margin="5, 0"
                         BackgroundColor="White"
                         TextColor="Black"
