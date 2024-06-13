@@ -13,20 +13,28 @@ namespace MiniAmazon.MAUI.ViewModels
     public class ProductViewModel
     {
         public ICommand? EditCommand { get; private set; }
+        public ICommand? RemoveCommand { get; private set; }
 
         private void ExecuteEdit(ProductViewModel? p)
         {
             if (p?.Product == null)
-            {
                 return;
-            }
             Shell.Current.GoToAsync($"//Product?productId={p.Product.Id}");
+        }
+
+        private void ExecuteRemove(int? id)
+        {
+            if (id == null)
+                return;
+            InventoryService.Current.Remove(id ?? 0);
         }
 
         public void SetupCommands()
         {
             EditCommand = new Command(
                (p) => ExecuteEdit(p as ProductViewModel));
+            RemoveCommand = new Command(
+                (p) => ExecuteRemove((p as ProductViewModel)?.Product?.Id));
         }
         public Product? Product { get; set; }
 
@@ -39,9 +47,7 @@ namespace MiniAmazon.MAUI.ViewModels
             set
             {
                 if (Product != null)
-                {
                     Product.Id = value;
-                }
             }
         }
 
@@ -71,13 +77,23 @@ namespace MiniAmazon.MAUI.ViewModels
             }
         }
 
-        public string? Price
+        public string? DisplayPrice
         {
             get
             {
                 if (Product == null)
                     return string.Empty;
                 return $"${Product.Price}";
+            }
+        }
+
+        public string? EditingPrice
+        {
+            get
+            {
+                if (Product == null)
+                    return string.Empty;
+                return DisplayPrice?.Replace("$", "");
             }
             set
             {
@@ -124,9 +140,7 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             Product = InventoryService.Current?.Products?.FirstOrDefault(p => p.Id == id);
             if (Product == null)
-            {
                 Product = new Product();
-            }
         }
 
         public void Add()

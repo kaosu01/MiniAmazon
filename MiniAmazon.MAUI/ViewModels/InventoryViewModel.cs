@@ -19,18 +19,18 @@ namespace MiniAmazon.MAUI.ViewModels
                 return InventoryService.Current?.Products?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
-        }
-
-        public void RefreshInventory()
-        {
-            NotifyPropertyChanged(nameof(Products));
-        }
+        } 
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+        public void RefreshInventory()
+        {
+            NotifyPropertyChanged(nameof(Products));
         }
     }
 }

@@ -25,4 +25,9 @@ public partial class InventoryView : ContentPage
     {
         (BindingContext as InventoryViewModel)?.RefreshInventory();
     }
+
+    private void InLineRemove_Clicked(object sender, EventArgs e)
+    {
+        (BindingContext as InventoryViewModel)?.RefreshInventory();
+    }
 }
