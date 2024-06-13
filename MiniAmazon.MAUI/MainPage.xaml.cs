@@ -13,7 +13,7 @@
 
         private void GoToShop(object sender, EventArgs e)
         {
-
+            Shell.Current.GoToAsync("//Shop");
         }
     }
 

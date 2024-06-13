@@ -22,4 +22,9 @@
         Title="Product Management"
         ContentTemplate="{DataTemplate views:ProductView}"
         Route="Product" />
+
+    <ShellContent
+        Title="Shopping Management"
+        ContentTemplate="{DataTemplate views:ShopView}"
+        Route="Shop" />
 </Shell>
