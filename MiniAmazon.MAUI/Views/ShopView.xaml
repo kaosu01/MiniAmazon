@@ -2,8 +2,120 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MiniAmazon.MAUI.Views.ShopView"
-             Title="ShopView">
-    <Button Text="Mini-Amazon"
-            Clicked="Logo_Clicked"
-            />
+             Title="ShopView"
+             NavigatedTo="ContentPage_NavigatedTo">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.85*"/>
+            <RowDefinition Height="1.125*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="Mini-Amazon"
+                    Clicked="Logo_Clicked"
+                    Grid.Column="0"
+                    Background="White"
+                    TextColor="Black"
+                    FontAttributes="Bold"
+                    BorderColor="Black"
+                    BorderWidth="2.5"
+                    Margin="5, 0"
+                    FontSize="18"
+                    />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Text="All Products"
+                   Margin="10,10"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   Grid.Column="0"
+                   TextDecorations="Underline"
+                   />
+            <Label Text="My Cart"
+                   Grid.Column="1"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   Margin="0,10"
+                   TextDecorations="Underline"
+                   />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.75*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0"
+                   Margin="10, 10"
+                   Text="{Binding SearchInventoryQuery}"/>
+            <Button Grid.Column="1"
+                    Text="Search"
+                    FontAttributes="Bold"
+                    Margin="10, 10"
+                    Clicked="SearchInventory_Clicked"
+                    />
+            <Button Grid.Column="2"
+                    Margin="10, 10"
+                    Text="Refresh Search"
+                    FontAttributes="Bold"
+                    Clicked="RefreshSearch_Clicked"
+                    />
+        </Grid>
+        <ListView Grid.Row="3"
+                  ItemsSource="{Binding Products}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Margin="0, 0, 0, 2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.25*"/>
+                                <ColumnDefinition Width="0.35*"/>
+                                <ColumnDefinition Width="0.25*"/>
+                                <ColumnDefinition Width="0.15*"/>
+                                <ColumnDefinition Width="0.25*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding Name}"
+                                   Margin="10, 0"
+                                   FontAttributes="Bold"
+                                   />
+                            <Label Grid.Column="1"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding Description}"
+                                   FontAttributes="Italic"
+                                   />
+                            <Label Grid.Column="2"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding DisplayPrice}"
+                                   FontAttributes="Italic"
+                                   />
+                            <Label Grid.Column="3"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding Quantity}"
+                                   FontAttributes="Italic"
+                                   />
+                            <Button Text="Add to Cart"
+                                    Grid.Column="4"
+                                    Margin="10, 0"
+                                    BackgroundColor="Green"
+                                    FontAttributes="Bold"
+                                    />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 </ContentPage>
