@@ -6,7 +6,35 @@ namespace MiniAmazon.Library.Services
     public class ShoppingCartService
     {
         private List<ShoppingCart> carts;
-        private ShoppingCartService() { carts = new List<ShoppingCart>(); }
+        private ShoppingCartService()
+        {
+            carts = new List<ShoppingCart>
+            {
+                new ShoppingCart
+                {
+                    Id = 1,
+                    Items = new List<Product>
+                    {
+                        new Product
+                        {
+                            Id = 1,
+                            Name = "Chair",
+                            Description = "You sit on it",
+                            Price = 19.99m,
+                            Quantity = 2
+                        },
+                        new Product
+                        {
+                            Id = 2,
+                            Name = "Eraser",
+                            Description = "You erase with it",
+                            Price = 4.99m,
+                            Quantity = 4
+                        }
+                    }
+                }
+            };
+        }
         private static ShoppingCartService? instance;
         private static object instanceLock = new object();
         public static ShoppingCartService Current

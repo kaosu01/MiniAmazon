@@ -110,7 +110,7 @@
                             <Label Grid.Column="0"
                                    VerticalTextAlignment="Center"
                                    Margin="10, 0"
-                                   Text="{Binding Id}"
+                                   Text="{Binding pId}"
                                    />
                             <Label Grid.Column="1"
                                    VerticalTextAlignment="Center"

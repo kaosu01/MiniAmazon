@@ -28,6 +28,11 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             NotifyPropertyChanged(nameof(Products));
         }
+
+        public void RefreshCheckoutCart()
+        {
+            NotifyPropertyChanged(nameof(CheckoutCartProducts));
+        }
         public ShopViewModel()
         {
             SearchInventoryQuery = string.Empty;
@@ -50,6 +55,15 @@ namespace MiniAmazon.MAUI.ViewModels
             {
                 return InventoryService.Current?.Products?.Where(p => p != null)
                     .Where(p => p.Name?.ToUpper()?.Contains(SearchInventoryQuery.ToUpper()) ?? false)
+                    .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
+            }
+        }
+
+        public List<ProductViewModel> CheckoutCartProducts
+        {
+            get
+            {
+                return ShoppingCartService.Current?.Carts[0].Items?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         }

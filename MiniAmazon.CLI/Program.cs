@@ -12,7 +12,9 @@ namespace MiniAmazon.CLI
             var shoppingCartSvc = ShoppingCartService.Current;
 
             // Create A Shopping Cart Used For Checkout
-            var checkout_Cart = shoppingCartSvc.AddOrUpdate(new ShoppingCart());
+            var checkout_Cart = shoppingCartSvc.Carts[0];
+
+            Console.WriteLine(checkout_Cart.Id);
 
             // Variables for Simulation of Shopping
             string? menuinput = null;

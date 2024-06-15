@@ -12,8 +12,10 @@ namespace MiniAmazon.MAUI.ViewModels
 {
     public class ProductViewModel
     {
+        public ICommand? AddToCartCommand { get; private set; }
         public ICommand? EditCommand { get; private set; }
         public ICommand? RemoveCommand { get; private set; }
+        public ICommand? RemoveFromCartCommand { get; private set; }
 
         private void ExecuteEdit(ProductViewModel? p)
         {
@@ -29,16 +31,32 @@ namespace MiniAmazon.MAUI.ViewModels
             InventoryService.Current.Remove(id ?? 0);
         }
 
+        private void ExecuteAddToCart(ProductViewModel? p, int? cartId)
+        {
+            if (cartId == null)
+                return;
+            //ShoppingCartService.Current.AddToCart(p, cartId);
+        }
+
+        private void ExecuteRemoveFromCart(ProductViewModel? p, int? cartId)
+        {
+
+        }
+
         public void SetupCommands()
         {
             EditCommand = new Command(
                (p) => ExecuteEdit(p as ProductViewModel));
             RemoveCommand = new Command(
                 (p) => ExecuteRemove((p as ProductViewModel)?.Product?.Id));
+            AddToCartCommand = new Command(
+                (p) => ExecuteAddToCart((p as ProductViewModel), cartId));
+            RemoveFromCartCommand = new Command(
+                (p) => ExecuteRemoveFromCart((p as ProductViewModel), cartId));
         }
         public Product? Product { get; set; }
 
-        public int Id
+        public int pId
         {
             get
             {
@@ -74,6 +92,16 @@ namespace MiniAmazon.MAUI.ViewModels
             {
                 if (Product != null)
                     Product.Description = value;
+            }
+        }
+
+        public string? TotalProductPrice
+        {
+            get
+            {
+                if (Product == null)
+                    return string.Empty;
+                return $"${Product.Price * Product.Quantity}";
             }
         }
 
@@ -118,6 +146,16 @@ namespace MiniAmazon.MAUI.ViewModels
                     return;
                 if (int.TryParse(value, out var quantity))
                     Product.Quantity = quantity;
+            }
+        }
+
+        public ShoppingCart? CheckoutCart { get; set; }
+
+        public int cartId
+        {
+            get
+            {
+                return CheckoutCart?.Id ?? 0;
             }
         }
 

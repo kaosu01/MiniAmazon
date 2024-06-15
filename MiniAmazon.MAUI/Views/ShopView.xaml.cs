@@ -29,4 +29,16 @@ public partial class ShopView : ContentPage
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
     }
+
+    private void InLineAddToCart_Clicked(object sender, EventArgs e)
+    {
+        (BindingContext as ShopViewModel)?.RefreshInventory();
+        (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
+    }
+
+    private void InLineRemoveFromCart_Clicked(object sender, EventArgs e)
+    {
+        (BindingContext as ShopViewModel)?.RefreshInventory();
+        (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
+    }
 }
