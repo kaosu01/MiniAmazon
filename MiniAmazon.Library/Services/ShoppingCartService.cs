@@ -91,7 +91,7 @@ namespace MiniAmazon.Library.Services
                 getCart.Items?.Add(product);
             else
                 // Update the Quantity In the Cart
-                productInCart.Quantity += product.Quantity;
+                productInCart.Quantity++;
         }
         public void RemoveFromCart(Product product, int cartId)
         {
@@ -107,7 +107,7 @@ namespace MiniAmazon.Library.Services
 
                 // Remove
                 if (productToDelete != null)
-                    productToDelete.Quantity -= product.Quantity;
+                    productToDelete.Quantity--;
 
                 if(productToDelete?.Quantity == 0)
                     findCart.Items?.Remove(productToDelete);
@@ -116,7 +116,7 @@ namespace MiniAmazon.Library.Services
                 var addtoInv = InventoryService.Current.Products?.FirstOrDefault(p => p.Id == product.Id);
 
                 if (addtoInv != null)
-                    addtoInv.Quantity += product.Quantity;
+                    addtoInv.Quantity++;
 
             }
         }

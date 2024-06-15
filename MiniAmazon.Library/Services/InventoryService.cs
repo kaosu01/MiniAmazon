@@ -69,7 +69,7 @@ namespace MiniAmazon.Library.Services
                 return products.Select(p => p.Id).Max() + 1;
             }
         }
-        public Product? AddorUpdate(Product? p)
+        public Product? AddorUpdate(Product p)
         {
             if (products == null)
                 return null;
@@ -77,7 +77,7 @@ namespace MiniAmazon.Library.Services
             var isAdd = false;
 
             // If This is the First Time this Item is Being Added Into the Inventory
-            if (p?.Id == 0)
+            if (p.Id == 0)
             {
                 p.Id = LastId;
                 isAdd = true;
@@ -85,7 +85,12 @@ namespace MiniAmazon.Library.Services
 
             // We Need to Add the Product
             if (isAdd)
+            {
+                p.Name = p.Name?.ToLower();
+                p.Name = char.ToUpper(p.Name[0]) + p.Name[1..];
                 products.Add(p);
+            }
+                
 
             return p;
         }

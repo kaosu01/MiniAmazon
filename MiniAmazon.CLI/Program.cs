@@ -237,7 +237,6 @@ namespace MiniAmazon.CLI
                         {
                             // Variables Used to Add a Product to the User's Cart
                             int idInput = 0;
-                            int pCount = 0;
                             Product? product = null;
                             Product? productToAdd = null;
 
@@ -253,22 +252,13 @@ namespace MiniAmazon.CLI
                                     Console.WriteLine("Invalid ID Selection... Please Try Again...");
                             } while (product == null);
 
-                            do
-                            {
-                                Console.Write($"How Many of the Product \"{product.Name}\" Do You Want to Add? ");
-                                pCount = Convert.ToInt32(Console.ReadLine());
-
-                                if (pCount > product.Quantity)
-                                    Console.WriteLine("You Have Selected A Quantity Greater than Available... Please Try Again...");
-                            } while (pCount > product.Quantity);
-
                             productToAdd = new Product
                             {
                                 Id = product.Id,
                                 Name = product.Name,
                                 Description = product.Description,
                                 Price = product.Price,
-                                Quantity = pCount
+                                Quantity = 1
                             };
                             shoppingCartSvc?.AddToCart(productToAdd, checkout_Cart.Id);
                             Console.WriteLine($"{productToAdd.Name} Has Been Added to Your Cart");
@@ -291,7 +281,6 @@ namespace MiniAmazon.CLI
                     case "R":   // Remove
                         {
                             int idInput = 0;
-                            int rCount = 0;
                             int amountDeleted = 0;
                             Product? productToDelete = null;
 
@@ -307,17 +296,7 @@ namespace MiniAmazon.CLI
                                     Console.WriteLine("Invalid ID Selection... Please Try Again...");
                             } while (productToDelete == null);
 
-                            // Get Quantity User Wants to Remove From Their Cart
-                            do
-                            {
-                                Console.Write($"How Many of the Product \"{productToDelete.Name}\" Do You Want to Remove? ");
-                                rCount = Convert.ToInt32(Console.ReadLine());
-
-                                if (rCount > productToDelete.Quantity)
-                                    Console.WriteLine("You Have Selected A Quantity Greater Than What's In Your Cart... Please Try Again...");
-                            } while (rCount > productToDelete.Quantity);
-
-                            amountDeleted = productToDelete.Quantity - rCount;
+                            amountDeleted = productToDelete.Quantity - 1;
 
                             // Change the Quantity to How Much the User Wants to Remove From Their Cart, Then Remove
                             productToDelete = new Product()
@@ -326,7 +305,7 @@ namespace MiniAmazon.CLI
                                 Name = productToDelete.Name,
                                 Description = productToDelete.Description,
                                 Price = productToDelete.Price,
-                                Quantity = rCount
+                                Quantity = 1
                             };
 
                             shoppingCartSvc?.RemoveFromCart(productToDelete, checkout_Cart.Id);
@@ -335,7 +314,7 @@ namespace MiniAmazon.CLI
                             if (amountDeleted == 0)
                                 Console.WriteLine($"Removed \"{productToDelete.Name}\" From Your Cart");
                             else
-                                Console.WriteLine($"Removed {rCount} of the Product \"{productToDelete.Name}\" From Your Cart");
+                                Console.WriteLine($"Removed 1 of the Product \"{productToDelete.Name}\" From Your Cart");
 
                             break;
                         }
