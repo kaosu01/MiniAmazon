@@ -1,4 +1,5 @@
-﻿using MiniAmazon.Library.Services;
+﻿using MiniAmazon.Library.Models;
+using MiniAmazon.Library.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,6 +34,14 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             NotifyPropertyChanged(nameof(CheckoutCartProducts));
         }
+
+        public void RefreshCosts()
+        {
+            NotifyPropertyChanged(nameof(DisplaySubtotal));
+            NotifyPropertyChanged(nameof(DisplayTax));
+            NotifyPropertyChanged(nameof(DisplayTotal));
+        }
+
         public ShopViewModel()
         {
             SearchInventoryQuery = string.Empty;
@@ -65,6 +74,55 @@ namespace MiniAmazon.MAUI.ViewModels
             {
                 return ShoppingCartService.Current?.Cart.Items?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
+            }
+        }
+
+        public string? DisplaySubtotal
+        {
+            get
+            {
+                if (ShoppingCartService.Current?.Cart.Items == null)
+                    return "$0.00";
+                else
+                {
+                    decimal subTotal = 0;
+                    var cartList = ShoppingCartService.Current?.Cart.Items;
+                    for (int i = 0; i < cartList?.Count; i++)
+                    {
+                        subTotal += cartList[i].Price * cartList[i].Quantity;
+                    }
+                    return $"${subTotal}";
+                }
+            }
+        }
+
+        public string? DisplayTax
+        {
+            get
+            {
+                if (DisplaySubtotal == "$0.00")
+                    return "$0.00";
+                else
+                {
+                    decimal tax = Convert.ToDecimal(DisplaySubtotal?.Replace("$", ""));
+                    tax = Math.Round(tax * 0.07m, 2);
+                    return $"${tax}";
+                }
+            }
+        }
+
+        public string? DisplayTotal
+        {
+            get
+            {
+                if (DisplaySubtotal == "$0.00")
+                    return "$0.00";
+                else
+                {
+                    decimal subTotal = Math.Round(Convert.ToDecimal(DisplaySubtotal?.Replace("$", "")), 2);
+                    decimal tax = Math.Round(Convert.ToDecimal(DisplayTax?.Replace("$", "")), 2);
+                    return $"${subTotal + tax}";
+                }
             }
         }
     }
