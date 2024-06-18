@@ -110,7 +110,7 @@
                             <Label Grid.Column="0"
                                    VerticalTextAlignment="Center"
                                    Margin="10, 0"
-                                   Text="{Binding pId}"
+                                   Text="{Binding PId}"
                                    />
                             <Label Grid.Column="1"
                                    VerticalTextAlignment="Center"
@@ -126,7 +126,7 @@
                                    />
                             <Label Grid.Column="4"
                                    VerticalTextAlignment="Center"
-                                   Text="{Binding Quantity}"
+                                   Text="{Binding DisplayQuantity}"
                                    />
                             <Button Grid.Column="6"
                                     VerticalOptions="Center"

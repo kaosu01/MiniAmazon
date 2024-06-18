@@ -9,8 +9,8 @@ namespace MiniAmazon.Library.Services
         {
             Cart = new ShoppingCart
             {
-                Items = new List<Product>
-                {
+                Items = new List<Product>()
+                /*{
                     new Product
                     {
                         Id = 1,
@@ -27,7 +27,7 @@ namespace MiniAmazon.Library.Services
                         Price = 4.99m,
                         Quantity = 4
                     }
-                }
+                }*/
             };
         }
 
@@ -102,6 +102,16 @@ namespace MiniAmazon.Library.Services
             if (Cart == null || Cart.Items == null)
                 return;
 
+            // Create p As A New Product, So It Doesn't Interfere w/ the Inventory's Version
+            p = new Product
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                Quantity = 1
+            };
+
             // Check if Product is Available in Inventory
             var productInInv = InventoryService.Current.Products?.FirstOrDefault(prod_in_Inv => prod_in_Inv.Id == p.Id);
 
@@ -140,7 +150,7 @@ namespace MiniAmazon.Library.Services
             var addtoInv = InventoryService.Current.Products?.FirstOrDefault(prod_In_Inv => prod_In_Inv.Id == p.Id);
 
             if (addtoInv != null)
-                addtoInv.Quantity++;
+                addtoInv.Quantity++;    
         }
     }
 }

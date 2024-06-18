@@ -96,7 +96,7 @@
                                    />
                                 <Label Grid.Column="3"
                                    VerticalTextAlignment="Center"
-                                   Text="{Binding Quantity}"
+                                   Text="{Binding DisplayQuantity}"
                                    FontAttributes="Italic"
                                    />
                                 <Button Text="Add to Cart"
@@ -146,7 +146,7 @@
                                         Clicked="InLineRemoveFromCart_Clicked"
                                         />
                                 <Label Grid.Column="2"
-                                       Text="{Binding Quantity}"
+                                       Text="{Binding DisplayQuantity}"
                                        HorizontalTextAlignment="Center"
                                        VerticalTextAlignment="Center"
                                        FontAttributes="Italic"

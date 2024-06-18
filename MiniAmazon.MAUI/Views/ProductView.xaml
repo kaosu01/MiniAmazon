@@ -99,7 +99,7 @@
            VerticalTextAlignment="Center"
            />
             <Entry Grid.Column="3"
-                   Text="{Binding Quantity}"
+                   Text="{Binding EditingQuantity}"
            />
         </Grid>
         <Grid Grid.Row="10">

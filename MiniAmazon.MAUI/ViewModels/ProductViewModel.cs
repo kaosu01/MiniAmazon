@@ -56,7 +56,7 @@ namespace MiniAmazon.MAUI.ViewModels
         }
         public Product? Product { get; set; }
 
-        public int pId
+        public int PId
         {
             get
             {
@@ -132,7 +132,26 @@ namespace MiniAmazon.MAUI.ViewModels
             }
         }
 
-        public string? Quantity
+        public string? DisplayQuantity
+        {
+            get
+            {
+                if (Product == null)
+                    return string.Empty;
+                else if (Product.Quantity == 0)
+                    return "Out of Stock";
+                return $"{Product.Quantity}";
+            }
+            set
+            {
+                if (Product == null)
+                    return;
+                if (int.TryParse(value, out var quantity))
+                    Product.Quantity = quantity;
+            }
+        }
+
+        public string? EditingQuantity
         {
             get
             {

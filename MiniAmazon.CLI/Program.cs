@@ -17,10 +17,6 @@ namespace MiniAmazon.CLI
             Console.WriteLine("Cart:");
             checkout_Cart.Items?.ToList().ForEach(Console.WriteLine);
 
-            // The Lines of Code Commented Out Were For Testing Purposes for the MAUI/XAML
-            //var checkout_Cart = shoppingCartSvc.Carts[0];
-            //Console.WriteLine(checkout_Cart.Id);
-
             // Variables for Simulation of Shopping
             string? menuinput = null;
             bool shopping = true;
