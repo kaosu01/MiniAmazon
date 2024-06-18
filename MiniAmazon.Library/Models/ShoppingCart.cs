@@ -2,7 +2,7 @@
 {
     public class ShoppingCart
     {
-        public int Id { get; set; }
+        int Id { get; set; }
         public List<Product>? Items { get; set; }
     }
 }

@@ -12,7 +12,7 @@
                 <RowDefinition Height="3.5*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="1"
-                    Text="Welcome to Amazon!"
+                    Text="Welcome to Mini-Amazon!"
                     FontAttributes="Bold"
                     FontSize="30"
                     SemanticProperties.HeadingLevel="Level1"

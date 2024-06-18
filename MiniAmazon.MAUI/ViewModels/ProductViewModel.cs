@@ -31,16 +31,16 @@ namespace MiniAmazon.MAUI.ViewModels
             InventoryService.Current.Remove(id ?? 0);
         }
 
-        private void ExecuteAddToCart(ProductViewModel? p, int? cartId)
+        private void ExecuteAddToCart(Product? p)
         {
-            if (cartId == null)
-                return;
-            //ShoppingCartService.Current.AddToCart(p, cartId);
+            if (p != null)
+                ShoppingCartService.Current.AddToCart(p);
         }
 
-        private void ExecuteRemoveFromCart(ProductViewModel? p, int? cartId)
+        private void ExecuteRemoveFromCart(Product? p)
         {
-
+            if (p != null)
+                ShoppingCartService.Current.RemoveFromCart(p);
         }
 
         public void SetupCommands()
@@ -50,9 +50,9 @@ namespace MiniAmazon.MAUI.ViewModels
             RemoveCommand = new Command(
                 (p) => ExecuteRemove((p as ProductViewModel)?.Product?.Id));
             AddToCartCommand = new Command(
-                (p) => ExecuteAddToCart((p as ProductViewModel), cartId));
+                (p) => ExecuteAddToCart((p as ProductViewModel)?.Product));
             RemoveFromCartCommand = new Command(
-                (p) => ExecuteRemoveFromCart((p as ProductViewModel), cartId));
+                (p) => ExecuteRemoveFromCart((p as ProductViewModel)?.Product));
         }
         public Product? Product { get; set; }
 
@@ -150,14 +150,6 @@ namespace MiniAmazon.MAUI.ViewModels
         }
 
         public ShoppingCart? CheckoutCart { get; set; }
-
-        public int cartId
-        {
-            get
-            {
-                return CheckoutCart?.Id ?? 0;
-            }
-        }
 
         public ProductViewModel()
         {

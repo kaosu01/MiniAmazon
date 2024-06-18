@@ -12,7 +12,10 @@ namespace MiniAmazon.CLI
             var shoppingCartSvc = ShoppingCartService.Current;
 
             // Create A Shopping Cart Used For Checkout
-            var checkout_Cart = shoppingCartSvc.AddOrUpdate(new ShoppingCart());
+            var checkout_Cart = shoppingCartSvc.Cart;
+
+            Console.WriteLine("Cart:");
+            checkout_Cart.Items?.ToList().ForEach(Console.WriteLine);
 
             // The Lines of Code Commented Out Were For Testing Purposes for the MAUI/XAML
             //var checkout_Cart = shoppingCartSvc.Carts[0];
@@ -264,7 +267,7 @@ namespace MiniAmazon.CLI
                                 Price = product.Price,
                                 Quantity = 1
                             };
-                            shoppingCartSvc?.AddToCart(productToAdd, checkout_Cart.Id);
+                            shoppingCartSvc?.AddToCart(productToAdd);
                             Console.WriteLine($"{productToAdd.Name} Has Been Added to Your Cart");
 
                             break;
@@ -312,7 +315,7 @@ namespace MiniAmazon.CLI
                                 Quantity = 1
                             };
 
-                            shoppingCartSvc?.RemoveFromCart(productToDelete, checkout_Cart.Id);
+                            shoppingCartSvc?.RemoveFromCart(productToDelete);
 
                             // Print Out Confirmation Message
                             if (amountDeleted == 0)

@@ -63,7 +63,7 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                return ShoppingCartService.Current?.Carts[0].Items?.Where(p => p != null)
+                return ShoppingCartService.Current?.Cart.Items?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         }

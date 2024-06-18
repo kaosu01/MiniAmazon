@@ -5,38 +5,37 @@ namespace MiniAmazon.Library.Services
 {
     public class ShoppingCartService
     {
-        private List<ShoppingCart> carts;
         private ShoppingCartService()
         {
-            carts = new List<ShoppingCart>
+            Cart = new ShoppingCart
             {
-                new ShoppingCart
+                Items = new List<Product>
                 {
-                    Id = 1,
-                    Items = new List<Product>
+                    new Product
                     {
-                        new Product
-                        {
-                            Id = 1,
-                            Name = "Chair",
-                            Description = "You sit on it",
-                            Price = 19.99m,
-                            Quantity = 2
-                        },
-                        new Product
-                        {
-                            Id = 2,
-                            Name = "Eraser",
-                            Description = "You erase with it",
-                            Price = 4.99m,
-                            Quantity = 4
-                        }
+                        Id = 1,
+                        Name = "Chair",
+                        Description = "You sit on it",
+                        Price = 19.99m,
+                        Quantity = 2
+                    },
+                    new Product
+                    {
+                        Id = 2,
+                        Name = "Eraser",
+                        Description = "You erase with it",
+                        Price = 4.99m,
+                        Quantity = 4
                     }
                 }
             };
         }
+
         private static ShoppingCartService? instance;
         private static object instanceLock = new object();
+
+        public ShoppingCart Cart { get; private set; }
+
         public static ShoppingCartService Current
         {
             get
@@ -51,11 +50,11 @@ namespace MiniAmazon.Library.Services
                 return instance;
             }
         }
-        public ReadOnlyCollection<ShoppingCart> Carts
-        {
-            get { return carts.AsReadOnly(); }
-        }
-        private int NextId
+
+        public ReadOnlyCollection<ShoppingCart> carts;
+
+        /*
+         * private int NextId
         {
             get
             {
@@ -64,6 +63,8 @@ namespace MiniAmazon.Library.Services
                 return carts.Select(c => c.Id).Max() + 1;
             }
         }
+        */
+        /*
         public ShoppingCart AddOrUpdate(ShoppingCart sc)
         {
             bool isAdd = false;
@@ -80,9 +81,12 @@ namespace MiniAmazon.Library.Services
 
             return sc;
         }
+        */
+
+        /*
         public void DeleteCart(int id)
         {
-            if (carts == null)
+            if (Cart == null)
                 return;
 
             // Find the Cart the User Wants to Delete
@@ -91,62 +95,52 @@ namespace MiniAmazon.Library.Services
             if(cartToDelete != null)
                 carts.Remove(cartToDelete);
         }
-        public void AddToCart(Product product, int id)
+        */
+
+        public void AddToCart(Product p)
         {
-            if (carts == null)
-                return;
-
-            // Find the Correct Cart to Add To
-            var getCart = carts.FirstOrDefault(findCart => findCart.Id == id);
-
-            if (getCart == null)
+            if (Cart == null || Cart.Items == null)
                 return;
 
             // Check if Product is Available in Inventory
-            var productInInv = InventoryService.Current.Products?.FirstOrDefault(prod_in_Inv => prod_in_Inv.Id == product.Id);
+            var productInInv = InventoryService.Current.Products?.FirstOrDefault(prod_in_Inv => prod_in_Inv.Id == p.Id);
 
-            if (productInInv == null)
+            if (productInInv == null || productInInv.Quantity <= 0)
                 return;
 
             // Decrement Quantity of Selected Product From Inventory
-            productInInv.Quantity -= product.Quantity;
+            productInInv.Quantity--;
 
             // Determine if We're Adding or Updating the Cart
-            var productInCart = getCart.Items?.FirstOrDefault(prod_in_Cart => prod_in_Cart.Id == product.Id);
+            var productInCart = Cart.Items?.FirstOrDefault(prod_in_Cart => prod_in_Cart.Id == p.Id);
 
             if (productInCart == null)
                 // Add the Product Into the Cart
-                getCart.Items?.Add(product);
+                Cart.Items?.Add(p);
             else
                 // Update the Quantity In the Cart
                 productInCart.Quantity++;
         }
-        public void RemoveFromCart(Product product, int cartId)
+        public void RemoveFromCart(Product p)
         {
-            if (carts == null)
+            if (Cart == null)
                 return;
 
-            var findCart = carts.FirstOrDefault(c => c.Id == cartId);
+            // Find Product in Cart to Delete
+            var productToDelete = Cart.Items?.FirstOrDefault(prod_In_Cart => prod_In_Cart.Id == p.Id);
 
-            if(findCart != null)
-            {
-                // Find Product in Cart to Delete
-                var productToDelete = findCart.Items?.FirstOrDefault(prod_In_Inv => prod_In_Inv.Id == product.Id);
+            // Remove
+            if (productToDelete != null)
+                productToDelete.Quantity--;
 
-                // Remove
-                if (productToDelete != null)
-                    productToDelete.Quantity--;
+            if(productToDelete?.Quantity == 0)
+                Cart.Items?.Remove(productToDelete);
 
-                if(productToDelete?.Quantity == 0)
-                    findCart.Items?.Remove(productToDelete);
+            // Find Product in Inventory to Add Back
+            var addtoInv = InventoryService.Current.Products?.FirstOrDefault(prod_In_Inv => prod_In_Inv.Id == p.Id);
 
-                // Find Product in Inventory to Add Back
-                var addtoInv = InventoryService.Current.Products?.FirstOrDefault(p => p.Id == product.Id);
-
-                if (addtoInv != null)
-                    addtoInv.Quantity++;
-
-            }
+            if (addtoInv != null)
+                addtoInv.Quantity++;
         }
     }
 }
