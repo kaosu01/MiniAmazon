@@ -168,8 +168,6 @@ namespace MiniAmazon.MAUI.ViewModels
             }
         }
 
-        public ShoppingCart? CheckoutCart { get; set; }
-
         public ProductViewModel()
         {
             Product = new Product();

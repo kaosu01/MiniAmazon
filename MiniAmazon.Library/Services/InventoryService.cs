@@ -90,7 +90,20 @@ namespace MiniAmazon.Library.Services
                 p.Name = char.ToUpper(p.Name[0]) + p.Name[1..];
                 products.Add(p);
             }
-                
+
+            // Update the Product in Cart if Changes Were Made
+            var prod_In_Cart = ShoppingCartService.Current.Cart.Items;
+
+            for (int i = 0; i < prod_In_Cart?.Count; i++)
+            {
+                if (prod_In_Cart[i].Id == p.Id)
+                {
+                    prod_In_Cart[i].Name = p.Name;
+                    prod_In_Cart[i].Description = p.Description;
+                    prod_In_Cart[i].Price = p.Price;
+                }
+            }
+
             return p;
         }
         public void Remove(int id)
