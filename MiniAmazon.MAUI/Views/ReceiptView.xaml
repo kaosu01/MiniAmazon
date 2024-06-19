@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MiniAmazon.MAUI.Views.ReceiptView"
+             Title="ReceiptView"
+             NavigatedFrom="ContentPage_NavigatedFrom"
+             NavigatedTo="ContentPage_NavigatedTo">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/> <!-- My Order -->
+                <RowDefinition Height="7*"/> <!-- Display Order -->
+                <RowDefinition/> <!-- Subtotal/Tax/Total -->
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0"
+                   Text="My Order"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   FontSize="30"
+                   TextDecorations="Underline"
+                   />
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding CheckoutCartProducts}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Text="{Binding Name}"
+                                       Margin="30, 0"
+                                       HorizontalTextAlignment="Start"
+                                       VerticalTextAlignment="Center"
+                                       FontAttributes="Bold"
+                                       FontSize="24"
+                                       />
+                                <Label Grid.Column="2"
+                                       Text="{Binding DisplayQuantity}"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       FontAttributes="Italic"
+                                       FontSize="24"
+                                       />
+                                <Label Grid.Column="4"
+                                       Text="{Binding TotalProductPrice}"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       FontAttributes="Italic"
+                                       FontSize="24"
+                                       />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.25*"/>
+                    <!-- Subtotal -->
+                    <ColumnDefinition/>
+                    <!-- DisplaySubtotal -->
+                    <ColumnDefinition Width="0.5*"/>
+                    <!-- Tax -->
+                    <ColumnDefinition/>
+                    <!-- Display Tax -->
+                    <ColumnDefinition Width="0.5*"/>
+                    <!-- Total -->
+                    <ColumnDefinition/>
+                    <!-- Display Total -->
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Text="Subtotal:"
+                       Margin="30, 0"
+                       FontAttributes="Bold"
+                       FontSize="20"
+                       />
+                <Label Grid.Column="1"
+                       Text="{Binding DisplaySubtotal}"
+                       FontSize="20"
+                       />
+                <Label Grid.Column="2"
+                       Text="Tax:"
+                       FontAttributes="Bold"
+                       FontSize="20"
+                       />
+                <Label Grid.Column="3"
+                       Text="{Binding DisplayTax}"
+                       FontSize="20"
+                       />
+                <Label Grid.Column="4"
+                       Text="Total:"
+                       FontAttributes="Bold"
+                       FontSize="20"
+                       />
+                <Label Grid.Column="5"
+                       Text="{Binding DisplayTotal}"
+                       FontSize="20"
+                       />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/> <!-- Blank -->
+                <RowDefinition/> <!-- Blank -->
+                <RowDefinition Height="0.75*"/> <!-- Thank You For Shopping At Mini-Amazon -->
+                <RowDefinition Height="0.65*"/> <!-- Go To Inventory/Continue Shopping -->
+                <RowDefinition/> <!-- Blank -->
+                <RowDefinition/> <!-- Blank -->
+            </Grid.RowDefinitions>
+            <Label Grid.Row="2"
+                   Text="Thank You For Shopping At Mini-Amazon!"
+                   FontAttributes="Bold"
+                   FontSize="28"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   />
+            <Button Grid.Row="3"
+                    Text="Go Back To Main Page"
+                    Clicked="MainPage_Clicked"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    />
+        </Grid>
+    </Grid>
+</ContentPage>

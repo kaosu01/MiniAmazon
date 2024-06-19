@@ -230,7 +230,7 @@
                     Text="Checkout"
                     FontAttributes="Bold"
                     Margin="15, 0"
-                    Clicked="Button_Clicked"
+                    Clicked="Checkout_Clicked"
                     />
         </Grid>
     </Grid>

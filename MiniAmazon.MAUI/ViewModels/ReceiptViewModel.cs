@@ -1,5 +1,4 @@
-﻿using MiniAmazon.Library.Models;
-using MiniAmazon.Library.Services;
+﻿using MiniAmazon.Library.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,64 +9,8 @@ using System.Threading.Tasks;
 
 namespace MiniAmazon.MAUI.ViewModels
 {
-    public class ShopViewModel : INotifyPropertyChanged
+    class ReceiptViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void RefreshInventory()
-        {
-            SearchInventoryQuery = string.Empty;
-            NotifyPropertyChanged(nameof(Products));
-        }
-
-        public void SearchInventory()
-        {
-            NotifyPropertyChanged(nameof(Products));
-        }
-
-        public void RefreshCheckoutCart()
-        {
-            NotifyPropertyChanged(nameof(CheckoutCartProducts));
-        }
-
-        public void RefreshCosts()
-        {
-            NotifyPropertyChanged(nameof(DisplaySubtotal));
-            NotifyPropertyChanged(nameof(DisplayTax));
-            NotifyPropertyChanged(nameof(DisplayTotal));
-        }
-
-        public ShopViewModel()
-        {
-            SearchInventoryQuery = string.Empty;
-        }
-
-        private string searchInventoryQuery;
-
-        public string SearchInventoryQuery
-        {
-            set
-            {
-                searchInventoryQuery = value;
-                NotifyPropertyChanged();
-            }
-            get { return searchInventoryQuery; }
-        }
-        public List<ProductViewModel> Products
-        {
-            get
-            {
-                return InventoryService.Current?.Products?.Where(p => p != null)
-                    .Where(p => p.Name?.ToUpper()?.Contains(SearchInventoryQuery.ToUpper()) ?? false)
-                    .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
-            }
-        }
-
         public List<ProductViewModel> CheckoutCartProducts
         {
             get
@@ -76,7 +19,6 @@ namespace MiniAmazon.MAUI.ViewModels
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         }
-
         public string? DisplaySubtotal
         {
             get
@@ -124,6 +66,30 @@ namespace MiniAmazon.MAUI.ViewModels
                     return $"${subTotal + tax}";
                 }
             }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void RefreshCheckoutCart()
+        {
+            NotifyPropertyChanged(nameof(CheckoutCartProducts));
+        }
+
+        public void RefreshCosts()
+        {
+            NotifyPropertyChanged(nameof(DisplaySubtotal));
+            NotifyPropertyChanged(nameof(DisplayTax));
+            NotifyPropertyChanged(nameof(DisplayTotal));
+        }
+
+        public void ClearCheckoutCart()
+        {
+            ShoppingCartService.Current.ClearCart();
         }
     }
 }

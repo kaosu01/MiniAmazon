@@ -18,6 +18,8 @@ public partial class ShopView : ContentPage
     private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
+        (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
+        (BindingContext as ShopViewModel)?.RefreshCosts();
     }
 
     private void SearchInventory_Clicked(object sender, EventArgs e)
@@ -46,6 +48,6 @@ public partial class ShopView : ContentPage
 
     private void Checkout_Clicked(object sender, EventArgs e)
     {
-
+        Shell.Current.GoToAsync("//Receipt");
     }
 }

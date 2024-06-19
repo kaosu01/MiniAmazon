@@ -7,28 +7,7 @@ namespace MiniAmazon.Library.Services
     {
         private ShoppingCartService()
         {
-            Cart = new ShoppingCart
-            {
-                Items = new List<Product>()
-                /*{
-                    new Product
-                    {
-                        Id = 1,
-                        Name = "Chair",
-                        Description = "You sit on it",
-                        Price = 19.99m,
-                        Quantity = 2
-                    },
-                    new Product
-                    {
-                        Id = 2,
-                        Name = "Eraser",
-                        Description = "You erase with it",
-                        Price = 4.99m,
-                        Quantity = 4
-                    }
-                }*/
-            };
+            Cart = new ShoppingCart { Items = new List<Product>() };
         }
 
         private static ShoppingCartService? instance;
@@ -151,6 +130,12 @@ namespace MiniAmazon.Library.Services
 
             if (addtoInv != null)
                 addtoInv.Quantity++;    
+        }
+
+        public void ClearCart()
+        {
+            if (Cart != null && Cart.Items != null)
+                Cart.Items.Clear();
         }
     }
 }

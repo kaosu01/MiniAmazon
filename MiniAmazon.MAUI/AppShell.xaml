@@ -27,4 +27,10 @@
         Title="Shopping Management"
         ContentTemplate="{DataTemplate views:ShopView}"
         Route="Shop" />
+
+    <ShellContent
+        Title="Receipt Display"
+        ContentTemplate="{DataTemplate views:ReceiptView}"
+        Route="Receipt" />
+    
 </Shell>
