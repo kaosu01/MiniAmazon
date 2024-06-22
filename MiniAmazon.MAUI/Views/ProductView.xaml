@@ -15,9 +15,11 @@
             <RowDefinition/>
             <RowDefinition Height="0.25*"/>
             <RowDefinition/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition/>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
                Text="Enter Product Details"
@@ -55,11 +57,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="2"
-           Text="Description:"
-           FontSize="Medium"
-           FontAttributes="Bold"
-           VerticalTextAlignment="Center"
-           />
+                   Text="Description:"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   VerticalTextAlignment="Center"
+                   />
             <Entry Grid.Column="3"
                    Text="{Binding Description}"
            />
@@ -74,11 +76,11 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="2"
-           Text="Price:"
-           FontSize="Medium"
-           FontAttributes="Bold"
-           VerticalTextAlignment="Center"
-           />
+                   Text="Price:"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   VerticalTextAlignment="Center"
+                   />
             <Entry Grid.Column="3"
                    Text="{Binding EditingPrice}"
            />
@@ -93,16 +95,86 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="2"
-           Text="Quantity:"
-           FontSize="Medium"
-           FontAttributes="Bold"
-           VerticalTextAlignment="Center"
-           />
+                   Text="Quantity:"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   VerticalTextAlignment="Center"
+                   />
             <Entry Grid.Column="3"
                    Text="{Binding EditingQuantity}"
            />
         </Grid>
-        <Grid Grid.Row="10">
+        <Grid Grid.Row="9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.75*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="1"
+                      x:Name="Markdown"
+                      VerticalOptions="Center"
+                      HorizontalOptions="End"
+                      CheckedChanged="Markdown_CheckedChanged"
+                      IsChecked="{Binding EditingMarkdownBool}"
+                      />
+            <Label Grid.Column="2"
+                   Text="Put Product On Sale"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Start"
+                   FontAttributes="Italic"
+                   FontSize="18"
+                   />
+        </Grid>
+        <Grid Grid.Row="10"
+              IsVisible="{Binding ButtonsVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2"
+            Text="Cancel"
+            Margin="20, 0"
+            BackgroundColor="Red"
+            FontAttributes="Bold"
+            Clicked="Cancel_Clicked"
+            />
+            <Button Grid.Column="3"
+            Text="Save"
+            Margin="20, 0"
+            BackgroundColor="Green"
+            FontAttributes="Bold"
+            Clicked="Save_Clicked"
+            />
+        </Grid>
+        <Grid Grid.Row="10"
+              IsVisible="{Binding SaleAndButtons}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.75*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="2"
+                   Text="Sale Price:"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   VerticalTextAlignment="Center"
+                   />
+            <Entry Grid.Column="3"
+                   Text="{Binding EditingSalePrice}"
+                   />
+        </Grid>
+        <Grid Grid.Row="12"
+              IsVisible="{Binding SaleAndButtons}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

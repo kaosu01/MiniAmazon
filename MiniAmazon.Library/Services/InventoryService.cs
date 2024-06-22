@@ -46,7 +46,9 @@ namespace MiniAmazon.Library.Services
                     Name = "Chair",
                     Description = "You sit on it",
                     Price = 19.99m,
-                    Quantity = 3
+                    Quantity = 3,
+                    IsMarkdown = true,
+                    MarkdownPrice = 12.99m
                 },
                 new Product
                 {
@@ -101,6 +103,8 @@ namespace MiniAmazon.Library.Services
                     prod_In_Cart[i].Name = p.Name;
                     prod_In_Cart[i].Description = p.Description;
                     prod_In_Cart[i].Price = p.Price;
+                    prod_In_Cart[i].IsMarkdown = p.IsMarkdown;
+                    prod_In_Cart[i].MarkdownPrice = p.MarkdownPrice;
                 }
             }
 

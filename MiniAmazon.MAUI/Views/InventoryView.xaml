@@ -50,11 +50,12 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition Width="1.25*"/>
-                <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.5*"/> <!-- ID -->
+                <ColumnDefinition Width="0.85*"/> <!-- Name -->
+                <ColumnDefinition Width="2.5*"/> <!-- Description -->
+                <ColumnDefinition Width="0.65*"/> <!-- Price -->
+                <ColumnDefinition Width="1.5*"/> <!-- Sale Price (if Applicable) -->
+                <ColumnDefinition Width="0.75*"/> <!-- Quantity -->
                 <ColumnDefinition/>
                 <ColumnDefinition Width="1.75*"/>
                 <ColumnDefinition Width="0.25*"/>
@@ -82,7 +83,7 @@
                    FontAttributes="Bold"
                    TextDecorations="Underline"
                    />
-            <Label Grid.Column="4"
+            <Label Grid.Column="5"
                    Text="Quantity"
                    FontAttributes="Bold"
                    TextDecorations="Underline"
@@ -97,10 +98,11 @@
                         <Grid Margin="0, 0, 0, 2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.5*"/>
-                                <ColumnDefinition Width="1.25*"/>
+                                <ColumnDefinition Width="0.85*"/>
                                 <ColumnDefinition Width="2.5*"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.65*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="0.75*"/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="1.75*"/>
                                 <ColumnDefinition Width="0.25*"/>
@@ -122,13 +124,27 @@
                                    />
                             <Label Grid.Column="3"
                                    VerticalTextAlignment="Center"
-                                   Text="{Binding DisplayPrice}"
-                                   />
+                                   Text="{Binding DisplayPrice}">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding MarkdownStrikethrough}" Value="True">
+                                                <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
                             <Label Grid.Column="4"
+                                   HorizontalTextAlignment="Start"
+                                   VerticalTextAlignment="Center"
+                                   Text="{Binding DisplaySalePrice}"
+                                   />
+                            <Label Grid.Column="5"
                                    VerticalTextAlignment="Center"
                                    Text="{Binding DisplayQuantity}"
                                    />
-                            <Button Grid.Column="6"
+                            <Button Grid.Column="7"
                                     VerticalOptions="Center"
                                     FontAttributes="Bold"
                                     BackgroundColor="Gray"
@@ -136,7 +152,7 @@
                                     Command="{Binding Path=EditCommand}"
                                     CommandParameter="{Binding}"
                                     />
-                            <Button Grid.Column="8"
+                            <Button Grid.Column="9"
                                     VerticalOptions="Center"
                                     FontAttributes="Bold"
                                     BackgroundColor="Red"

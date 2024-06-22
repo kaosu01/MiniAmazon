@@ -2,20 +2,55 @@
 using MiniAmazon.Library.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace MiniAmazon.MAUI.ViewModels
 {
-    public class ProductViewModel
-    {
+    public class ProductViewModel : INotifyPropertyChanged
+{
         public ICommand? AddToCartCommand { get; private set; }
         public ICommand? EditCommand { get; private set; }
         public ICommand? RemoveCommand { get; private set; }
         public ICommand? RemoveFromCartCommand { get; private set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void RefreshView()
+        {
+            NotifyPropertyChanged(nameof(ButtonsVisibility));
+            NotifyPropertyChanged(nameof(SaleAndButtons));
+        }
+
+        public Visibility ButtonsVisibility
+        {
+            get
+            {
+                if (Product == null)
+                    return Visibility.Visible;
+                return Product.IsMarkdown ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public Visibility SaleAndButtons
+        {
+            get
+            {
+                if (Product == null)
+                    return Visibility.Visible;
+                return Product.IsMarkdown ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
 
         private void ExecuteEdit(ProductViewModel? p)
         {
@@ -115,6 +150,19 @@ namespace MiniAmazon.MAUI.ViewModels
             }
         }
 
+        public string? DisplaySalePrice
+        {
+            get
+            {
+                if (Product == null)
+                    return string.Empty;
+                if (Product.IsMarkdown == true)
+                    return $"${Product.MarkdownPrice}";
+                else
+                    return string.Empty;
+            }
+        }
+
         public string? EditingPrice
         {
             get
@@ -129,6 +177,23 @@ namespace MiniAmazon.MAUI.ViewModels
                     return;
                 if (decimal.TryParse(value, out var price))
                     Product.Price = price;
+            }
+        }
+
+        public string? EditingSalePrice
+        {
+            get
+            {
+                if (Product == null)
+                    return string.Empty;
+                return DisplaySalePrice?.Replace("$", "");
+            }
+            set
+            {
+                if (Product == null)
+                    return;
+                if (decimal.TryParse(value, out var price))
+                    Product.MarkdownPrice = price;
             }
         }
 
@@ -165,6 +230,32 @@ namespace MiniAmazon.MAUI.ViewModels
                     return;
                 if (int.TryParse(value, out var quantity))
                     Product.Quantity = quantity;
+            }
+        }
+
+        public bool MarkdownStrikethrough
+        {
+            get
+            {
+                if (Product == null)
+                    return false;
+                return Product.IsMarkdown;
+            }
+        }
+
+        public bool EditingMarkdownBool
+        {
+            get
+            {
+                if (Product == null)
+                    return false;
+                return Product.IsMarkdown;
+            }
+            set
+            {
+                if (Product == null)
+                    return;
+                Product.IsMarkdown = value;
             }
         }
 

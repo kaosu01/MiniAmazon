@@ -25,4 +25,9 @@ public partial class ProductView : ContentPage
     {
         BindingContext = new ProductViewModel(ProductId);
     }
+
+    private void Markdown_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        (BindingContext as ProductViewModel)?.RefreshView();
+    }
 }
