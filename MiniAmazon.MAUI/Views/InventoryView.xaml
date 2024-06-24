@@ -144,6 +144,14 @@
                                    VerticalTextAlignment="Center"
                                    Text="{Binding DisplayQuantity}"
                                    />
+                            <Label Grid.Column="6"
+                                   VerticalTextAlignment="Start"
+                                   HorizontalTextAlignment="Start"
+                                   Rotation="345"
+                                   TextColor="DarkOrange"
+                                   FontSize="14"
+                                   Text="{Binding DisplayBOGOFree}"
+                                   />
                             <Button Grid.Column="7"
                                     VerticalOptions="Center"
                                     FontAttributes="Bold"

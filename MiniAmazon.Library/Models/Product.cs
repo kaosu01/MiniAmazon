@@ -8,7 +8,8 @@
         public decimal MarkdownPrice { get; set; }
         public int Id { get; set; }
         public int Quantity { get; set; }
-        public bool IsMarkdown { get; set; } = false;
+        public bool IsMarkdown { get; set; }
+        public bool IsBOGO { get; set; }
 
         public string? Display() { return ToString();}
         public override string ToString() { return $"({Id}) {Name}: {Description}\n    Price: ${Price}\tQuantity: {Quantity}\n"; }

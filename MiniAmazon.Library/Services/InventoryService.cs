@@ -56,7 +56,8 @@ namespace MiniAmazon.Library.Services
                     Name = "Eraser",
                     Description = "You erase with it",
                     Price = 4.99m,
-                    Quantity = 7
+                    Quantity = 7,
+                    IsBOGO = true
                 }
             };
         }
@@ -105,6 +106,7 @@ namespace MiniAmazon.Library.Services
                     prod_In_Cart[i].Price = p.Price;
                     prod_In_Cart[i].IsMarkdown = p.IsMarkdown;
                     prod_In_Cart[i].MarkdownPrice = p.MarkdownPrice;
+                    prod_In_Cart[i].IsBOGO = p.IsBOGO;
                 }
             }
 

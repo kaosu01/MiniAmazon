@@ -32,9 +32,9 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.75*"/>
-                <ColumnDefinition Width="0.25*"/>
-                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="0.85*"/>
+                <ColumnDefinition Width="0.325*"/>
+                <ColumnDefinition Width="0.325*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Entry Grid.Column="0"
@@ -64,7 +64,7 @@
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.25*"/>
+                <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <ListView Grid.Column="0"
@@ -74,42 +74,69 @@
                         <ViewCell>
                             <Grid Margin="0, 0, 0, 2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="0.35*"/>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="0.15*"/>
-                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition Width="0.5*"/> <!-- Name -->
+                                    <ColumnDefinition Width="1.25*"/> <!-- Description -->
+                                    <ColumnDefinition Width="0.275*"/> <!-- Price -->
+                                    <ColumnDefinition Width="0.5*"/> <!-- Markdown Price (If Applicable) -->
+                                    <ColumnDefinition Width="0.25*"/> <!-- Quantity -->
+                                    <ColumnDefinition Width="0.5*"/> <!-- BOGO Free (If Applicable) -->
+                                    <ColumnDefinition/> <!-- Add To Cart Button -->
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0"
-                                   VerticalTextAlignment="Center"
-                                   Text="{Binding Name}"
-                                   Margin="10, 0"
-                                   FontAttributes="Bold"
-                                   />
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding Name}"
+                                       Margin="10, 0"
+                                       FontAttributes="Bold"
+                                       />
                                 <Label Grid.Column="1"
-                                   VerticalTextAlignment="Center"
-                                   Text="{Binding Description}"
-                                   FontAttributes="Italic"
-                                   />
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding Description}"
+                                       FontAttributes="Italic"
+                                       />
                                 <Label Grid.Column="2"
-                                   VerticalTextAlignment="Center"
-                                   Text="{Binding DisplayPrice}"
-                                   FontAttributes="Italic"
-                                   />
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding DisplayPrice}"
+                                       FontAttributes="Italic">
+                                    <Label.Style>
+                                       <Style TargetType="Label">
+                                           <Style.Triggers>
+                                               <DataTrigger TargetType="Label" Binding="{Binding MarkdownStrikethrough}" Value="True">
+                                                   <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                               </DataTrigger>
+                                           </Style.Triggers>
+                                       </Style>
+                                   </Label.Style>
+                                </Label>
                                 <Label Grid.Column="3"
-                                   VerticalTextAlignment="Center"
-                                   Text="{Binding DisplayQuantity}"
-                                   FontAttributes="Italic"
-                                   />
+                                       HorizontalTextAlignment="Start"
+                                       VerticalTextAlignment="Start"
+                                       FontSize="18"
+                                       Rotation="345"
+                                       Margin="0, 5"
+                                       Text="{Binding DisplaySalePrice}"
+                                       />
+                                <Label Grid.Column="4"
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding DisplayQuantity}"
+                                       FontAttributes="Italic"
+                                       />
+                                <Label Grid.Column="5"
+                                       VerticalTextAlignment="Start"
+                                       HorizontalTextAlignment="Start"
+                                       Rotation="345"
+                                       TextColor="DarkOrange"
+                                       FontSize="14"
+                                       Text="{Binding DisplayBOGOFree}"
+                                       />
                                 <Button Text="Add to Cart"
-                                    Grid.Column="4"
-                                    Margin="10, 0"
-                                    BackgroundColor="Green"
-                                    FontAttributes="Bold"
-                                    Command="{Binding AddToCartCommand}"
-                                    CommandParameter="{Binding}"
-                                    Clicked="InLineAddToCart_Clicked"
-                                    />
+                                        Grid.Column="6"
+                                        Margin="10, 0"
+                                        BackgroundColor="Green"
+                                        FontAttributes="Bold"
+                                        Command="{Binding AddToCartCommand}"
+                                        CommandParameter="{Binding}"
+                                        Clicked="InLineAddToCart_Clicked"
+                                        />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

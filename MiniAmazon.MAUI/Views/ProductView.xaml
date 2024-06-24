@@ -106,22 +106,33 @@
         </Grid>
         <Grid Grid.Row="9">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0.75*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="1.25*"/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="1.25*"/>
+                <ColumnDefinition Width="2.5*"/>
             </Grid.ColumnDefinitions>
             <CheckBox Grid.Column="1"
-                      x:Name="Markdown"
                       VerticalOptions="Center"
-                      HorizontalOptions="End"
+                      HorizontalOptions="Start"
                       CheckedChanged="Markdown_CheckedChanged"
                       IsChecked="{Binding EditingMarkdownBool}"
                       />
             <Label Grid.Column="2"
-                   Text="Put Product On Sale"
+                   Text="Apply Markdown Price"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Start"
+                   FontAttributes="Italic"
+                   FontSize="18"
+                   />
+            <CheckBox Grid.Column="3"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Start"
+                      IsChecked="{Binding EditingBOGOFreeBool}"
+                      />
+            <Label Grid.Column="4"
+                   Text="Apply BOGO Free Offer"
                    VerticalOptions="Center"
                    HorizontalTextAlignment="Start"
                    FontAttributes="Italic"

@@ -88,7 +88,10 @@ namespace MiniAmazon.Library.Services
                 Name = p.Name,
                 Description = p.Description,
                 Price = p.Price,
-                Quantity = 1
+                MarkdownPrice = p.MarkdownPrice,
+                Quantity = 1,
+                IsBOGO = p.IsBOGO,
+                IsMarkdown = p.IsMarkdown
             };
 
             // Check if Product is Available in Inventory

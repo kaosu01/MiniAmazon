@@ -31,7 +31,14 @@ namespace MiniAmazon.MAUI.ViewModels
                     var cartList = ShoppingCartService.Current?.Cart.Items;
                     for (int i = 0; i < cartList?.Count; i++)
                     {
-                        subTotal += cartList[i].Price * cartList[i].Quantity;
+                        if (cartList[i].IsMarkdown && cartList[i].IsBOGO)
+                            subTotal += (cartList[i].Quantity % 2 * cartList[i].MarkdownPrice) + (cartList[i].Quantity / 2 * cartList[i].MarkdownPrice);
+                        else if (cartList[i].IsMarkdown)
+                            subTotal += cartList[i].MarkdownPrice * cartList[i].Quantity;
+                        else if (cartList[i].IsBOGO)
+                            subTotal += (cartList[i].Quantity % 2 * cartList[i].Price) + (cartList[i].Quantity / 2 * cartList[i].Price);
+                        else
+                            subTotal += cartList[i].Price * cartList[i].Quantity;
                     }
                     return $"${subTotal}";
                 }

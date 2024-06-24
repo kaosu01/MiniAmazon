@@ -136,7 +136,14 @@ namespace MiniAmazon.MAUI.ViewModels
             {
                 if (Product == null)
                     return string.Empty;
-                return $"${Product.Price * Product.Quantity}";
+                if (Product.IsMarkdown && Product.IsBOGO)
+                    return $"${((Product.Quantity % 2) * Product.MarkdownPrice) + ((Product.Quantity / 2) * Product.MarkdownPrice)}";
+                else if (Product.IsMarkdown)
+                    return $"${Product.MarkdownPrice * Product.Quantity}";
+                else if (Product.IsBOGO)
+                    return $"${((Product.Quantity % 2) * Product.Price) + ((Product.Quantity / 2) * Product.Price)}";
+                else
+                    return $"${Product.Price * Product.Quantity}";
             }
         }
 
@@ -216,6 +223,18 @@ namespace MiniAmazon.MAUI.ViewModels
             }
         }
 
+        public string? DisplayBOGOFree
+        {
+            get
+            {
+                if (Product == null)
+                    return string.Empty;
+                if (Product.IsBOGO == true)
+                    return "BUY 1 GET 1\n      FREE!!!";
+                return string.Empty;
+            }
+        }
+
         public string? EditingQuantity
         {
             get
@@ -256,6 +275,22 @@ namespace MiniAmazon.MAUI.ViewModels
                 if (Product == null)
                     return;
                 Product.IsMarkdown = value;
+            }
+        }
+
+        public bool EditingBOGOFreeBool
+        {
+            get
+            {
+                if (Product == null)
+                    return false;
+                return Product.IsBOGO;
+            }
+            set
+            {
+                if (Product == null)
+                    return;
+                Product.IsBOGO = value;
             }
         }
 
