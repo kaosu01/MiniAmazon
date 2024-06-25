@@ -207,20 +207,18 @@
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.25*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition Width="0.75*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.25*"/> <!-- Subtotal -->
-                    <ColumnDefinition/> <!-- DisplaySubtotal -->
-                    <ColumnDefinition Width="0.5*"/> <!-- Tax -->
-                    <ColumnDefinition/> <!-- Display Tax -->
-                    <ColumnDefinition Width="0.5*"/> <!-- Total -->
-                    <ColumnDefinition/> <!-- Display Total -->
+                    <ColumnDefinition Width="0.5*"/> <!-- Subtotal -->
+                    <ColumnDefinition Width="0.5*"/> <!-- DisplaySubtotal -->
+                    <ColumnDefinition Width="0.25*"/> <!-- Tax -->
+                    <ColumnDefinition Width="0.5*"/> <!-- Display Tax -->
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
                        Text="Subtotal:"
-                       Margin="30, 0"
                        FontAttributes="Bold"
                        FontSize="20"
                        />
@@ -237,28 +235,41 @@
                        Text="{Binding DisplayTax}"
                        FontSize="20"
                        />
-                <Label Grid.Column="4"
-                       Text="Total:"
-                       FontAttributes="Bold"
-                       FontSize="20"
-                       />
-                <Label Grid.Column="5"
-                       Text="{Binding DisplayTotal}"
-                       FontSize="20"
-                       />
             </Grid>
         </Grid>
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="1.25*"/>
+                <ColumnDefinition Width="0.15*"/>
+                <ColumnDefinition Width="0.75*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1"
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.75*"/>
+                    <ColumnDefinition Width="1.75*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Text="Total:"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="End"
+                       Margin="20, 0"
+                       />
+                <Label Grid.Column="1"
+                       Text="{Binding DisplayTotal}"
+                       VerticalTextAlignment="Center"
+                       FontSize="20"
+                       
+                       />
+                <Button Grid.Column="2"
                     Text="Checkout"
                     FontAttributes="Bold"
                     Margin="15, 0"
                     Clicked="Checkout_Clicked"
                     />
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>
