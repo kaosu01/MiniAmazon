@@ -11,6 +11,8 @@ namespace MiniAmazon.MAUI.ViewModels
 {
     class ReceiptViewModel : INotifyPropertyChanged
     {
+        private readonly ShopViewModel? shopViewModel; // This is Staying Null for Tax
+
         public List<ProductViewModel> CheckoutCartProducts
         {
             get
@@ -54,8 +56,8 @@ namespace MiniAmazon.MAUI.ViewModels
                 else
                 {
                     decimal tax = Convert.ToDecimal(DisplaySubtotal?.Replace("$", ""));
-                    tax = Math.Round(tax * 0.07m, 2);
-                    return $"${tax} (7%)";
+                    tax = Math.Round(Convert.ToDecimal(tax * Convert.ToDecimal(shopViewModel?.SelectedTaxRate?.Replace("%", "")) / 100), 2);
+                    return $"${tax} ({shopViewModel?.SelectedTaxRate}%)"; // Error I Believe
                 }
             }
         }
@@ -69,7 +71,7 @@ namespace MiniAmazon.MAUI.ViewModels
                 else
                 {
                     decimal subTotal = Math.Round(Convert.ToDecimal(DisplaySubtotal?.Replace("$", "")), 2);
-                    decimal tax = Math.Round(Convert.ToDecimal(DisplayTax?.Replace("$", "").Replace("(7%)", "")), 2);
+                    decimal tax = Math.Round(Convert.ToDecimal(DisplayTax?.Split(' ')[0].Replace("$", "")), 2);
                     return $"${subTotal + tax}";
                 }
             }

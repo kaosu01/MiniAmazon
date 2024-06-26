@@ -6,10 +6,11 @@
              NavigatedTo="ContentPage_NavigatedTo">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.75*"/>
-            <RowDefinition Height="1.15*"/>
-            <RowDefinition Height="7*"/>
             <RowDefinition/>
+            <RowDefinition Height="1.25*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.25*"/>
             <RowDefinition/>
             <RowDefinition Height="0.25*"/>
         </Grid.RowDefinitions>
@@ -206,38 +207,48 @@
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.25*"/>
-                <ColumnDefinition Width="0.25*"/>
-                <ColumnDefinition Width="0.75*"/>
+                <ColumnDefinition Width="1.75*"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/> <!-- Subtotal -->
-                    <ColumnDefinition Width="0.5*"/> <!-- DisplaySubtotal -->
+                    <ColumnDefinition Width="0.525*"/> <!-- Subtotal -->
+                    <ColumnDefinition Width="0.75*"/> <!-- DisplaySubtotal -->
                     <ColumnDefinition Width="0.25*"/> <!-- Tax -->
-                    <ColumnDefinition Width="0.5*"/> <!-- Display Tax -->
+                    <ColumnDefinition Width="0.325*"/> <!-- Display Tax -->
+                    <ColumnDefinition Width="0.85*"/> <!-- Pick Tax Rate -->
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
                        Text="Subtotal:"
                        FontAttributes="Bold"
                        FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
                 <Label Grid.Column="1"
                        Text="{Binding DisplaySubtotal}"
                        FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
                 <Label Grid.Column="2"
                        Text="Tax:"
                        FontAttributes="Bold"
                        FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
                 <Label Grid.Column="3"
                        Text="{Binding DisplayTax}"
                        FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
+                <Picker Grid.Column="4"
+                        Margin="30, 5"
+                        VerticalOptions="Center"
+                        ItemsSource="{Binding TaxRates}"
+                        SelectedItem="{Binding SelectedTaxRate}"
+                        />
             </Grid>
         </Grid>
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.25*"/>
                 <ColumnDefinition Width="0.15*"/>
@@ -260,8 +271,7 @@
                 <Label Grid.Column="1"
                        Text="{Binding DisplayTotal}"
                        VerticalTextAlignment="Center"
-                       FontSize="20"
-                       
+                       FontSize="20"         
                        />
                 <Button Grid.Column="2"
                     Text="Checkout"

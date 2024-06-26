@@ -112,8 +112,8 @@ namespace MiniAmazon.MAUI.ViewModels
                 else
                 {
                     decimal tax = Convert.ToDecimal(DisplaySubtotal?.Replace("$", ""));
-                    tax = Math.Round(tax * 0.07m, 2);
-                    return $"${tax} (7%)";
+                    tax = Math.Round(tax * (Convert.ToDecimal(SelectedTaxRate) / 100), 2);
+                    return $"${tax}";
                 }
             }
         }
@@ -132,5 +132,33 @@ namespace MiniAmazon.MAUI.ViewModels
                 }
             }
         }
+
+        private string? selectedTaxRate;
+
+        public string? SelectedTaxRate
+        {
+            get
+            {
+                return selectedTaxRate ?? "7.0%";
+            }
+            set
+            {
+                selectedTaxRate = value?.Replace("%", "");
+                NotifyPropertyChanged(nameof(DisplayTax));
+                NotifyPropertyChanged(nameof(DisplayTotal));
+            }
+        }
+
+        public List<string> TaxRates
+        {
+            get
+            {
+                return Enumerable.Range(0, (int)((10m - 0) / 0.1m) + 1)
+                         .Select(i => 0 + i * 0.1m)
+                         .Select(x => $"{Math.Round(x, 1)}%")
+                         .ToList();
+            }
+        }
+
     }
 }
