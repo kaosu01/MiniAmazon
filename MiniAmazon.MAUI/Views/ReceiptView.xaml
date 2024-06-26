@@ -12,9 +12,9 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition/> <!-- My Order -->
-                <RowDefinition Height="7*"/> <!-- Display Order -->
-                <RowDefinition/> <!-- Subtotal/Tax/Total -->
+                <RowDefinition/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition/>
                 <RowDefinition Height="0.125*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
@@ -121,12 +121,12 @@
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition/> <!-- Blank -->
-                <RowDefinition/> <!-- Blank -->
-                <RowDefinition Height="0.75*"/> <!-- Thank You For Shopping At Mini-Amazon -->
-                <RowDefinition Height="0.65*"/> <!-- Go To Inventory/Continue Shopping -->
-                <RowDefinition/> <!-- Blank -->
-                <RowDefinition/> <!-- Blank -->
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="0.75*"/>
+                <RowDefinition Height="0.65*"/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Row="2"
                    Text="Thank You For Shopping At Mini-Amazon!"

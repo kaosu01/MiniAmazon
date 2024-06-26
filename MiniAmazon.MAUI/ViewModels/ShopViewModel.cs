@@ -100,17 +100,5 @@ namespace MiniAmazon.MAUI.ViewModels
                 }
             }
         }
-
-        public List<string> TaxRates
-        {
-            get
-            {
-                return Enumerable.Range(0, (int)((10m - 0) / 0.1m) + 1)
-                         .Select(i => 0 + i * 0.1m)
-                         .Select(x => $"{Math.Round(x, 1)}%")
-                         .ToList();
-            }
-        }
-
     }
 }
