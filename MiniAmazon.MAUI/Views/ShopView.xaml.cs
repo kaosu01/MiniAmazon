@@ -19,7 +19,7 @@ public partial class ShopView : ContentPage
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
         (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
-        (BindingContext as ShopViewModel)?.RefreshCosts();
+        (BindingContext as ShopViewModel)?.RefreshSubtotal();
     }
 
     private void SearchInventory_Clicked(object sender, EventArgs e)
@@ -36,14 +36,14 @@ public partial class ShopView : ContentPage
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
         (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
-        (BindingContext as ShopViewModel)?.RefreshCosts();
+        (BindingContext as ShopViewModel)?.RefreshSubtotal();
     }
 
     private void InLineRemoveFromCart_Clicked(object sender, EventArgs e)
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
         (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
-        (BindingContext as ShopViewModel)?.RefreshCosts();
+        (BindingContext as ShopViewModel)?.RefreshSubtotal();
     }
 
     private void Checkout_Clicked(object sender, EventArgs e)

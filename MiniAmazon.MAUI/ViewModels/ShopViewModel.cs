@@ -35,11 +35,9 @@ namespace MiniAmazon.MAUI.ViewModels
             NotifyPropertyChanged(nameof(CheckoutCartProducts));
         }
 
-        public void RefreshCosts()
+        public void RefreshSubtotal()
         {
             NotifyPropertyChanged(nameof(DisplaySubtotal));
-            NotifyPropertyChanged(nameof(DisplayTax));
-            NotifyPropertyChanged(nameof(DisplayTotal));
         }
 
         public ShopViewModel()
@@ -100,52 +98,6 @@ namespace MiniAmazon.MAUI.ViewModels
                     }
                     return $"${subTotal}";
                 }
-            }
-        }
-
-        public string? DisplayTax
-        {
-            get
-            {
-                if (DisplaySubtotal == "$0.00")
-                    return "$0.00";
-                else
-                {
-                    decimal tax = Convert.ToDecimal(DisplaySubtotal?.Replace("$", ""));
-                    tax = Math.Round(tax * (Convert.ToDecimal(SelectedTaxRate) / 100), 2);
-                    return $"${tax}";
-                }
-            }
-        }
-
-        public string? DisplayTotal
-        {
-            get
-            {
-                if (DisplaySubtotal == "$0.00")
-                    return "$0.00";
-                else
-                {
-                    decimal subTotal = Math.Round(Convert.ToDecimal(DisplaySubtotal?.Replace("$", "")), 2);
-                    decimal tax = Math.Round(Convert.ToDecimal(DisplayTax?.Replace("$", "").Replace("(7%)", "")), 2);
-                    return $"${subTotal + tax}";
-                }
-            }
-        }
-
-        private string? selectedTaxRate;
-
-        public string? SelectedTaxRate
-        {
-            get
-            {
-                return selectedTaxRate ?? "7.0%";
-            }
-            set
-            {
-                selectedTaxRate = value?.Replace("%", "");
-                NotifyPropertyChanged(nameof(DisplayTax));
-                NotifyPropertyChanged(nameof(DisplayTotal));
             }
         }
 

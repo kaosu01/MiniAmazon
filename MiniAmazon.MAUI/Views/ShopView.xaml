@@ -8,9 +8,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="1.25*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition/>
-            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="7*"/>
             <RowDefinition/>
             <RowDefinition Height="0.25*"/>
         </Grid.RowDefinitions>
@@ -75,13 +73,20 @@
                         <ViewCell>
                             <Grid Margin="0, 0, 0, 2">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/> <!-- Name -->
-                                    <ColumnDefinition Width="1.25*"/> <!-- Description -->
-                                    <ColumnDefinition Width="0.275*"/> <!-- Price -->
-                                    <ColumnDefinition Width="0.5*"/> <!-- Markdown Price (If Applicable) -->
-                                    <ColumnDefinition Width="0.25*"/> <!-- Quantity -->
-                                    <ColumnDefinition Width="0.5*"/> <!-- BOGO Free (If Applicable) -->
-                                    <ColumnDefinition/> <!-- Add To Cart Button -->
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <!-- Name -->
+                                    <ColumnDefinition Width="1.25*"/>
+                                    <!-- Description -->
+                                    <ColumnDefinition Width="0.275*"/>
+                                    <!-- Price -->
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <!-- Markdown Price (If Applicable) -->
+                                    <ColumnDefinition Width="0.25*"/>
+                                    <!-- Quantity -->
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <!-- BOGO Free (If Applicable) -->
+                                    <ColumnDefinition/>
+                                    <!-- Add To Cart Button -->
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0"
                                        VerticalTextAlignment="Center"
@@ -99,14 +104,14 @@
                                        Text="{Binding DisplayPrice}"
                                        FontAttributes="Italic">
                                     <Label.Style>
-                                       <Style TargetType="Label">
-                                           <Style.Triggers>
-                                               <DataTrigger TargetType="Label" Binding="{Binding MarkdownStrikethrough}" Value="True">
-                                                   <Setter Property="TextDecorations" Value="Strikethrough"/>
-                                               </DataTrigger>
-                                           </Style.Triggers>
-                                       </Style>
-                                   </Label.Style>
+                                        <Style TargetType="Label">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding MarkdownStrikethrough}" Value="True">
+                                                    <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
                                 </Label>
                                 <Label Grid.Column="3"
                                        HorizontalTextAlignment="Start"
@@ -207,49 +212,6 @@
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.75*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.525*"/> <!-- Subtotal -->
-                    <ColumnDefinition Width="0.75*"/> <!-- DisplaySubtotal -->
-                    <ColumnDefinition Width="0.25*"/> <!-- Tax -->
-                    <ColumnDefinition Width="0.325*"/> <!-- Display Tax -->
-                    <ColumnDefinition Width="0.85*"/> <!-- Pick Tax Rate -->
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="Subtotal:"
-                       FontAttributes="Bold"
-                       FontSize="20"
-                       VerticalTextAlignment="Center"
-                       />
-                <Label Grid.Column="1"
-                       Text="{Binding DisplaySubtotal}"
-                       FontSize="20"
-                       VerticalTextAlignment="Center"
-                       />
-                <Label Grid.Column="2"
-                       Text="Tax:"
-                       FontAttributes="Bold"
-                       FontSize="20"
-                       VerticalTextAlignment="Center"
-                       />
-                <Label Grid.Column="3"
-                       Text="{Binding DisplayTax}"
-                       FontSize="20"
-                       VerticalTextAlignment="Center"
-                       />
-                <Picker Grid.Column="4"
-                        Margin="30, 5"
-                        VerticalOptions="Center"
-                        ItemsSource="{Binding TaxRates}"
-                        SelectedItem="{Binding SelectedTaxRate}"
-                        />
-            </Grid>
-        </Grid>
-        <Grid Grid.Row="5">
-            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.25*"/>
                 <ColumnDefinition Width="0.15*"/>
                 <ColumnDefinition Width="0.75*"/>
@@ -261,7 +223,7 @@
                     <ColumnDefinition Width="1.75*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                       Text="Total:"
+                       Text="Subtotal:"
                        FontSize="20"
                        FontAttributes="Bold"
                        VerticalTextAlignment="Center"
@@ -269,7 +231,7 @@
                        Margin="20, 0"
                        />
                 <Label Grid.Column="1"
-                       Text="{Binding DisplayTotal}"
+                       Text="{Binding DisplaySubtotal}"
                        VerticalTextAlignment="Center"
                        FontSize="20"         
                        />

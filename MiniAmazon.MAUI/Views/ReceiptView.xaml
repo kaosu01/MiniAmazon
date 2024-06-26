@@ -7,7 +7,7 @@
              NavigatedTo="ContentPage_NavigatedTo">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -15,6 +15,7 @@
                 <RowDefinition/> <!-- My Order -->
                 <RowDefinition Height="7*"/> <!-- Display Order -->
                 <RowDefinition/> <!-- Subtotal/Tax/Total -->
+                <RowDefinition Height="0.125*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
                    Text="My Order"
@@ -66,46 +67,55 @@
             </ListView>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.25*"/>
-                    <!-- Subtotal -->
-                    <ColumnDefinition/>
-                    <!-- DisplaySubtotal -->
-                    <ColumnDefinition Width="0.5*"/>
-                    <!-- Tax -->
-                    <ColumnDefinition/>
-                    <!-- Display Tax -->
-                    <ColumnDefinition Width="0.5*"/>
-                    <!-- Total -->
-                    <ColumnDefinition/>
-                    <!-- Display Total -->
+                    <ColumnDefinition Width="0.075*"/>
+                    <ColumnDefinition Width="0.1875*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.075*"/>
+                    <ColumnDefinition Width="0.125*"/>
+                    <ColumnDefinition Width="0.275*"/>
+                    <ColumnDefinition Width="0.125*"/>
+                    <ColumnDefinition Width="0.225*"/>
+                    <ColumnDefinition Width="0.075*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
+                <Label Grid.Column="1"
                        Text="Subtotal:"
-                       Margin="30, 0"
                        FontAttributes="Bold"
                        FontSize="20"
-                       />
-                <Label Grid.Column="1"
-                       Text="{Binding DisplaySubtotal}"
-                       FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
                 <Label Grid.Column="2"
+                       Text="{Binding DisplaySubtotal}"
+                       FontSize="20"
+                       VerticalTextAlignment="Center"
+                       />
+                <Label Grid.Column="3"
                        Text="Tax:"
                        FontAttributes="Bold"
                        FontSize="20"
-                       />
-                <Label Grid.Column="3"
-                       Text="{Binding DisplayTax}"
-                       FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
                 <Label Grid.Column="4"
+                       Text="{Binding DisplayTax}"
+                       FontSize="20"
+                       VerticalTextAlignment="Center"
+                       />
+                <Picker Grid.Column="5"
+                        VerticalOptions="Center"
+                        Margin="20, 5"
+                        HorizontalOptions="Start" 
+                        ItemsSource="{Binding TaxRates}"
+                        SelectedItem="{Binding SelectedTaxRate}"
+                        />
+                <Label Grid.Column="6"
                        Text="Total:"
                        FontAttributes="Bold"
                        FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
-                <Label Grid.Column="5"
+                <Label Grid.Column="7"
                        Text="{Binding DisplayTotal}"
                        FontSize="20"
+                       VerticalTextAlignment="Center"
                        />
             </Grid>
         </Grid>
@@ -121,7 +131,7 @@
             <Label Grid.Row="2"
                    Text="Thank You For Shopping At Mini-Amazon!"
                    FontAttributes="Bold"
-                   FontSize="28"
+                   FontSize="26"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"
                    />

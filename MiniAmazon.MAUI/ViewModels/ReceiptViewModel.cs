@@ -11,8 +11,6 @@ namespace MiniAmazon.MAUI.ViewModels
 {
     class ReceiptViewModel : INotifyPropertyChanged
     {
-        private readonly ShopViewModel? shopViewModel; // This is Staying Null for Tax
-
         public List<ProductViewModel> CheckoutCartProducts
         {
             get
@@ -56,8 +54,8 @@ namespace MiniAmazon.MAUI.ViewModels
                 else
                 {
                     decimal tax = Convert.ToDecimal(DisplaySubtotal?.Replace("$", ""));
-                    tax = Math.Round(Convert.ToDecimal(tax * Convert.ToDecimal(shopViewModel?.SelectedTaxRate?.Replace("%", "")) / 100), 2);
-                    return $"${tax} ({shopViewModel?.SelectedTaxRate}%)"; // Error I Believe
+                    tax = Math.Round(Convert.ToDecimal(tax * Convert.ToDecimal(SelectedTaxRate?.Replace("%", "")) / 100), 2);
+                    return $"${tax}";
                 }
             }
         }
@@ -74,6 +72,22 @@ namespace MiniAmazon.MAUI.ViewModels
                     decimal tax = Math.Round(Convert.ToDecimal(DisplayTax?.Split(' ')[0].Replace("$", "")), 2);
                     return $"${subTotal + tax}";
                 }
+            }
+        }
+
+        private string? selectedTaxRate;
+
+        public string? SelectedTaxRate
+        {
+            get
+            {
+                return selectedTaxRate ?? "7.0%";
+            }
+            set
+            {
+                selectedTaxRate = value?.Replace("%", "");
+                NotifyPropertyChanged(nameof(DisplayTax));
+                NotifyPropertyChanged(nameof(DisplayTotal));
             }
         }
 
@@ -99,6 +113,17 @@ namespace MiniAmazon.MAUI.ViewModels
         public void ClearCheckoutCart()
         {
             ShoppingCartService.Current.ClearCart();
+        }
+
+        public List<string> TaxRates
+        {
+            get
+            {
+                return Enumerable.Range(0, (int)((10m - 0) / 0.1m) + 1)
+                         .Select(i => 0 + i * 0.1m)
+                         .Select(x => $"{Math.Round(x, 1)}%")
+                         .ToList();
+            }
         }
     }
 }
