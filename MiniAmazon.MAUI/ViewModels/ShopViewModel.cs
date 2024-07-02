@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MiniAmazon.MAUI.ViewModels
 {
@@ -22,12 +23,12 @@ namespace MiniAmazon.MAUI.ViewModels
         public void RefreshInventory()
         {
             SearchInventoryQuery = string.Empty;
-            NotifyPropertyChanged(nameof(Products));
+            NotifyPropertyChanged(nameof(ShoppingProducts));
         }
 
         public void SearchInventory()
         {
-            NotifyPropertyChanged(nameof(Products));
+            NotifyPropertyChanged(nameof(ShoppingProducts));
         }
 
         public void RefreshCheckoutCart()
@@ -56,11 +57,11 @@ namespace MiniAmazon.MAUI.ViewModels
             }
             get { return searchInventoryQuery; }
         }
-        public List<ProductViewModel> Products
+        public List<ProductViewModel> ShoppingProducts
         {
             get
             {
-                return InventoryService.Current?.Products?.Where(p => p != null)
+                return InventoryServiceProxy.Current?.Products?.Where(p => p != null)
                     .Where(p => p.Name?.ToUpper()?.Contains(SearchInventoryQuery.ToUpper()) ?? false)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
@@ -70,7 +71,7 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                return ShoppingCartService.Current?.Cart.Items?.Where(p => p != null)
+                return ShoppingCartServiceProxy.Current?.Cart.Items?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         }
@@ -79,12 +80,12 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                if (ShoppingCartService.Current?.Cart?.Items?.Count == 0)
+                if (ShoppingCartServiceProxy.Current?.Cart?.Items?.Count == 0)
                     return "$0.00";
                 else
                 {
                     decimal subTotal = 0;
-                    var cartList = ShoppingCartService.Current?.Cart.Items;
+                    var cartList = ShoppingCartServiceProxy.Current?.Cart.Items;
                     for (int i = 0; i < cartList?.Count; i++)
                     {
                         if (cartList[i].IsMarkdown && cartList[i].IsBOGO)

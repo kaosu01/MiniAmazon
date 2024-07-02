@@ -3,19 +3,33 @@ using System.Collections.ObjectModel;
 
 namespace MiniAmazon.Library.Services 
 {
-    public class ShoppingCartService
+    public class ShoppingCartServiceProxy
     {
-        private ShoppingCartService()
+        private ShoppingCartServiceProxy()
         {
-            Cart = new ShoppingCart { Items = new List<Product>() };
+            carts = new List<ShoppingCart>();
         }
 
-        private static ShoppingCartService? instance;
+        private static ShoppingCartServiceProxy? instance;
         private static object instanceLock = new object();
 
-        public ShoppingCart Cart { get; private set; }
 
-        public static ShoppingCartService Current
+        private List<ShoppingCart> carts;
+        public ShoppingCart Cart
+        {
+            get
+            {
+                if (!carts.Any())
+                {
+                    var newCart = new ShoppingCart();
+                    carts.Add(newCart);
+                    return newCart;
+                }
+                return carts?.FirstOrDefault() ?? new ShoppingCart();
+            }
+        }
+
+        public static ShoppingCartServiceProxy Current
         {
             get
             {
@@ -23,14 +37,20 @@ namespace MiniAmazon.Library.Services
                 {
                     if (instance == null)
                     {
-                        instance = new ShoppingCartService();
+                        instance = new ShoppingCartServiceProxy();
                     }
                 }
                 return instance;
             }
         }
 
-        public ReadOnlyCollection<ShoppingCart> carts;
+        public ReadOnlyCollection<ShoppingCart> Carts
+        {
+            get
+            {
+                return carts.AsReadOnly();
+            }
+        }
 
         /*
          * private int NextId
@@ -95,7 +115,7 @@ namespace MiniAmazon.Library.Services
             };
 
             // Check if Product is Available in Inventory
-            var productInInv = InventoryService.Current.Products?.FirstOrDefault(prod_in_Inv => prod_in_Inv.Id == p.Id);
+            var productInInv = InventoryServiceProxy.Current.Products?.FirstOrDefault(prod_in_Inv => prod_in_Inv.Id == p.Id);
 
             if (productInInv == null || productInInv.Quantity <= 0)
                 return;
@@ -129,7 +149,7 @@ namespace MiniAmazon.Library.Services
                 Cart.Items?.Remove(productToDelete);
 
             // Find Product in Inventory to Add Back
-            var addtoInv = InventoryService.Current.Products?.FirstOrDefault(prod_In_Inv => prod_In_Inv.Id == p.Id);
+            var addtoInv = InventoryServiceProxy.Current.Products?.FirstOrDefault(prod_In_Inv => prod_In_Inv.Id == p.Id);
 
             if (addtoInv != null)
                 addtoInv.Quantity++;    

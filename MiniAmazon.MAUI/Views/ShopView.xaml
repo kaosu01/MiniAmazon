@@ -59,6 +59,7 @@
                    FontAttributes="Bold"
                    Margin="30, 15"
                    TextDecorations="Underline"
+                   VerticalTextAlignment="Center"
                    />
         </Grid>
         <Grid Grid.Row="2">
@@ -67,26 +68,19 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <ListView Grid.Column="0"
-                      ItemsSource="{Binding Products}">
+                      ItemsSource="{Binding ShoppingProducts}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Grid Margin="0, 0, 0, 2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.5*"/>
-                                    <!-- Name -->
                                     <ColumnDefinition Width="1.25*"/>
-                                    <!-- Description -->
                                     <ColumnDefinition Width="0.275*"/>
-                                    <!-- Price -->
                                     <ColumnDefinition Width="0.5*"/>
-                                    <!-- Markdown Price (If Applicable) -->
                                     <ColumnDefinition Width="0.25*"/>
-                                    <!-- Quantity -->
                                     <ColumnDefinition Width="0.5*"/>
-                                    <!-- BOGO Free (If Applicable) -->
                                     <ColumnDefinition/>
-                                    <!-- Add To Cart Button -->
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0"
                                        VerticalTextAlignment="Center"

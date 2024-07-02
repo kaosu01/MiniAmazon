@@ -4,9 +4,9 @@ using System.Xml.Linq;
 
 namespace MiniAmazon.Library.Services
 {
-    public class InventoryService
+    public class InventoryServiceProxy
     {
-        private static InventoryService? instance;
+        private static InventoryServiceProxy? instance;
 
         // To Support Multi-Threading
         private static object instanceLock = new object();
@@ -20,7 +20,7 @@ namespace MiniAmazon.Library.Services
             get { return products.AsReadOnly(); }
         }
         
-        public static InventoryService Current
+        public static InventoryServiceProxy Current
         {
             get
             {
@@ -28,14 +28,14 @@ namespace MiniAmazon.Library.Services
                 {
                     if (instance == null)
                     {
-                        instance = new InventoryService();
+                        instance = new InventoryServiceProxy();
                     }
                 }
                 return instance;
             }
         }
 
-        private InventoryService()
+        private InventoryServiceProxy()
         {
             // Added Products For Testing Purposes
             products = new List<Product>
@@ -95,7 +95,7 @@ namespace MiniAmazon.Library.Services
             }
 
             // Update the Product in Cart if Changes Were Made
-            var prod_In_Cart = ShoppingCartService.Current.Cart.Items;
+            var prod_In_Cart = ShoppingCartServiceProxy.Current.Cart.Items;
 
             for (int i = 0; i < prod_In_Cart?.Count; i++)
             {

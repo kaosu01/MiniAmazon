@@ -8,8 +8,8 @@ namespace MiniAmazon.CLI
     {
         static void Main()
         {
-            var inventorySvc = InventoryService.Current;
-            var shoppingCartSvc = ShoppingCartService.Current;
+            var inventorySvc = InventoryServiceProxy.Current;
+            var shoppingCartSvc = ShoppingCartServiceProxy.Current;
 
             // Create A Shopping Cart Used For Checkout
             var checkout_Cart = shoppingCartSvc.Cart;
@@ -59,7 +59,7 @@ namespace MiniAmazon.CLI
             }
         }
 
-        static void Inventory(InventoryService inventorySvc)
+        static void Inventory(InventoryServiceProxy inventorySvc)
         {
             bool inInventory = true;
             string? invinput = null;
@@ -215,7 +215,7 @@ namespace MiniAmazon.CLI
             }
             return;
         }
-        static void Shopping(InventoryService inventorySvc, ShoppingCartService shoppingCartSvc, ShoppingCart checkout_Cart)
+        static void Shopping(InventoryServiceProxy inventorySvc, ShoppingCartServiceProxy shoppingCartSvc, ShoppingCart checkout_Cart)
         {
             bool shopping = true;   // Continue Shopping Until Checkout
             string? shopInput = null;

@@ -16,7 +16,7 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                return InventoryService.Current?.Products?.Where(p => p != null)
+                return InventoryServiceProxy.Current?.Products?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         } 

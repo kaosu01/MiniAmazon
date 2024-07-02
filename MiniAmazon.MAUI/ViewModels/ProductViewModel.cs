@@ -63,19 +63,19 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             if (id == null)
                 return;
-            InventoryService.Current.Remove(id ?? 0);
+            InventoryServiceProxy.Current.Remove(id ?? 0);
         }
 
         private void ExecuteAddToCart(Product? p)
         {
             if (p != null)
-                ShoppingCartService.Current.AddToCart(p);
+                ShoppingCartServiceProxy.Current.AddToCart(p);
         }
 
         private void ExecuteRemoveFromCart(Product? p)
         {
             if (p != null)
-                ShoppingCartService.Current.RemoveFromCart(p);
+                ShoppingCartServiceProxy.Current.RemoveFromCart(p);
         }
 
         public void SetupCommands()
@@ -311,7 +311,7 @@ namespace MiniAmazon.MAUI.ViewModels
 
         public ProductViewModel(int id)
         {
-            Product = InventoryService.Current?.Products?.FirstOrDefault(p => p.Id == id);
+            Product = InventoryServiceProxy.Current?.Products?.FirstOrDefault(p => p.Id == id);
             if (Product == null)
                 Product = new Product();
         }
@@ -319,7 +319,7 @@ namespace MiniAmazon.MAUI.ViewModels
         public void Add()
         {
             if (Product != null)
-                InventoryService.Current.AddorUpdate(Product);
+                InventoryServiceProxy.Current.AddorUpdate(Product);
         }
     }
 }
