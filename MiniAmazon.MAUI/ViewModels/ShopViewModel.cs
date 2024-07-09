@@ -48,6 +48,21 @@ namespace MiniAmazon.MAUI.ViewModels
             SearchInventoryQuery = string.Empty;
         }
 
+        public ShoppingCart Cart
+        {
+            get
+            {
+                return ShoppingCartServiceProxy.Current.Carts[0];
+            }
+        }
+        public ShoppingCart Wishlist
+        {
+            get
+            {
+                return ShoppingCartServiceProxy.Current.Carts[1];
+            }
+        }
+
         private string searchInventoryQuery;
 
         public string SearchInventoryQuery
@@ -137,6 +152,11 @@ namespace MiniAmazon.MAUI.ViewModels
                     return $"${subTotal}";
                 }
             }
+        }
+
+        public void GetReceipt(int id)
+        {
+            Shell.Current.GoToAsync($"//Receipt?cartId={id}");
         }
     }
 }

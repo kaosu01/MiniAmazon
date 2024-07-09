@@ -1,4 +1,5 @@
-﻿using MiniAmazon.Library.Services;
+﻿using MiniAmazon.Library.Models;
+using MiniAmazon.Library.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,11 +12,17 @@ namespace MiniAmazon.MAUI.ViewModels
 {
     class ReceiptViewModel : INotifyPropertyChanged
     {
+        public ReceiptViewModel(int id)
+        {
+            cart = ShoppingCartServiceProxy.Current.Carts.FirstOrDefault(cartId => cartId.Id == id) ?? new ShoppingCart();
+        }
+
+        public ShoppingCart cart { get; set; }
         public List<ProductViewModel> CheckoutCartProducts
         {
             get
             {
-                return ShoppingCartServiceProxy.Current?.Carts[0].Items?.Where(p => p != null)
+                return cart.Items?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         }
@@ -23,12 +30,12 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                if (ShoppingCartServiceProxy.Current?.Carts[0]?.Items?.Count == 0)
+                if (cart.Items?.Count == 0)
                     return "$0.00";
                 else
                 {
                     decimal subTotal = 0;
-                    var cartList = ShoppingCartServiceProxy.Current?.Carts[0].Items;
+                    var cartList = cart.Items;
                     for (int i = 0; i < cartList?.Count; i++)
                     {
                         if (cartList[i].IsMarkdown && cartList[i].IsBOGO)
@@ -112,7 +119,7 @@ namespace MiniAmazon.MAUI.ViewModels
 
         public void ClearCheckoutCart()
         {
-            ShoppingCartServiceProxy.Current.ClearCart(ShoppingCartServiceProxy.Current.Carts[0].Id);
+            ShoppingCartServiceProxy.Current.ClearCart(cart.Id);
         }
 
         public List<string> TaxRates
