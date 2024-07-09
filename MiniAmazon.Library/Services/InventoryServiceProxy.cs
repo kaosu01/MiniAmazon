@@ -95,20 +95,23 @@ namespace MiniAmazon.Library.Services
             }
 
             // Update the Product in Cart if Changes Were Made
-            var prod_In_Cart = ShoppingCartServiceProxy.Current.Cart.Items;
-
-            for (int i = 0; i < prod_In_Cart?.Count; i++)
+            var carts = ShoppingCartServiceProxy.Current.Carts;
+            for (int i = 0; i < carts.Count; i++)
             {
-                if (prod_In_Cart[i].Id == p.Id)
+                // Get Product In Cart if In Cart List
+                var prod_In_Cart = carts[i].Items?.FirstOrDefault(cartItem => cartItem.Id == p.Id);
+
+                if (prod_In_Cart != null)
                 {
-                    prod_In_Cart[i].Name = p.Name;
-                    prod_In_Cart[i].Description = p.Description;
-                    prod_In_Cart[i].Price = p.Price;
-                    prod_In_Cart[i].IsMarkdown = p.IsMarkdown;
-                    prod_In_Cart[i].MarkdownPrice = p.MarkdownPrice;
-                    prod_In_Cart[i].IsBOGO = p.IsBOGO;
-                }
-            }
+                
+                    prod_In_Cart.Name = p.Name;
+                    prod_In_Cart.Description = p.Description;
+                    prod_In_Cart.Price = p.Price;
+                    prod_In_Cart.IsMarkdown = p.IsMarkdown;
+                    prod_In_Cart.MarkdownPrice = p.MarkdownPrice;
+                    prod_In_Cart.IsBOGO = p.IsBOGO;
+                } 
+            } 
 
             return p;
         }

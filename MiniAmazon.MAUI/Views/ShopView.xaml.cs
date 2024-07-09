@@ -19,7 +19,6 @@ public partial class ShopView : ContentPage
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
         (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
-        (BindingContext as ShopViewModel)?.RefreshSubtotal();
     }
 
     private void SearchInventory_Clicked(object sender, EventArgs e)
@@ -36,17 +35,33 @@ public partial class ShopView : ContentPage
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
         (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
-        (BindingContext as ShopViewModel)?.RefreshSubtotal();
     }
 
     private void InLineRemoveFromCart_Clicked(object sender, EventArgs e)
     {
         (BindingContext as ShopViewModel)?.RefreshInventory();
         (BindingContext as ShopViewModel)?.RefreshCheckoutCart();
-        (BindingContext as ShopViewModel)?.RefreshSubtotal();
+    }
+
+    private void InLineAddToWishlist_Clicked(object sender, EventArgs e)
+    {
+        (BindingContext as ShopViewModel)?.RefreshInventory();
+        (BindingContext as ShopViewModel)?.RefreshWishlist();
+    }
+
+    private void InLineRemoveFromWishlist_Clicked(object sender, EventArgs e)
+    {
+        (BindingContext as ShopViewModel)?.RefreshInventory();
+        (BindingContext as ShopViewModel)?.RefreshWishlist();
     }
 
     private void Checkout_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//Receipt");
+    }
+
+    // Need To Find A Way That I'll Checkout One Cart Or The Other
+    private void CheckoutWishlist_Clicked(object sender, EventArgs e)
     {
         Shell.Current.GoToAsync("//Receipt");
     }

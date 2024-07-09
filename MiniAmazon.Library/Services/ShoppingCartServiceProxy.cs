@@ -7,14 +7,25 @@ namespace MiniAmazon.Library.Services
     {
         private ShoppingCartServiceProxy()
         {
-            carts = new List<ShoppingCart>();
+            carts = new List<ShoppingCart>
+            {
+                new ShoppingCart
+                {
+                    Id = 0
+                },
+                new ShoppingCart
+                {
+                    Id = 1
+                }
+            };
         }
 
         private static ShoppingCartServiceProxy? instance;
         private static object instanceLock = new object();
 
-
         private List<ShoppingCart> carts;
+
+        /*
         public ShoppingCart Cart
         {
             get
@@ -28,6 +39,21 @@ namespace MiniAmazon.Library.Services
                 return carts?.FirstOrDefault() ?? new ShoppingCart();
             }
         }
+
+        public ShoppingCart Wishlist
+        {
+            get
+            {
+                if (carts.Count == 1)
+                {
+                    var wishlistCart = new ShoppingCart();
+                    carts.Add(wishlistCart);
+                    return wishlistCart;
+                }
+                return carts[1] ?? new ShoppingCart();
+            }
+        }
+        */
 
         public static ShoppingCartServiceProxy Current
         {
@@ -53,7 +79,7 @@ namespace MiniAmazon.Library.Services
         }
 
         /*
-         * private int NextId
+        private int NextId
         {
             get
             {
@@ -63,6 +89,8 @@ namespace MiniAmazon.Library.Services
             }
         }
         */
+        
+        
         /*
         public ShoppingCart AddOrUpdate(ShoppingCart sc)
         {
@@ -96,9 +124,9 @@ namespace MiniAmazon.Library.Services
         }
         */
 
-        public void AddToCart(Product p)
+        public void AddToCart(Product p, int id)
         {
-            if (Cart == null || Cart.Items == null)
+            if (carts == null)
                 return;
 
             // Create p As A New Product, So It Doesn't Interfere w/ the Inventory's Version
@@ -123,30 +151,45 @@ namespace MiniAmazon.Library.Services
             // Decrement Quantity of Selected Product From Inventory
             productInInv.Quantity--;
 
+            // Determine What Cart We're Adding/Updating
+            var cart = carts.FirstOrDefault(cartType => cartType.Id == id);
+
+            if (cart == null)
+                return;
+
             // Determine if We're Adding or Updating the Cart
-            var productInCart = Cart.Items?.FirstOrDefault(prod_in_Cart => prod_in_Cart.Id == p.Id);
+            var productInCart = cart.Items?.FirstOrDefault(product_In_Cart => product_In_Cart.Id == p.Id);
 
             if (productInCart == null)
                 // Add the Product Into the Cart
-                Cart.Items?.Add(p);
+                cart.Items?.Add(p);
             else
                 // Update the Quantity In the Cart
                 productInCart.Quantity++;
         }
-        public void RemoveFromCart(Product p)
+
+        public void RemoveFromCart(Product p, int id)
         {
-            if (Cart == null)
+            if (carts == null)
+                return;
+
+            // Determine What Cart We're Removing the Item From
+            var cart = carts.FirstOrDefault(cartType => cartType.Id == id);
+
+            if (cart == null)
                 return;
 
             // Find Product in Cart to Delete
-            var productToDelete = Cart.Items?.FirstOrDefault(prod_In_Cart => prod_In_Cart.Id == p.Id);
+            var productToDelete = cart.Items?.FirstOrDefault(prod_In_Cart => prod_In_Cart.Id == p.Id);
 
-            // Remove
-            if (productToDelete != null)
-                productToDelete.Quantity--;
+            // Remove, If Possible
+            if (productToDelete == null)
+                return;
+
+            productToDelete.Quantity--;
 
             if(productToDelete?.Quantity == 0)
-                Cart.Items?.Remove(productToDelete);
+                cart.Items?.Remove(productToDelete);
 
             // Find Product in Inventory to Add Back
             var addtoInv = InventoryServiceProxy.Current.Products?.FirstOrDefault(prod_In_Inv => prod_In_Inv.Id == p.Id);
@@ -155,10 +198,18 @@ namespace MiniAmazon.Library.Services
                 addtoInv.Quantity++;    
         }
 
-        public void ClearCart()
+        public void ClearCart(int id)
         {
-            if (Cart != null && Cart.Items != null)
-                Cart.Items.Clear();
+            if (carts == null)
+                return;
+
+            // Determine What Cart We're Clearing Out
+            var cart = carts.FirstOrDefault(cartType => cartType.Id == id);
+
+            if(cart == null)
+                return;
+
+            cart.Items?.Clear();
         }
     }
 }

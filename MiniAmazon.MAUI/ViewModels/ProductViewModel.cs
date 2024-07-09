@@ -15,9 +15,11 @@ namespace MiniAmazon.MAUI.ViewModels
     public class ProductViewModel : INotifyPropertyChanged
 {
         public ICommand? AddToCartCommand { get; private set; }
+        public ICommand? RemoveFromCartCommand { get; private set; }
         public ICommand? EditCommand { get; private set; }
         public ICommand? RemoveCommand { get; private set; }
-        public ICommand? RemoveFromCartCommand { get; private set; }
+        public ICommand? AddToWishlistCommand { get; private set; }
+        public ICommand? RemoveFromWishlistCommand { get; private set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -69,13 +71,25 @@ namespace MiniAmazon.MAUI.ViewModels
         private void ExecuteAddToCart(Product? p)
         {
             if (p != null)
-                ShoppingCartServiceProxy.Current.AddToCart(p);
+                ShoppingCartServiceProxy.Current.AddToCart(p, 0);
         }
 
         private void ExecuteRemoveFromCart(Product? p)
         {
             if (p != null)
-                ShoppingCartServiceProxy.Current.RemoveFromCart(p);
+                ShoppingCartServiceProxy.Current.RemoveFromCart(p, 0);
+        }
+
+        private void ExecuteAddToWishlist(Product? p)
+        {
+            if (p != null)
+                ShoppingCartServiceProxy.Current.AddToCart(p, 1);
+        }
+
+        private void ExecuteRemoveFromWishlist(Product? p)
+        {
+            if (p != null)
+                ShoppingCartServiceProxy.Current.RemoveFromCart(p, 1);
         }
 
         public void SetupCommands()
@@ -88,6 +102,10 @@ namespace MiniAmazon.MAUI.ViewModels
                 (p) => ExecuteAddToCart((p as ProductViewModel)?.Product));
             RemoveFromCartCommand = new Command(
                 (p) => ExecuteRemoveFromCart((p as ProductViewModel)?.Product));
+            AddToWishlistCommand = new Command(
+                (p) => ExecuteAddToWishlist((p as ProductViewModel)?.Product));
+            RemoveFromWishlistCommand = new Command(
+                (p) => ExecuteRemoveFromWishlist((p as ProductViewModel)?.Product));
         }
         public Product? Product { get; set; }
 

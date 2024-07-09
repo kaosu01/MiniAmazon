@@ -8,9 +8,7 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="1.25*"/>
-            <RowDefinition Height="7*"/>
-            <RowDefinition/>
-            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -75,12 +73,13 @@
                             <Grid Margin="0, 0, 0, 2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="1.25*"/>
+                                    <ColumnDefinition/>
                                     <ColumnDefinition Width="0.275*"/>
                                     <ColumnDefinition Width="0.5*"/>
                                     <ColumnDefinition Width="0.25*"/>
                                     <ColumnDefinition Width="0.5*"/>
                                     <ColumnDefinition/>
+                                    <ColumnDefinition Width="0.25*"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0"
                                        VerticalTextAlignment="Center"
@@ -128,8 +127,8 @@
                                        FontSize="14"
                                        Text="{Binding DisplayBOGOFree}"
                                        />
-                                <Button Text="Add to Cart"
-                                        Grid.Column="6"
+                                <Button Grid.Column="6"
+                                        Text="Add to Cart"
                                         Margin="10, 0"
                                         BackgroundColor="Green"
                                         FontAttributes="Bold"
@@ -137,104 +136,210 @@
                                         CommandParameter="{Binding}"
                                         Clicked="InLineAddToCart_Clicked"
                                         />
+                                <Button Grid.Column="7"
+                                        Text="♥"
+                                        Clicked="InLineAddToWishlist_Clicked"
+                                        BackgroundColor="Transparent"
+                                        TextColor="Gray"
+                                        Command="{Binding AddToWishlistCommand}"
+                                        CommandParameter="{Binding}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView Grid.Column="1"
-                      ItemsSource="{Binding CheckoutCartProducts}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                       Text="{Binding Name}"
-                                       Margin="30, 0"
-                                       HorizontalTextAlignment="Start"
-                                       VerticalTextAlignment="Center"
-                                       FontAttributes="Bold"
-                                       />
-                                <Button Grid.Column="1"
-                                        Text="-"
-                                        FontAttributes="Bold"
-                                        TextColor="Black"
-                                        BorderColor="Gray"
-                                        BorderWidth="2"
-                                        BackgroundColor="White"
-                                        Margin="0, 10"
-                                        Command="{Binding RemoveFromCartCommand}"
-                                        CommandParameter="{Binding}"
-                                        Clicked="InLineRemoveFromCart_Clicked"
-                                        />
-                                <Label Grid.Column="2"
-                                       Text="{Binding DisplayQuantity}"
-                                       HorizontalTextAlignment="Center"
-                                       VerticalTextAlignment="Center"
-                                       FontAttributes="Italic"
-                                       />
-                                <Button Grid.Column="3"
-                                        Text="+"
-                                        FontAttributes="Bold"
-                                        TextColor="Black"
-                                        BorderColor="Gray"
-                                        BorderWidth="2"
-                                        BackgroundColor="White"
-                                        Margin="0, 10"
-                                        Command="{Binding AddToCartCommand}"
-                                        CommandParameter="{Binding}"
-                                        Clicked="InLineAddToCart_Clicked"
-                                        />
-                                <Label Grid.Column="4"
-                                       Text="{Binding TotalProductPrice}"
-                                       HorizontalTextAlignment="Center"
-                                       VerticalTextAlignment="Center"
-                                       FontAttributes="Italic"
-                                       />
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.25*"/>
-                <ColumnDefinition Width="0.15*"/>
-                <ColumnDefinition Width="0.75*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="0.75*"/>
-                    <ColumnDefinition Width="1.75*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0"
-                       Text="Subtotal:"
-                       FontSize="20"
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="1.25*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="0.25*"/>
+                </Grid.RowDefinitions>
+                <ListView Grid.Row="0"
+                          ItemsSource="{Binding CheckoutCartProducts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Name}"
+                                           Margin="30, 0"
+                                           HorizontalTextAlignment="Start"
+                                           VerticalTextAlignment="Center"
+                                           FontAttributes="Bold"
+                                           />
+                                    <Button Grid.Column="1"
+                                            Text="-"
+                                            FontAttributes="Bold"
+                                            TextColor="Black"
+                                            BorderColor="Gray"
+                                            BorderWidth="2"
+                                            BackgroundColor="White"
+                                            Margin="0, 10"
+                                            Command="{Binding RemoveFromCartCommand}"
+                                            CommandParameter="{Binding}"
+                                            Clicked="InLineRemoveFromCart_Clicked"
+                                            />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding DisplayQuantity}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           FontAttributes="Italic"
+                                           />
+                                    <Button Grid.Column="3"
+                                            Text="+"
+                                            FontAttributes="Bold"
+                                            TextColor="Black"
+                                            BorderColor="Gray"
+                                            BorderWidth="2"
+                                            BackgroundColor="White"
+                                            Margin="0, 10"
+                                            Command="{Binding AddToCartCommand}"
+                                            CommandParameter="{Binding}"
+                                            Clicked="InLineAddToCart_Clicked"
+                                            />
+                                    <Label Grid.Column="4"
+                                           Text="{Binding TotalProductPrice}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           FontAttributes="Italic"
+                                           />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.75*"/>
+                        <ColumnDefinition Width="1.75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="Subtotal:"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="End"
+                           Margin="20, 0"
+                           />
+                    <Label Grid.Column="1"
+                           Text="{Binding DisplayCartSubtotal}"
+                           VerticalTextAlignment="Center"
+                           FontSize="20"         
+                           />
+                    <Button Grid.Column="2"
+                            Text="Checkout Cart"
+                            FontAttributes="Bold"
+                            Margin="15, 0"
+                            Clicked="Checkout_Clicked"
+                            />
+                </Grid>
+                <Label Grid.Row="3"
+                       Text="My Wishlist"
+                       FontSize="24"
                        FontAttributes="Bold"
+                       Margin="30, 15"
+                       TextDecorations="Underline"
                        VerticalTextAlignment="Center"
-                       HorizontalTextAlignment="End"
-                       Margin="20, 0"
                        />
-                <Label Grid.Column="1"
-                       Text="{Binding DisplaySubtotal}"
-                       VerticalTextAlignment="Center"
-                       FontSize="20"         
-                       />
-                <Button Grid.Column="2"
-                    Text="Checkout"
-                    FontAttributes="Bold"
-                    Margin="15, 0"
-                    Clicked="Checkout_Clicked"
-                    />
+                <ListView Grid.Row="4"
+                          ItemsSource="{Binding WishlistProducts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                        <ColumnDefinition Width="0.25*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Name}"
+                                           Margin="30, 0"
+                                           HorizontalTextAlignment="Start"
+                                           VerticalTextAlignment="Center"
+                                           FontAttributes="Bold"
+                                            />
+                                    <Button Grid.Column="1"
+                                            Text="-"
+                                            FontAttributes="Bold"
+                                            TextColor="Black"
+                                            BorderColor="Gray"
+                                            BorderWidth="2"
+                                            BackgroundColor="White"
+                                            Margin="0, 10"
+                                            Command="{Binding RemoveFromWishlistCommand}"
+                                            CommandParameter="{Binding}"
+                                            Clicked="InLineRemoveFromWishlist_Clicked"
+                                            />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding DisplayQuantity}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           FontAttributes="Italic"
+                                           />
+                                    <Button Grid.Column="3"
+                                            Text="+"
+                                            FontAttributes="Bold"
+                                            TextColor="Black"
+                                            BorderColor="Gray"
+                                            BorderWidth="2"
+                                            BackgroundColor="White"
+                                            Margin="0, 10"
+                                            Command="{Binding AddToWishlistCommand}"
+                                            CommandParameter="{Binding}"
+                                            Clicked="InLineAddToWishlist_Clicked"
+                                            />
+                                    <Label Grid.Column="4"
+                                           Text="{Binding TotalProductPrice}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           FontAttributes="Italic"
+                                           />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.75*"/>
+                        <ColumnDefinition Width="1.75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Text="Subtotal:"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="End"
+                           Margin="20, 0"
+                           />
+                    <Label Grid.Column="1"
+                           Text="{Binding DisplayWishlistSubtotal}"
+                           VerticalTextAlignment="Center"
+                           FontSize="20"         
+                           />
+                    <Button Grid.Column="2"
+                            Text="Checkout Wishlist"
+                            FontAttributes="Bold"
+                            Margin="15, 0"
+                            Clicked="CheckoutWishlist_Clicked"
+                            />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

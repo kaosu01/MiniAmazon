@@ -34,11 +34,13 @@ namespace MiniAmazon.MAUI.ViewModels
         public void RefreshCheckoutCart()
         {
             NotifyPropertyChanged(nameof(CheckoutCartProducts));
+            NotifyPropertyChanged(nameof(DisplayCartSubtotal));
         }
 
-        public void RefreshSubtotal()
+        public void RefreshWishlist()
         {
-            NotifyPropertyChanged(nameof(DisplaySubtotal));
+            NotifyPropertyChanged(nameof(WishlistProducts));
+            NotifyPropertyChanged(nameof(DisplayWishlistSubtotal));
         }
 
         public ShopViewModel()
@@ -71,21 +73,56 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                return ShoppingCartServiceProxy.Current?.Cart.Items?.Where(p => p != null)
+                return ShoppingCartServiceProxy.Current?.Carts[0].Items?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         }
 
-        public string? DisplaySubtotal
+        public List<ProductViewModel> WishlistProducts
         {
             get
             {
-                if (ShoppingCartServiceProxy.Current?.Cart?.Items?.Count == 0)
+                return ShoppingCartServiceProxy.Current?.Carts[1].Items?.Where(p => p != null)
+                    .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
+            }
+        }
+
+        public string? DisplayCartSubtotal
+        {
+            get
+            {
+                if (ShoppingCartServiceProxy.Current?.Carts[0]?.Items?.Count == 0)
                     return "$0.00";
                 else
                 {
                     decimal subTotal = 0;
-                    var cartList = ShoppingCartServiceProxy.Current?.Cart.Items;
+                    var cartList = ShoppingCartServiceProxy.Current?.Carts[0].Items;
+                    for (int i = 0; i < cartList?.Count; i++)
+                    {
+                        if (cartList[i].IsMarkdown && cartList[i].IsBOGO)
+                            subTotal += (cartList[i].Quantity % 2 * cartList[i].MarkdownPrice) + (cartList[i].Quantity / 2 * cartList[i].MarkdownPrice);
+                        else if (cartList[i].IsMarkdown)
+                            subTotal += cartList[i].MarkdownPrice * cartList[i].Quantity;
+                        else if (cartList[i].IsBOGO)
+                            subTotal += (cartList[i].Quantity % 2 * cartList[i].Price) + (cartList[i].Quantity / 2 * cartList[i].Price);
+                        else
+                            subTotal += cartList[i].Price * cartList[i].Quantity;
+                    }
+                    return $"${subTotal}";
+                }
+            }
+        }
+
+        public string? DisplayWishlistSubtotal
+        {
+            get
+            {
+                if (ShoppingCartServiceProxy.Current?.Carts[1]?.Items?.Count == 0)
+                    return "$0.00";
+                else
+                {
+                    decimal subTotal = 0;
+                    var cartList = ShoppingCartServiceProxy.Current?.Carts[1].Items;
                     for (int i = 0; i < cartList?.Count; i++)
                     {
                         if (cartList[i].IsMarkdown && cartList[i].IsBOGO)

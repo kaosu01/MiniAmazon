@@ -15,7 +15,7 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                return ShoppingCartServiceProxy.Current?.Cart.Items?.Where(p => p != null)
+                return ShoppingCartServiceProxy.Current?.Carts[0].Items?.Where(p => p != null)
                     .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>();
             }
         }
@@ -23,12 +23,12 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             get
             {
-                if (ShoppingCartServiceProxy.Current?.Cart?.Items?.Count == 0)
+                if (ShoppingCartServiceProxy.Current?.Carts[0]?.Items?.Count == 0)
                     return "$0.00";
                 else
                 {
                     decimal subTotal = 0;
-                    var cartList = ShoppingCartServiceProxy.Current?.Cart.Items;
+                    var cartList = ShoppingCartServiceProxy.Current?.Carts[0].Items;
                     for (int i = 0; i < cartList?.Count; i++)
                     {
                         if (cartList[i].IsMarkdown && cartList[i].IsBOGO)
@@ -112,7 +112,7 @@ namespace MiniAmazon.MAUI.ViewModels
 
         public void ClearCheckoutCart()
         {
-            ShoppingCartServiceProxy.Current.ClearCart();
+            ShoppingCartServiceProxy.Current.ClearCart(ShoppingCartServiceProxy.Current.Carts[0].Id);
         }
 
         public List<string> TaxRates
