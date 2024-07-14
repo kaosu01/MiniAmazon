@@ -1,4 +1,6 @@
 ﻿using MiniAmazon.Library.Models;
+using MiniAmazon.Library.Utilities;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Xml.Linq;
 
@@ -37,29 +39,8 @@ namespace MiniAmazon.Library.Services
 
         private InventoryServiceProxy()
         {
-            // Added Products For Testing Purposes
-            products = new List<Product>
-            {
-                new Product
-                {
-                    Id = 1,
-                    Name = "Chair",
-                    Description = "You sit on it",
-                    Price = 19.99m,
-                    Quantity = 3,
-                    IsMarkdown = true,
-                    MarkdownPrice = 12.99m
-                },
-                new Product
-                {
-                    Id = 2,
-                    Name = "Eraser",
-                    Description = "You erase with it",
-                    Price = 4.99m,
-                    Quantity = 7,
-                    IsBOGO = true
-                }
-            };
+            var response = new WebRequestHandler().Get("/Inventory").Result;
+            products = JsonConvert.DeserializeObject<List<Product>>(response);
         }
 
         // Get Next Id in the List
