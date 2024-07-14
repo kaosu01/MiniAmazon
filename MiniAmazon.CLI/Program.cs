@@ -1,4 +1,5 @@
-﻿using MiniAmazon.Library.Models;
+﻿using MiniAmazon.Library.DTOs;
+using MiniAmazon.Library.Models;
 using MiniAmazon.Library.Services;
 using System.ComponentModel.DataAnnotations;
 
@@ -89,7 +90,7 @@ namespace MiniAmazon.CLI
                             Console.Write("Enter the Amount In Stock: ");
                             pCount = Convert.ToInt32(Console.ReadLine());
 
-                            var product = new Product
+                            var product = new ProductDTO
                             {
                                 Name = pName,
                                 Description = pDescription,
@@ -113,7 +114,7 @@ namespace MiniAmazon.CLI
                         {
                             // Get Input for Searching Product to Update
                             int idInput = 0;
-                            Product? product = null;
+                            ProductDTO? product = null;
 
                             // Get Input for Updating Product
                             string? uName = null;
@@ -162,7 +163,7 @@ namespace MiniAmazon.CLI
                             // Get ID and Delete Product
                             int idInput = 0;
                             string? ans = null;
-                            Product? product = null;
+                            ProductDTO? product = null;
 
                             // Print Inventory Again to Show IDs
                             inventorySvc?.Products?.ToList().ForEach(Console.WriteLine);
@@ -240,8 +241,8 @@ namespace MiniAmazon.CLI
                         {
                             // Variables Used to Add a Product to the User's Cart
                             int idInput = 0;
-                            Product? product = null;
-                            Product? productToAdd = null;
+                            ProductDTO? product = null;
+                            ProductDTO? productToAdd = null;
 
                             // Get Product Using ID
                             do
@@ -255,7 +256,7 @@ namespace MiniAmazon.CLI
                                     Console.WriteLine("Invalid ID Selection... Please Try Again...");
                             } while (product == null);
 
-                            productToAdd = new Product
+                            productToAdd = new ProductDTO
                             {
                                 Id = product.Id,
                                 Name = product.Name,
@@ -285,7 +286,7 @@ namespace MiniAmazon.CLI
                         {
                             int idInput = 0;
                             int amountDeleted = 0;
-                            Product? productToDelete = null;
+                            ProductDTO? productToDelete = null;
 
                             // Get Product Using ID
                             do
@@ -302,7 +303,7 @@ namespace MiniAmazon.CLI
                             amountDeleted = productToDelete.Quantity - 1;
 
                             // Change the Quantity to How Much the User Wants to Remove From Their Cart, Then Remove
-                            productToDelete = new Product()
+                            productToDelete = new ProductDTO()
                             {
                                 Id = productToDelete.Id,
                                 Name = productToDelete.Name,
@@ -354,7 +355,7 @@ namespace MiniAmazon.CLI
                     for (int i = 0; i < checkout_Cart.Items?.Count; i++)
                     {
                         Console.WriteLine(checkout_Cart.Items[i]);
-                        Product product = checkout_Cart.Items[i];
+                        ProductDTO product = checkout_Cart.Items[i];
                         subTotal += product.Price * product.Quantity;
                     }
                 }

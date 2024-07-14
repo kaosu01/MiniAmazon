@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiniAmazon.Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,22 @@ namespace MiniAmazon.Library.DTOs
         public int Quantity { get; set; }
         public bool IsMarkdown { get; set; }
         public bool IsBOGO { get; set; }
+
+        public ProductDTO()
+        {
+
+        }
+
+        public ProductDTO(Product p)
+        {
+            Name = p.Name;
+            Description = p.Description;
+            Price = p.Price;
+            MarkdownPrice = p.MarkdownPrice;
+            Id = p.Id;
+            Quantity = p.Quantity;
+            IsMarkdown = p.IsMarkdown;
+            IsBOGO = p.IsBOGO;
+        }
     }
 }

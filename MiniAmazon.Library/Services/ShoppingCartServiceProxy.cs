@@ -1,4 +1,5 @@
-﻿using MiniAmazon.Library.Models;
+﻿using MiniAmazon.Library.DTOs;
+using MiniAmazon.Library.Models;
 using System.Collections.ObjectModel;
 
 namespace MiniAmazon.Library.Services 
@@ -124,13 +125,13 @@ namespace MiniAmazon.Library.Services
         }
         */
 
-        public void AddToCart(Product p, int id)
+        public void AddToCart(ProductDTO p, int id)
         {
             if (carts == null)
                 return;
 
             // Create p As A New Product, So It Doesn't Interfere w/ the Inventory's Version
-            p = new Product
+            p = new ProductDTO
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -168,7 +169,7 @@ namespace MiniAmazon.Library.Services
                 productInCart.Quantity++;
         }
 
-        public void RemoveFromCart(Product p, int id)
+        public void RemoveFromCart(ProductDTO p, int id)
         {
             if (carts == null)
                 return;

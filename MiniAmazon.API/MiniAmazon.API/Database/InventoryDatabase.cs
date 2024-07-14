@@ -4,7 +4,7 @@ namespace MiniAmazon.API.Database
 {
     public static class InventoryDatabase
     {
-        public static IEnumerable<Product> Products { get; } =
+        public static List<Product> Products { get; } =
             new List<Product>
             {
                 new Product
@@ -33,7 +33,26 @@ namespace MiniAmazon.API.Database
                     Description = "You can type with it",
                     Price = 79.99m,
                     Quantity = 6
+                },
+                new Product
+                {
+                    Id = 4,
+                    Name = "Headphones",
+                    Description = "You can listen to music with it",
+                    Price = 39.99m,
+                    Quantity = 3,
+                    IsMarkdown = true,
+                    MarkdownPrice = 31.99m
                 }
             };
+        public static int NextProductId
+        {
+            get
+            {
+                if (!Products.Any())
+                    return 1;
+                return Products.Select(p => p.Id).Max() + 1;
+            }
+        }
     }
 }

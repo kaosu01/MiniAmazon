@@ -1,4 +1,6 @@
-﻿namespace MiniAmazon.Library.Models
+﻿using MiniAmazon.Library.DTOs;
+
+namespace MiniAmazon.Library.Models
 {
     public class Product
     {
@@ -13,5 +15,22 @@
 
         public string? Display() { return ToString();}
         public override string ToString() { return $"({Id}) {Name}: {Description}\n    Price: ${Price}\tQuantity: {Quantity}\n"; }
+
+        public Product(ProductDTO p)
+        {
+            Name = p.Name;
+            Description = p.Description;
+            Price = p.Price;
+            MarkdownPrice = p.MarkdownPrice;
+            Id = p.Id;
+            Quantity = p.Quantity;
+            IsMarkdown = p.IsMarkdown;
+            IsBOGO = p.IsBOGO;
+        }
+
+        public Product()
+        {
+
+        }
     }
 }

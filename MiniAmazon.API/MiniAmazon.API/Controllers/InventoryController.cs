@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniAmazon.API.ECs;
+using MiniAmazon.Library.DTOs;
 using MiniAmazon.Library.Models;
 
 namespace MiniAmazon.API.Controllers
@@ -15,9 +16,15 @@ namespace MiniAmazon.API.Controllers
         }
 
         [HttpGet()]
-        public async Task<IEnumerable<Product>> Get()
+        public async Task<IEnumerable<ProductDTO>> Get()
         {
             return await new InventoryEC().Get();
+        }
+
+        [HttpPost()]
+        public async Task<ProductDTO> AddorUpdate([FromBody] ProductDTO p)
+        {
+            return await new InventoryEC().AddorUpdate(p);
         }
     }
 }

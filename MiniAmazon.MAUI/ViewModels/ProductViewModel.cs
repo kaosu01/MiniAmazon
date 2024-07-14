@@ -1,4 +1,5 @@
-﻿using MiniAmazon.Library.Models;
+﻿using MiniAmazon.Library.DTOs;
+using MiniAmazon.Library.Models;
 using MiniAmazon.Library.Services;
 using System;
 using System.Collections.Generic;
@@ -68,25 +69,25 @@ namespace MiniAmazon.MAUI.ViewModels
             InventoryServiceProxy.Current.Remove(id ?? 0);
         }
 
-        private void ExecuteAddToCart(Product? p)
+        private void ExecuteAddToCart(ProductDTO? p)
         {
             if (p != null)
                 ShoppingCartServiceProxy.Current.AddToCart(p, 0);
         }
 
-        private void ExecuteRemoveFromCart(Product? p)
+        private void ExecuteRemoveFromCart(ProductDTO? p)
         {
             if (p != null)
                 ShoppingCartServiceProxy.Current.RemoveFromCart(p, 0);
         }
 
-        private void ExecuteAddToWishlist(Product? p)
+        private void ExecuteAddToWishlist(ProductDTO? p)
         {
             if (p != null)
                 ShoppingCartServiceProxy.Current.AddToCart(p, 1);
         }
 
-        private void ExecuteRemoveFromWishlist(Product? p)
+        private void ExecuteRemoveFromWishlist(ProductDTO? p)
         {
             if (p != null)
                 ShoppingCartServiceProxy.Current.RemoveFromCart(p, 1);
@@ -107,7 +108,7 @@ namespace MiniAmazon.MAUI.ViewModels
             RemoveFromWishlistCommand = new Command(
                 (p) => ExecuteRemoveFromWishlist((p as ProductViewModel)?.Product));
         }
-        public Product? Product { get; set; }
+        public ProductDTO? Product { get; set; }
 
         public int PId
         {
@@ -314,16 +315,16 @@ namespace MiniAmazon.MAUI.ViewModels
 
         public ProductViewModel()
         {
-            Product = new Product();
+            Product = new ProductDTO();
             SetupCommands();
         }
 
-        public ProductViewModel(Product? p)
+        public ProductViewModel(ProductDTO? p)
         {
             if (p != null)
                 Product = p;
             else
-                Product = new Product();
+                Product = new ProductDTO();
             SetupCommands();
         }
 
@@ -331,7 +332,7 @@ namespace MiniAmazon.MAUI.ViewModels
         {
             Product = InventoryServiceProxy.Current?.Products?.FirstOrDefault(p => p.Id == id);
             if (Product == null)
-                Product = new Product();
+                Product = new ProductDTO();
         }
 
         public void Add()
