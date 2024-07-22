@@ -335,10 +335,10 @@ namespace MiniAmazon.MAUI.ViewModels
                 Product = new ProductDTO();
         }
 
-        public void Add()
+        public async void Add()
         {
             if (Product != null)
-                InventoryServiceProxy.Current.AddorUpdate(Product);
+                Product = await InventoryServiceProxy.Current.AddorUpdate(Product);
         }
     }
 }

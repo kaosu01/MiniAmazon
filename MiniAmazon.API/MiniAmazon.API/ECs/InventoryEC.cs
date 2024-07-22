@@ -36,6 +36,17 @@ namespace MiniAmazon.API.ECs
                 p.Name = char.ToUpper(p.Name[0]) + p.Name[1..];
                 InventoryDatabase.Products.Add(new Product(p));
             }
+            else
+            {
+                var prodToUpdate = InventoryDatabase.Products.FirstOrDefault(prod => prod.Id == p.Id);
+                if (prodToUpdate != null)
+                {
+                    var index = InventoryDatabase.Products.IndexOf(prodToUpdate);
+                    InventoryDatabase.Products.RemoveAt(index);
+                    prodToUpdate = new Product(p);
+                    InventoryDatabase.Products.Insert(index, prodToUpdate);
+                }
+            }
 
             /* FOR NOW LET'S ONLY UPDATE THE INVENTORY DATABASE NOT THE CARTS */
             //// Update the Product in Cart if Changes Were Made

@@ -23,6 +23,14 @@ namespace MiniAmazon.Library.Services
             get { return products.AsReadOnly(); }
         }
         
+        public async Task<IEnumerable<ProductDTO>> Get()
+        {
+            var result = await new WebRequestHandler().Get("/Inventory");
+            var deserializedResult = JsonConvert.DeserializeObject<List<ProductDTO>>(result);
+            products = deserializedResult?.ToList() ?? new List<ProductDTO>();
+            return products;
+        }
+
         public static InventoryServiceProxy Current
         {
             get

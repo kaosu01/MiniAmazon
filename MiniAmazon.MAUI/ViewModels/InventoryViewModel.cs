@@ -28,8 +28,9 @@ namespace MiniAmazon.MAUI.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         
-        public void RefreshInventory()
+        public async void RefreshInventory()
         {
+            await InventoryServiceProxy.Current.Get();
             NotifyPropertyChanged(nameof(Products));
         }
     }
