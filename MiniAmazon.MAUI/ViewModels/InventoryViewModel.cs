@@ -12,6 +12,7 @@ namespace MiniAmazon.MAUI.ViewModels
 {
     public class InventoryViewModel : INotifyPropertyChanged
     {
+        public InventoryViewModel() { }
         public List<ProductViewModel> Products
         {
             get

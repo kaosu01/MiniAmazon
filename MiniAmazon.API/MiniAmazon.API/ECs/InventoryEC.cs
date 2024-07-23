@@ -18,6 +18,20 @@ namespace MiniAmazon.API.ECs
             return InventoryDatabase.Products.Take(100).Select(p => new ProductDTO(p));
         }
 
+        public async Task<ProductDTO?> Remove(int id)
+        {
+            if (InventoryDatabase.Products == null)
+                return null;
+
+            var productToDelete = InventoryDatabase.Products.FirstOrDefault(c => c.Id == id);
+
+            if (productToDelete == null)
+                return null;
+
+            InventoryDatabase.Products.Remove(productToDelete);
+            return new ProductDTO(productToDelete);
+        }
+
         public async Task<ProductDTO> AddorUpdate(ProductDTO p)
         {
             var isAdd = false;

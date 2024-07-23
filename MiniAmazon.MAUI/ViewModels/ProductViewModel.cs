@@ -3,6 +3,7 @@ using MiniAmazon.Library.Models;
 using MiniAmazon.Library.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
@@ -62,11 +63,9 @@ namespace MiniAmazon.MAUI.ViewModels
             Shell.Current.GoToAsync($"//Product?productId={p.Product.Id}");
         }
 
-        private void ExecuteRemove(int? id)
+        private async void ExecuteRemove(int? id)
         {
-            if (id == null)
-                return;
-            InventoryServiceProxy.Current.Remove(id ?? 0);
+            await InventoryServiceProxy.Current.Remove(id ?? 0);
         }
 
         private void ExecuteAddToCart(ProductDTO? p)
@@ -333,6 +332,16 @@ namespace MiniAmazon.MAUI.ViewModels
             Product = InventoryServiceProxy.Current?.Products?.FirstOrDefault(p => p.Id == id);
             if (Product == null)
                 Product = new ProductDTO();
+            SetupCommands();
+        }
+
+        public ObservableCollection<ProductViewModel> Inventory
+        {
+            get
+            {
+                return new ObservableCollection<ProductViewModel>(InventoryServiceProxy.Current?.Products?.Where(p => p != null)
+                    .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>());
+            }
         }
 
         public async void Add()

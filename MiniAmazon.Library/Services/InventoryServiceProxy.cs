@@ -57,15 +57,11 @@ namespace MiniAmazon.Library.Services
             var response = await new WebRequestHandler().Post("/Inventory", p);
             return JsonConvert.DeserializeObject<ProductDTO>(response);
         }
-        public void Remove(int id)
+        public async Task<ProductDTO?> Remove(int id)
         {
-            if (products == null)
-                return;
-
-            var productToDelete = products?.FirstOrDefault(c => c.Id == id);
-
-            if (productToDelete != null)
-                products?.Remove(productToDelete);
+            var response = await new WebRequestHandler().Delete($"/{id}");
+            var productToRemove = JsonConvert.DeserializeObject<ProductDTO>(response);
+            return productToRemove;
         }
     }
 }

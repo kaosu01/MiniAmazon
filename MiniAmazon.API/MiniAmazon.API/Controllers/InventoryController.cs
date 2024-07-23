@@ -26,5 +26,11 @@ namespace MiniAmazon.API.Controllers
         {
             return await new InventoryEC().AddorUpdate(p);
         }
+
+        [HttpDelete("/{id}")]
+        public async Task<ProductDTO?> Remove(int id)
+        {
+            return await new InventoryEC().Remove(id);
+        }
     }
 }
