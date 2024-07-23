@@ -335,15 +335,6 @@ namespace MiniAmazon.MAUI.ViewModels
             SetupCommands();
         }
 
-        public ObservableCollection<ProductViewModel> Inventory
-        {
-            get
-            {
-                return new ObservableCollection<ProductViewModel>(InventoryServiceProxy.Current?.Products?.Where(p => p != null)
-                    .Select(p => new ProductViewModel(p)).ToList() ?? new List<ProductViewModel>());
-            }
-        }
-
         public async void Add()
         {
             if (Product != null)
