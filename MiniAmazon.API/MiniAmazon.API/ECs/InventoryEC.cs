@@ -30,10 +30,14 @@ namespace MiniAmazon.API.ECs
 
             InventoryDatabase.Products.Remove(productToDelete);
             return new ProductDTO(productToDelete);
+
+            // return new ProductDTO(Filebase.Current.Delete(id));
         }
 
         public async Task<ProductDTO> AddorUpdate(ProductDTO p)
         {
+            // return new ProductDTO(Filebase.Current.AddOrUpdate(new Product(p));
+
             var isAdd = false;
 
             // If This is the First Time this Item is Being Added Into the Inventory
