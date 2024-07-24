@@ -51,7 +51,7 @@ namespace MiniAmazon.API.Database
             }
 
             //go to the right place]
-            string path = $"{p.Id}.json";
+            string path = $"{_root}\\{p.Id}.json";
 
             //if the item has been previously persisted
             if(File.Exists(path))
@@ -88,7 +88,7 @@ namespace MiniAmazon.API.Database
         public Product Delete(int id)
         {
             // Get Path to json File
-            string path = $"{id}.json";
+            string path = $"{_root}\\{id}.json";
             Product p = null;
 
             // If File Exists, Get the Product, Then Delete
