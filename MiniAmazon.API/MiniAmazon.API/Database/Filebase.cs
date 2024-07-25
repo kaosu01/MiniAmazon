@@ -97,7 +97,8 @@ namespace MiniAmazon.API.Database
                 p = JsonConvert.DeserializeObject<Product>(File.ReadAllText(path));
                 File.Delete(path);
             }   
-                return p;   
+
+            return p;   
         }
     }
 }
