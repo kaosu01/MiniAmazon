@@ -94,11 +94,10 @@ namespace MiniAmazon.API.Database
             // If File Exists, Get the Product, Then Delete
             if (File.Exists(path))
             {
-                p = JsonConvert.DeserializeObject<Product>(path);
+                p = JsonConvert.DeserializeObject<Product>(File.ReadAllText(path));
                 File.Delete(path);
-            }
-
-            return p;
+            }   
+                return p;   
         }
     }
 }

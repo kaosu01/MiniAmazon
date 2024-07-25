@@ -15,56 +15,56 @@ namespace MiniAmazon.API.ECs
 
         public async Task<IEnumerable<ProductDTO>> Get()
         {
-            return InventoryDatabase.Products.Take(100).Select(p => new ProductDTO(p));
+            return Filebase.Current.Products.Take(100).Select(p => new ProductDTO(p));
         }
 
         public async Task<ProductDTO?> Remove(int id)
         {
-            if (InventoryDatabase.Products == null)
-                return null;
+            //if (InventoryDatabase.Products == null)
+            //    return null;
 
-            var productToDelete = InventoryDatabase.Products.FirstOrDefault(c => c.Id == id);
+            //var productToDelete = InventoryDatabase.Products.FirstOrDefault(c => c.Id == id);
 
-            if (productToDelete == null)
-                return null;
+            //if (productToDelete == null)
+            //    return null;
 
-            InventoryDatabase.Products.Remove(productToDelete);
-            return new ProductDTO(productToDelete);
+            //InventoryDatabase.Products.Remove(productToDelete);
+            //return new ProductDTO(productToDelete);
 
-            // return new ProductDTO(Filebase.Current.Delete(id));
+            return new ProductDTO(Filebase.Current.Delete(id));
         }
 
         public async Task<ProductDTO> AddorUpdate(ProductDTO p)
         {
-            // return new ProductDTO(Filebase.Current.AddOrUpdate(new Product(p));
+            return new ProductDTO(Filebase.Current.AddOrUpdate(new Product(p)));
 
-            var isAdd = false;
+            //var isAdd = false;
 
-            // If This is the First Time this Item is Being Added Into the Inventory
-            if (p.Id == 0)
-            {
-                p.Id = InventoryDatabase.NextProductId;
-                isAdd = true;
-            }
+            //// If This is the First Time this Item is Being Added Into the Inventory
+            //if (p.Id == 0)
+            //{
+            //    p.Id = InventoryDatabase.NextProductId;
+            //    isAdd = true;
+            //}
 
-            // We Need to Add the Product
-            if (isAdd)
-            {
-                p.Name = p.Name?.ToLower();
-                p.Name = char.ToUpper(p.Name[0]) + p.Name[1..];
-                InventoryDatabase.Products.Add(new Product(p));
-            }
-            else
-            {
-                var prodToUpdate = InventoryDatabase.Products.FirstOrDefault(prod => prod.Id == p.Id);
-                if (prodToUpdate != null)
-                {
-                    var index = InventoryDatabase.Products.IndexOf(prodToUpdate);
-                    InventoryDatabase.Products.RemoveAt(index);
-                    prodToUpdate = new Product(p);
-                    InventoryDatabase.Products.Insert(index, prodToUpdate);
-                }
-            }
+            //// We Need to Add the Product
+            //if (isAdd)
+            //{
+            //    p.Name = p.Name?.ToLower();
+            //    p.Name = char.ToUpper(p.Name[0]) + p.Name[1..];
+            //    InventoryDatabase.Products.Add(new Product(p));
+            //}
+            //else
+            //{
+            //    var prodToUpdate = InventoryDatabase.Products.FirstOrDefault(prod => prod.Id == p.Id);
+            //    if (prodToUpdate != null)
+            //    {
+            //        var index = InventoryDatabase.Products.IndexOf(prodToUpdate);
+            //        InventoryDatabase.Products.RemoveAt(index);
+            //        prodToUpdate = new Product(p);
+            //        InventoryDatabase.Products.Insert(index, prodToUpdate);
+            //    }
+            //}
 
             /* FOR NOW LET'S ONLY UPDATE THE INVENTORY DATABASE NOT THE CARTS */
             //// Update the Product in Cart if Changes Were Made
@@ -86,7 +86,7 @@ namespace MiniAmazon.API.ECs
             //    }
             //}
 
-            return p;
+            //return p;
         }
     }
 }
