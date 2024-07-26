@@ -31,7 +31,8 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0"
@@ -41,6 +42,13 @@
                     FontAttributes="Bold"
                     />
             <Button Grid.Column="2"
+                    Text="Import +"
+                    Clicked="Import_Clicked"
+                    FontAttributes="Bold"
+                    Margin="10, 0"
+                    BackgroundColor="DarkBlue"
+                    />
+            <Button Grid.Column="3"
                     Text="Add New Product"
                     Clicked="Add_Clicked"
                     Margin="10, 0"

@@ -30,4 +30,9 @@ public partial class InventoryView : ContentPage
     {
         (BindingContext as InventoryViewModel)?.RefreshInventory();
     }
+
+    private void Import_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//Import");
+    }
 }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MiniAmazon.MAUI.Views.ImportView"
+             Title="ImportView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.175*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Margin="10, 0"
+                    BackgroundColor="White"
+                    Text="Mini-Amazon"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BorderWidth="3"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    Clicked="Logo_Clicked"
+                    />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1.25*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="2"
+                   Text="Insert File:"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   />
+            <Entry Grid.Column="3"
+                   Text="{Binding FilePath}"
+                   VerticalOptions="Center"
+                   />
+            <Button Grid.Column="4"
+                    Margin="20, 0"
+                    VerticalOptions="Center"
+                    BackgroundColor="Gray"
+                    Text="Browse..."
+                    FontAttributes="Bold"
+                    Clicked="FileBrowser_Clicked"
+                    />
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2"
+                    VerticalOptions="Center"
+                    Text="Cancel"
+                    FontAttributes="Bold"
+                    Margin="10, 0"
+                    BackgroundColor="Red"
+                    Clicked="Cancel_Clicked"
+                    />
+            <Button Grid.Column="3"
+                    VerticalOptions="Center"
+                    Text="Import File"
+                    FontAttributes="Bold"
+                    Margin="10, 0"
+                    BackgroundColor="Green"
+                    Clicked="Import_Clicked"
+                    />
+        </Grid>
+    </Grid>
+</ContentPage>

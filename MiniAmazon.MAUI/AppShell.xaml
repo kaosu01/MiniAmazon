@@ -32,5 +32,10 @@
         Title="Receipt Display"
         ContentTemplate="{DataTemplate views:ReceiptView}"
         Route="Receipt" />
-    
+
+    <ShellContent
+        Title="Import Product"
+        ContentTemplate="{DataTemplate views:ImportView}"
+        Route="Import" />
+
 </Shell>
